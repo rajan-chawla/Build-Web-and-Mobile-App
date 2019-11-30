@@ -1,27 +1,19 @@
-import React, {Component} from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import Header from "./components/Header";
+import Home from "./components/Home";
+import Footer from "./components/Footer";
 import './App.css';
-import axios from 'axios';
+
 
 class App extends Component {
-  
-  state = {
-    hello:null
-  }
-
-  componentDidMount(){
-    axios.get('/hello')
-    .then(res=> this.setState({hello: res.data}))
-    .catch(err => console.log(err))
-  }
-
-  render(){
-    return(
+  render() {
+    return (
       <div>
-        {this.state.hello? <div> {this.state.hello}</div>:null}
+        <Header />
+        <Home />
+        <Footer />
       </div>
     );
-
   }
 }
 
