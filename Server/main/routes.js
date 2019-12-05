@@ -1,11 +1,12 @@
 var express = require("express");
 var router = express.Router();
 var pool = require("./db");
+var authcheck = require("./authcheck");
 
 router.get("/api/get/allproducts", function(req, res, next) {
   console.log("request param is:" + req.query.term);
   const query =
-    "SELECT * FROM `hsfuldadb`.`Products` WHERE Title LIKE '%" +
+    "SELECT * FROM `BwmaDb`.`product` WHERE Title LIKE '%" +
     req.query.term +
     "%'";
   pool.query(query, (q_err, q_res) => {
@@ -19,4 +20,5 @@ router.get("/api/get/allproducts", function(req, res, next) {
   });
 });
 
+router.use("/", authcheck);
 module.exports = router;
