@@ -1,9 +1,9 @@
 const mysql = require('mysql');
 const pool = mysql.createConnection({
-    host: 'hsfuldadbinstance.cwgzgqbdpoif.us-east-1.rds.amazonaws.com',
-    user: 'hsfulda',
+    host: 'awsbwmadb.cwgzgqbdpoif.us-east-1.rds.amazonaws.com',
+    user: 'AwsBwmaDb',
     database: 'mysql',
-    password: 'hsfulda123',
+    password: 'AwsBwmaDb123',
     port: 3306
 });
 pool.connect((err) => {
