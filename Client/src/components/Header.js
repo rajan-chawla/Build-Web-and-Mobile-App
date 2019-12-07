@@ -14,13 +14,14 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
   grow: {
     flexGrow: 1,
 
   },
-  appbar:{
+  appbar: {
     color: "dimgrey",
     "background-color": "white",
   },
@@ -59,6 +60,23 @@ const useStyles = makeStyles(theme => ({
   },
   inputRoot: {
     color: 'inherit',
+  },
+  buttonSignup: {
+    margin: '0px',
+  },
+  buttonLogin: {
+    marginLeft: '10px',
+  },
+  line:{
+    marginTop: '10px',
+  },
+  buttonContainer: {
+    margin: '10px',
+    marginBottom: '20px',
+  },
+  heading: {
+    margin: '10px',
+    paddingLeft: '0px',
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 7),
@@ -118,8 +136,17 @@ export default function Header() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <Typography variant="subtitle1" className={classes.heading}> Welcome</Typography>
+      <Typography variant="subtitle1" className={classes.heading}> To access account and manage orders</Typography>
+      <div className={classes.buttonContainer}>
+      <Button variant="outlined" color="primary" className={classes.buttonSignup} href="/signup"> Signup  </Button>
+      <Button variant="outlined" color="secondary" className={classes.buttonLogin} href="/login"> Login</Button>      
+      </div>
+      <div className={classes.line}>
+      <hr />
+      </div>
+      <MenuItem onClick={handleMenuClose}>Orders</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Contact us</MenuItem>
     </Menu>
   );
 
@@ -177,7 +204,7 @@ export default function Header() {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-             Looking for samples
+            Looking for samples
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>

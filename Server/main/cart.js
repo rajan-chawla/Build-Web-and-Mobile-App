@@ -25,7 +25,6 @@ cartRoutes.get("/api/get/getcartitems", function(req, res){
 
 cartRoutes.post("/api/post/checkout", function(req, res){
 
-
 });
 
 module.exports = cartRoutes;
