@@ -47,6 +47,7 @@ router.post("/api/post/signup", function (req, res) {
     var dob = req.body.date_of_birth;
     var phone = req.body.phone;
     var query = "SELECT email FROM `BwmaDb`.`user` WHERE email = '" + email + "'";
+    console.log("signup received",query);
     pool.query(query, function (q_err, q_res) {
         if (q_err != null) {
             console.log("error ocurred", q_err);

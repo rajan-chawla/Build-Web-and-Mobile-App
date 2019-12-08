@@ -139,7 +139,7 @@ export default function Header() {
       <Typography variant="subtitle1" className={classes.heading}> Welcome</Typography>
       <Typography variant="subtitle1" className={classes.heading}> To access account and manage orders</Typography>
       <div className={classes.buttonContainer}>
-      <Button variant="outlined" color="primary" className={classes.buttonSignup} href="/signup"> Signup  </Button>
+      <Button variant="outlined" color="primary" className={classes.buttonSignup} href="/signup"> Sign up  </Button>
       <Button variant="outlined" color="secondary" className={classes.buttonLogin} href="/login"> Login</Button>      
       </div>
       <div className={classes.line}>
@@ -205,7 +205,7 @@ export default function Header() {
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
             Looking for samples
-          </Typography>
+            </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
