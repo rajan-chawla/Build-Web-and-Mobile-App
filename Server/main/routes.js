@@ -6,9 +6,7 @@ var user = require("./user");
 var product = require("./product");
 var cart = require("./cart");
 
-
-
-router.use("/", authcheck);
+router.use('/', authcheck);
 router.use("/", user);
 router.use("/", product);
 router.use("/", cart);
