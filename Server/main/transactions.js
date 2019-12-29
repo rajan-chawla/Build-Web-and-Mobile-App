@@ -5,7 +5,7 @@ var pool = require("./db");
 transactionRotes.get("/api/get/getTransactions", function(req, res, next) {
   var userId = req.query.id;
   const query =
-    "SELECT  p.name as product_name, price, u.name as seller_name, sold_date FROM hsfuldadb.product p join hsfuldadb.user u on u.id = p.seller_id where buyer_id = " + userId;
+    "SELECT  p.name as product_name, price, u.name as seller_name, sold_date FROM H7j0c1CcvW.product p join H7j0c1CcvW.user u on u.id = p.seller_id where buyer_id = " + userId;
   pool.query(query, (q_err, q_res) => {
     if (q_err != null) {
       console.log(q_err);

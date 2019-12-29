@@ -7,7 +7,7 @@ var upload = require("./config/multer");
 productRoutes.get("/api/get/productlist", function(req, res, next) {
   console.log("request param is:" + req.body.search);
   const query =
-    "select p.*,u.name as seller_name, c.name as category_name from hsfuldadb.product p join hsfuldadb.user u on p.seller_id = u.id join hsfuldadb.category c on c.id = p.category_id where p.buyer_id is null";
+    "select p.*,u.name as seller_name, c.name as category_name from H7j0c1CcvW.product p join H7j0c1CcvW.user u on p.seller_id = u.id join H7j0c1CcvW.category c on c.id = p.category_id where p.buyer_id is null";
   pool.query(query, (q_err, q_res) => {
     console.log("response", q_res);
     if (q_err != null) {
@@ -25,7 +25,7 @@ productRoutes.post("/api/get/productlistbyid", function(req, res, next) {
   var product_id = req.body.product_id;
 
   const query =
-    "select p.*,u.name as seller_name, c.name as category_name from hsfuldadb.product p join hsfuldadb.user u on p.seller_id = u.id join hsfuldadb.category c on c.id = p.category_id where p.id='" +
+    "select p.*,u.name as seller_name, c.name as category_name from H7j0c1CcvW.product p join H7j0c1CcvW.user u on p.seller_id = u.id join H7j0c1CcvW.category c on c.id = p.category_id where p.id='" +
     product_id +
     "'";
   pool.query(query, (q_err, q_res) => {
@@ -135,7 +135,7 @@ productRoutes.get("/api/get/categories", function(req, res, next) {
 productRoutes.get("/api/get/productbyid", function(req, res, next) {
   var id = req.body.id;
   const query =
-    "select p.*,u.name as seller_name, c.name as category_name from hsfuldadb.product p join hsfuldadb.user u on p.seller_id = u.id join hsfuldadb.category c on c.id = p.category_id where p.id= '" +
+    "select p.*,u.name as seller_name, c.name as category_name from H7j0c1CcvW.product p join H7j0c1CcvW.user u on p.seller_id = u.id join H7j0c1CcvW.category c on c.id = p.category_id where p.id= '" +
     id +
     "'";
   pool.query(query, (q_err, q_res) => {
@@ -160,7 +160,7 @@ productRoutes.post("/api/post/addproduct", function(req, res, next) {
   var seller_id = req.body.seller_id;
   var category_id = req.body.category_id;
   const query =
-    "INSERT INTO `hsfuldadb`.`product` (added_date,description,name, picture_link,price,seller_id, category_id) VALUES (CURRENT_TIMESTAMP, '" +
+    "INSERT INTO `H7j0c1CcvW`.`product` (added_date,description,name, picture_link,price,seller_id, category_id) VALUES (CURRENT_TIMESTAMP, '" +
     description +
     "', '" +
     name +

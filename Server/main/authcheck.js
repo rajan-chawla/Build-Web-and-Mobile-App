@@ -6,7 +6,7 @@ router.post("/api/post/login", function(req, res, next) {
   var email = req.body.email;
   var password = req.body.password;
   // const query =
-  //   "SELECT * FROM `hsfuldadb`.`user` WHERE email = '" + email + "'";
+  //   "SELECT * FROM `H7j0c1CcvW`.`user` WHERE email = '" + email + "'";
   const query = `SELECT user.id,user.password,max(user_role.role_id) AS role FROM user  JOIN user_role ON user.id=user_role.user_id WHERE user.email='${email}'`;
   pool.query(query, (q_err, q_res) => {
     if (q_err != null) {
@@ -51,7 +51,7 @@ router.post("/api/post/signup", function(req, res, next) {
   console.log(req.body);
 
   const query1 =
-    "SELECT email FROM `hsfuldadb`.`user` WHERE email = '" + email + "'";
+    "SELECT email FROM `H7j0c1CcvW`.`user` WHERE email = '" + email + "'";
   pool.query(query1, (q_err, q_res) => {
     if (q_err != null) {
       console.log("error ocurred", q_err);
@@ -71,7 +71,7 @@ router.post("/api/post/signup", function(req, res, next) {
         }
       } else {
         const query2 =
-          "INSERT INTO `hsfuldadb`.`user` (name, lastname, email,password, phone) VALUES ('" +
+          "INSERT INTO `H7j0c1CcvW`.`user` (name, lastname, email,password, phone) VALUES ('" +
           firstName +
           "', '" +
           lastName +

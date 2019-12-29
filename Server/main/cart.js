@@ -226,7 +226,7 @@ cartRoutes.post("/api/post/checkout", function(req, res){
     var buyer_id= req.body.id;
     var product_id =req.body.product_id;
     
-    const query= "SELECT * FROM `hsfuldadb`.`product` WHERE id = '" +product_id +"'";
+    const query= "SELECT * FROM `H7j0c1CcvW`.`product` WHERE id = '" +product_id +"'";
         pool.query(query, (q_err, q_res) => {
         if (q_err) {
             console.log(q_err);
@@ -272,7 +272,7 @@ cartRoutes.post("/api/post/buy_item", function(req, res){
             q_res.forEach(
                 (productInCart,index) => {
                     console.log("buyerID",productInCart.buyer_id);
-                    const query= "SELECT * FROM `hsfuldadb`.`product` WHERE id = '" +productInCart.product_id+"'";
+                    const query= "SELECT * FROM `H7j0c1CcvW`.`product` WHERE id = '" +productInCart.product_id+"'";
                     pool.query(query, (q_err, q_res) => {
                         if (q_err) {
                             console.log(q_err);
