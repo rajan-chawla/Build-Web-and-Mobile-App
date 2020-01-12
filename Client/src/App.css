@@ -1,3 +1,11 @@
+:root {
+  --green: #8BC34A;
+  --blue: rgb(9, 231, 220);
+  --blue-darker: #0084ff;
+  --purple: rgb(249, 84, 138);
+  --purple-darker: #AB51EA;
+}
+
 .App {
   text-align: center;
 }
@@ -21,6 +29,11 @@
   color: #09d3ac;
 }
 
-body{
-  background-color: #ffffff;
+body {
+  background-color: #FAFBFC;
+  font-family: 'Open Sans'
+}
+
+.boxShadow {
+  box-shadow: 10px 10px 40px -15px rgba(0, 0, 0, 0.33);
 }

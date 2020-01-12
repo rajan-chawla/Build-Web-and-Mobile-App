@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import './App.css';
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import Product from "./components/Product";
 
 class App extends Component {
   render() {
@@ -18,8 +19,9 @@ class App extends Component {
               <Route exact path="/" component={Home} />
               <Route exact path="/login" component={Login} />
               <Route path="/signup" component={Signup} />
+              <Route path="/product/id=:id" component = {Product} />
             </Switch>
-            <Footer />
+
           </div>
         </Router>
       </div>
