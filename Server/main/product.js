@@ -1,7 +1,7 @@
 var express = require("express");
 var productRoutes = express.Router();
 var pool = require("./db");
-var cloud = require("./config/cloudinaryConfig");
+var cloud = require("./config/cloundinaryConfig");
 var upload = require("./config/multer");
 
 productRoutes.get("/api/get/productlist", function(req, res, next) {
@@ -36,6 +36,7 @@ productRoutes.post("/api/get/productlistbyid", function(req, res, next) {
       console.log(JSON.stringify(q_res, null, 2));
       res.status(200).json(q_res);
     }
+    
   });
 });
 
@@ -133,11 +134,9 @@ productRoutes.get("/api/get/categories", function(req, res, next) {
 
 //GET Product by product ID
 productRoutes.get("/api/get/productbyid", function(req, res, next) {
-  var id = req.body.id;
-  const query =
-    "select p.*,u.name as seller_name, c.name as category_name from H7j0c1CcvW.product p join H7j0c1CcvW.user u on p.seller_id = u.id join H7j0c1CcvW.category c on c.id = p.category_id where p.id= '" +
-    id +
-    "'";
+  console.log('Request param is: ' + req.query.id)
+  var id = req.query.id;
+  const query = `select p.*,u.name as seller_name, c.name as category_name from H7j0c1CcvW.product p join H7j0c1CcvW.user u on p.seller_id = u.id join H7j0c1CcvW.category c on c.id = p.category_id where p.id =${id}`;
   pool.query(query, (q_err, q_res) => {
     if (q_err) {
       console.log(q_err);

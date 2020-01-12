@@ -1,7 +1,7 @@
 var express = require("express");
 var userRoutes = express.Router();
 var pool = require("./db");
-var cloud = require("./config/cloudinaryConfig");
+var cloud = require("./config/cloundinaryConfig");
 var upload = require("./config/multer");
 
 userRoutes.get("/api/get/profile", function(req, res) {
