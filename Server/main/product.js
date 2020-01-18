@@ -1,7 +1,7 @@
 var express = require("express");
 var productRoutes = express.Router();
 var pool = require("./db");
-var cloud = require("./config/cloundinaryConfig");
+var cloud = require("./config/cloudinaryConfig");
 var upload = require("./config/multer");
 
 productRoutes.get("/api/get/productlist", function(req, res, next) {
