@@ -1,9 +1,13 @@
 :root {
-  --green: #8BC34A;
+  --green: #8bc34a;
+  --green-darker: #178b48;
   --blue: rgb(9, 231, 220);
   --blue-darker: #0084ff;
   --purple: rgb(249, 84, 138);
   --purple-darker: #AB51EA;
+  --red: #f44336;
+  --red-darker: #d50000;
+  --grey: rgb(241, 241, 241);
 }
 
 .App {
@@ -36,4 +40,38 @@ body {
 
 .boxShadow {
   box-shadow: 10px 10px 40px -15px rgba(0, 0, 0, 0.33);
+}
+
+.buyButton {
+  background-image: linear-gradient(-90deg, var(--blue), var(--blue-darker));
+  transition: 0.3s;
+}
+
+.buyButton:hover {
+  box-shadow: 0px 0px 10px 0px rgba(9, 231, 220, 0.75);
+  transition: 0.3s;
+}
+
+.cartButton {
+  background-image: linear-gradient(-90deg, var(--purple), var(--purple-darker));
+}
+
+.cartButton:hover {
+  box-shadow: 0px 0px 10px 0px rgba(249, 84, 138, 0.75);
+  transition: 0.3s;
+}
+
+.footWrapper {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  background: black;
+}
+
+.footText {
+  font-size: 0.75em;
+  text-align: center;
+  padding: 6px 0px;
+  margin: 0;
+  color: #FFF;
 }
