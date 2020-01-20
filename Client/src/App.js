@@ -12,6 +12,8 @@ import SearchResults from "./components/SearchResults";
 import ProductMinified from "./components/ProductMinified";
 import ProfileView from "./components/ProfileView";
 import Cart from "./components/Cart";
+import Contactus from "./components/Contactus";
+import Resetpassword from "./components/Resetpassword";
 
 class App extends Component {
   render() {
@@ -27,7 +29,9 @@ class App extends Component {
               <Route path="/product/id=:id" component = {Product} />
               <Route path="/search/:input?/:category?" component = {SearchResults} />
               <Route path="/cart" component = {Cart} />
-              <Route path="/publicprofile" component = {ProfileView} />
+              <Route path="/Contactus" component = {Contactus} />
+              <Route path="/Resetpassword" component = {Resetpassword} />
+             <Route path="/publicprofile" component = {ProfileView} />
             </Switch>
           </div>
           <Foot />

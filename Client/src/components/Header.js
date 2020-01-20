@@ -16,7 +16,6 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
 import {Link} from 'react-router-dom';
-import styled from 'styled-components';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { withStyles } from '@material-ui/core/styles';;
 
@@ -177,7 +176,9 @@ export default function Header() {
       <hr />
       </div>
       <MenuItem onClick={handleSimpleMenuClose}>Orders</MenuItem>
-      <MenuItem onClick={handleSimpleMenuClose}>Contact us</MenuItem>
+      <MenuItem onClick={handleSimpleMenuClose}>Contact Us</MenuItem>
+       
+       
     </Menu>
   );
 
@@ -202,7 +203,7 @@ export default function Header() {
       <hr />
       </div>
       <MenuItem onClick={handleMenuClose}>Orders</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Contact us</MenuItem>
+      <Button href="/Contactus">Contact Us</Button>
     </Menu>
   );
 
@@ -344,11 +345,3 @@ export default function Header() {
   );
 }
 
-const ButtonContainer = styled.button `
-text-transform: capitalize;
-font-size: 1.4rem;
-background: transparent;
-color: var(--black);
-border: 0.05rem solid var(--darkBlue);
-border-radius: 0.5rem;
-`;
