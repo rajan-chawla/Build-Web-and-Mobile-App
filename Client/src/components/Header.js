@@ -15,6 +15,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
+import ShoppingCart from '@material-ui/icons/ShoppingCart';
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -146,7 +147,7 @@ export default function Header() {
       <hr />
       </div>
       <MenuItem onClick={handleMenuClose}>Orders</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Contact us</MenuItem>
+      <Button href="/Contactus"> Contact Us</Button>
     </Menu>
   );
 
@@ -161,6 +162,15 @@ export default function Header() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
+      <MenuItem>
+        <IconButton aria-label="show 4 new mails" color="inherit">
+          <Badge badgeContent={5} color="secondary">
+            <ShoppingCart />
+          </Badge>
+        </IconButton>
+        <p>ShoppingCart</p>
+      </MenuItem>
+
       <MenuItem>
         <IconButton aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={4} color="secondary">
@@ -221,6 +231,14 @@ export default function Header() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
+
+          <IconButton aria-label="show 17 new notifications" color="inherit" href="/Cart">
+              <Badge badgeContent={5} color="secondary">
+                <ShoppingCart />
+              </Badge>
+              </IconButton>
+             
+
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <MailIcon />
