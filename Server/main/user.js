@@ -9,7 +9,7 @@ userRoutes.get("/api/get/profile", function(req, res) {
   const query =
     "Select email, name, lastname, DATE_FORMAT(date_of_birth,'%Y-%m-%d') AS date_of_birth, phone, description, photo_link, is_verified, is_validated, " +
     "(select count(*) from `H7j0c1CcvW`.`user_role` where user_id = id and role_id = 2) as isSeller," +
-    "(select count(*) from `H7j0c1CcvW`.`user_role` where user_id = id and role_id = 3) as isAdmin,CAST(is_seller_requested AS SIGNED INTEGER) AS is_seller_requested  from `H7j0c1CcvW`.`user` where id='" +
+    "(select count(*) from `H7j0c1CcvW`.`user_role` where user_id = id and role_id = 3) as isAdmin from `H7j0c1CcvW`.`user` where id='" +
     id +
     "'";
   pool.query(query, (q_err, q_res) => {

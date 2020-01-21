@@ -75,3 +75,9 @@ body {
   margin: 0;
   color: #FFF;
 }
+
+.alert-info{
+  color: #ffffff;
+  background-color: #f50057;
+  border-color: #f50057
+}

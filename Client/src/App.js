@@ -14,6 +14,7 @@ import ProfileView from "./components/ProfileView";
 import Cart from "./components/Cart";
 import Contactus from "./components/Contactus";
 import Resetpassword from "./components/Resetpassword";
+import BuyerView from "./components/BuyerView";
 
 class App extends Component {
   render() {
@@ -29,9 +30,10 @@ class App extends Component {
               <Route path="/product/id=:id" component = {Product} />
               <Route path="/search/:input?/:category?" component = {SearchResults} />
               <Route path="/cart" component = {Cart} />
-              <Route path="/Contactus" component = {Contactus} />
-              <Route path="/Resetpassword" component = {Resetpassword} />
+              <Route path="/contactus" component = {Contactus} />
+              <Route path="/resetpassword" component = {Resetpassword} />
              <Route path="/publicprofile" component = {ProfileView} />
+              <Route path="/buyerview" component = {BuyerView} />
             </Switch>
           </div>
           <Foot />
