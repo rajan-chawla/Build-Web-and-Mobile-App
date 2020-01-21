@@ -15,6 +15,10 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
+import {Link} from 'react-router-dom';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import { withStyles } from '@material-ui/core/styles';;
+
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -100,20 +104,27 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const StyledBadge = withStyles(theme => ({
+  badge: {
+    right: -3,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: '0 4px',
+  },
+}))(Badge);
+
 export default function Header() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [simpleMenuanchorEl, setsimpleMenuAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const isSimpleMenuOpen = Boolean(simpleMenuanchorEl);
 
   const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget);
-  };
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
   };
 
   const handleMenuClose = () => {
@@ -121,9 +132,55 @@ export default function Header() {
     handleMobileMenuClose();
   };
 
+  const handleSimpleMenuClose = () => {
+    setsimpleMenuAnchorEl(null);
+  };
+
+  const handleSimpleMenuOpen = event => {
+    setsimpleMenuAnchorEl(event.currentTarget);
+  };
+
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
+  };
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const simpleMenuId = 'primary-search-account-menu';
+  const renderSimpleMenu = (
+    <Menu
+      anchorEl={simpleMenuanchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+      id={simpleMenuId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+      open={isSimpleMenuOpen}
+      onClose={handleSimpleMenuClose}
+    >
+      <div className={classes.buttonContainer}>
+      <MenuItem onClick={handleSimpleMenuClose}component={Link} to="/details">Details</MenuItem>
+      <MenuItem onClick={handleSimpleMenuClose} component={Link} to="/navbar">My Account</MenuItem>
+      <MenuItem onClick={handleSimpleMenuClose}component={Link} to="/navbar">Logout</MenuItem>
+      </div>
+      <div className={classes.line}>
+      <hr />
+      </div>
+      <MenuItem onClick={handleSimpleMenuClose}>Orders</MenuItem>
+      <MenuItem onClick={handleSimpleMenuClose}>Contact Us</MenuItem>
+       
+       
+    </Menu>
+  );
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -146,9 +203,11 @@ export default function Header() {
       <hr />
       </div>
       <MenuItem onClick={handleMenuClose}>Orders</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Contact us</MenuItem>
+      <Button href="/Contactus">Contact Us</Button>
     </Menu>
   );
+
+  
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
@@ -195,17 +254,24 @@ export default function Header() {
     <div className={classes.grow}>
       <AppBar position="static" className={classes.appbar}>
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton>
+        <IconButton
+              edge="start"
+              aria-label="open drawer"
+              aria-controls={simpleMenuId}
+              
+              className={classes.menuButton}
+              onClick={handleSimpleMenuOpen}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            
           <Typography className={classes.title} variant="h6" noWrap>
-            Looking for samples
+          <Link to='/' className="nav-link">
+            Home
+            </Link>
             </Typography>
+            
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -218,8 +284,20 @@ export default function Header() {
               }}
               inputProps={{ 'aria-label': 'search' }}
             />
+            
           </div>
+            <div>
+              
+            </div>
+          
           <div className={classes.grow} />
+          <IconButton aria-label="cart">
+              <Badge badgeContent={4} color="secondary">
+              <Link to="/cart" >
+               <ShoppingCartIcon />
+           </Link>
+              </Badge>
+            </IconButton>
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
@@ -231,6 +309,9 @@ export default function Header() {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
+                      
+            
+
             <IconButton
               edge="end"
               aria-label="account of current user"
@@ -242,6 +323,7 @@ export default function Header() {
               <AccountCircle />
             </IconButton>
           </div>
+          
           <div className={classes.sectionMobile}>
             <IconButton
               aria-label="show more"
@@ -257,6 +339,9 @@ export default function Header() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
+      {renderSimpleMenu}
+  
     </div>
   );
 }
+

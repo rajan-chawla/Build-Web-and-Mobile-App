@@ -13,6 +13,9 @@ import ProductMinified from "./components/ProductMinified";
 import ProfileView from "./components/ProfileView";
 import Cart from "./components/Cart";
 import AuthLogin from "./components/AuthLogin";
+import Contactus from "./components/Contactus";
+import Resetpassword from "./components/Resetpassword";
+import BuyerView from "./components/BuyerView";
 
 class App extends Component {
   render() {
@@ -30,6 +33,10 @@ class App extends Component {
               <Route path="/cart" component = {Cart} />
               <Route path="/publicprofile" component = {ProfileView} />
               <Route path="/login2" component={AuthLogin} />
+              <Route path="/contactus" component = {Contactus} />
+              <Route path="/resetpassword" component = {Resetpassword} />
+             <Route path="/publicprofile" component = {ProfileView} />
+              <Route path="/buyerview" component = {BuyerView} />
             </Switch>
           </div>
           <Foot />
