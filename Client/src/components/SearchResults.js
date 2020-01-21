@@ -17,8 +17,12 @@ class SearchResults extends Component {
         this.state = {
             categories: ['All'],
             results: [],
-            selectedIndex: 0
+            selectedIndex: 0,
+            searchType: this.props.match.params.type,
+            searchTerm: this.props.match.params.term
         };
+
+        console.log('search type ', this.state.searchType)
     }
 
     getCategories = () => {
@@ -32,8 +36,8 @@ class SearchResults extends Component {
         });
     };
 
-    getResults = () => {
-        axios.get('/api/get/productlist').then(res => {
+    getResults = (a, b) => {
+        axios.get(`/api/get/allproducts?type=${a}&term=${b}`).then(res => {
             for (let i = 0; i < res.data.length; i++) {
                 this.setState(
                     (state) => ({ results: [...this.state.results, res.data[i]] }),
@@ -45,15 +49,17 @@ class SearchResults extends Component {
 
     componentWillMount() {
         this.getCategories();
-        this.getResults();
+        this.getResults('Name', '');
     };
 
-    test(key) {
-        this.setState({
-            selectedIndex: key
-        })
-    }
 
+    categoryChange(val) {
+      this.setState(
+            (state) => ({ results: [] }),
+            this.getResults('Category', val)
+        )
+    };
+            
 render() {
     return (
         <Container className='searchContainer'>
@@ -62,13 +68,13 @@ render() {
                     <h4 className='categoryTitle'>Categories</h4>
                     <ul className='categoryList'>
                         {this.state.categories.map((value, index) => {
-                            return <li className={`categoryItem ${this.state.selectedIndex == index ? 'selected' : 'notSelected'}`} key={index} onClick={() => {this.test(index)}}>{value}</li>
+                            return <li className={`categoryItem ${this.state.selectedIndex == index ? 'selected' : 'notSelected'}`} key={index} value={value} onClick={() => {this.categoryChange(value)}}>{value}</li>
                         })}
                     </ul>
                 </Col>
                 <Col sm={{ size: 9, offset: 3 }}>
                     {this.state.results.map(result => {
-                        return <ProductMinified name={result.name} desc={result.description} price={result.price} img={result.picture_link} remove='0'/>
+                        return <ProductMinified name={result.name} desc={result.description} price={result.price} img={result.picture_link} prodId={result.id} remove='0'/>
                     })}
                 </Col>
             </Row>

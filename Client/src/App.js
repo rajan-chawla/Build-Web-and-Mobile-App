@@ -16,6 +16,7 @@ import AuthLogin from "./components/AuthLogin";
 import Contactus from "./components/Contactus";
 import Resetpassword from "./components/Resetpassword";
 import BuyerView from "./components/BuyerView";
+import AuthSignUp from "./components/AuthSignUp";
 
 class App extends Component {
   render() {
@@ -29,14 +30,15 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <Route path="/signup" component={Signup} />
               <Route path="/product/id=:id" component = {Product} />
-              <Route path="/search/:input?/:category?" component = {SearchResults} />
+              <Route path="/search/:type?/:term?" component = {SearchResults} />
               <Route path="/cart" component = {Cart} />
               <Route path="/publicprofile" component = {ProfileView} />
               <Route path="/login2" component={AuthLogin} />
               <Route path="/contactus" component = {Contactus} />
               <Route path="/resetpassword" component = {Resetpassword} />
-             <Route path="/publicprofile" component = {ProfileView} />
+              <Route path="/publicprofile" component = {ProfileView} />
               <Route path="/buyerview" component = {BuyerView} />
+              <Route path="/signup2" component = {AuthSignUp} />
             </Switch>
           </div>
           <Foot />

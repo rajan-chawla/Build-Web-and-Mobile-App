@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import  { Redirect } from 'react-router-dom'
 
 import './componentStyles/productminified.scss';
 import {
@@ -14,22 +15,26 @@ class ProductMinified extends Component {
         this.state = {
     
         };
+
+        this.handleParentClick = this.handleParentClick.bind(this);
     }
 
     handleChildClick(e) {
         e.stopPropagation();
         console.log('child');
+       
     }
 
     handleParentClick(e) {
-        console.log('parent');
+        e.stopPropagation();
+        this.props.history.push(`/product/id=${this.props.prodId}`);
     }
 
     render() {
         return (
             <div className='productWrapper boxShadow' onClick={this.handleParentClick}>
                 <img src={this.props.img} className='image'/>
-                <div class='descWrapper'>
+                <div className='descWrapper'>
                     <div class='headerWrapper'>
                         <h3 className='title'>{this.props.name}</h3>
                         <h3 className='price'>&euro;{this.props.price}</h3>

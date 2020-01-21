@@ -35,6 +35,7 @@ async function onRegisterClick(event) {
   event.preventDefault();
   formEnabled = false;
   const formdata = new FormData(event.target);
+  console.log(formdata);
   var data = {};
   for (let name of formdata.keys()) {
     const value = formdata.get(name);
@@ -110,11 +111,11 @@ export default function SignUp() {
                 required
                 fullWidth
                 id="phone"
-                label="Phone Number"
-                type="tel"
+                label="Phone"
                 name="phone"
-                autoComplete="email"
+                autoComplete="phone"
                 color="secondary"
+                type="text"
                 maxlength="12"
                 min="0"
               />

@@ -4,7 +4,6 @@ import axios from 'axios';
 
 class BuyerView extends Component {
 
-    
     constructor(props) {
         super(props);
         console.log(this.props.userId);
@@ -22,7 +21,6 @@ class BuyerView extends Component {
 
     componentDidUpdate() {
         console.log(this.props.userId);
-
     }
 
     getUserData = async () => {

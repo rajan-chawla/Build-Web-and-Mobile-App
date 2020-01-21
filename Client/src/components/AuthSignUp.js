@@ -14,15 +14,18 @@ import {
     Label
 } from 'reactstrap'
 
-class AuthLogin extends Component {
+class AuthSignUp extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             email: '',
             password: '',
-            loginErrors: ''
+            signUpErrors: ''
         };
+
+        let formEnabled = true;
+        let responseStatus = "";
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -36,33 +39,31 @@ class AuthLogin extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        axios.post('/api/post/login',
-        {
-            body: {
-                email: this.state.email,
-                password: this.state.password
-            }
-        })
-        .then(res => {
-            if (res.data.success === 'login sucessfull')
-            {
-                localStorage.setItem('loggedIn', true);
-                localStorage.setItem('loggedData', res.data);
-                console.log('po');
-                console.log(res);
-                console.log(res.data);
-                console.log(res.data.userid);
-                console.log(localStorage.loggedIn);
-                window.location.replace("/");
-            } else {
-                console.log('jo')
-            }
-        });
+        this.formEnabled = false;
+        const formdata = new FormData(event.target);
+        var data = {};
+        for (let name of formdata.keys()) {
+            const value = formdata.get(name);
+            data[name] = value;
+        }
+        axios
+            .post("/api/post/signup", data)
+            .then(response => {
+                console.log("Response data ", response.data);
+                this.responseStatus = response.data;
+                if (response.data.code == 200) {
+                    // return <Redirect to="/login" />;
+                    window.location.replace("/");
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 
-    render() {
-        return (
-            <Container className='loginContainer boxShadow'>
+        render() {
+                return (
+<Container className='loginContainer boxShadow'>
                 <div className='loginHeaderWrapper'>
                     <h2 className='loginTitle'>Log in </h2>
                     <Link className='headerSmall' to='/signup'>Sign up instead?</Link>
@@ -87,8 +88,9 @@ class AuthLogin extends Component {
 
                 </Form>
             </Container>
-        )
-    }
+                )
+        };
 }
 
-export default withRouter(AuthLogin);
+
+export default withRouter(AuthSignUp);
