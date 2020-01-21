@@ -79,7 +79,7 @@ export default function Album() {
           <Grid container spacing={4}>
             {cards.map(card => (
               <Grid item key={card} xs={12} sm={6} md={4}>
-              <Link to="/product">
+              <Link to="/product/id=3">
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.cardMedia}
