@@ -12,6 +12,7 @@ import SearchResults from "./components/SearchResults";
 import ProductMinified from "./components/ProductMinified";
 import ProfileView from "./components/ProfileView";
 import Cart from "./components/Cart";
+import AuthLogin from "./components/AuthLogin";
 
 class App extends Component {
   render() {
@@ -28,6 +29,7 @@ class App extends Component {
               <Route path="/search/:input?/:category?" component = {SearchResults} />
               <Route path="/cart" component = {Cart} />
               <Route path="/publicprofile" component = {ProfileView} />
+              <Route path="/login2" component={AuthLogin} />
             </Switch>
           </div>
           <Foot />
