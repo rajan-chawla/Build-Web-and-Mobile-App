@@ -12,6 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from "axios";
 
+
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -58,6 +59,9 @@ async function onRegisterClick(event) {
 
 export default function SignUp() {
   const classes = useStyles();
+
+
+  
 
   return (
     <Container component="main" maxWidth="xs">
@@ -134,12 +138,24 @@ export default function SignUp() {
               />
             </Grid>
             <Grid item xs={12}>
+            <select class="browser-default custom-select">
+            variant="outlined"
+                required
+                fullWidth
+                <option selected>Select Role</option>
+                <option value="1">Admin</option>
+                <option value="2">Buyer</option>
+               <option value="3">Seller</option>
+            </select>
+            </Grid>
+            <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="secondary" />}
                 label="I want to receive inspiration, marketing promotions and updates via email."
                 color="secondary"
               />
             </Grid>
+           
           </Grid>
           <Button
             type="submit"
