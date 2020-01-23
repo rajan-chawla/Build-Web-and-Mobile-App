@@ -1,28 +1,10 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 // reactstrap components
 import { Container } from "reactstrap";
 // core components
-import AdminNavbar from "components/Navbars/AdminNavbar.jsx";
-import AdminFooter from "components/Footers/AdminFooter.jsx";
-import Sidebar from "components/Sidebar/Sidebar.jsx";
+
+import Sidebar from '../layouts/sidebar';
 
 import routes from "routes.js";
 
@@ -72,13 +54,9 @@ class Admin extends React.Component {
           }}
         />
         <div className="main-content" ref="mainContent">
-          <AdminNavbar
-            {...this.props}
-            brandText={this.getBrandText(this.props.location.pathname)}
-          />
+          
           <Switch>{this.getRoutes(routes)}</Switch>
           <Container fluid>
-            <AdminFooter />
           </Container>
         </div>
       </>
