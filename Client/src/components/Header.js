@@ -1,4 +1,13 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "jquery/dist/jquery.min.js";
+import "bootstrap/dist/js/bootstrap.min.js";
+import "font-awesome/css/font-awesome.min.css";
+import "../css/header.css";
+import { HeaderContext } from "./HeaderContext";
+import Emitter from "./Emitter";
+import { connect } from "react-redux";
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -11,14 +20,10 @@ import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
-import {Link} from 'react-router-dom';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import { withStyles } from '@material-ui/core/styles';;
-
+import { withStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -113,159 +118,151 @@ const StyledBadge = withStyles(theme => ({
   },
 }))(Badge);
 
-export default function Header() {
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [simpleMenuanchorEl, setsimpleMenuAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const isSimpleMenuOpen = Boolean(simpleMenuanchorEl);
+/**
+ * header component handles navigation, logout,
+ * and emittes search event, assignes header context search
+ * term and type.
+ */
+const Header = props => {
+  const [values, setValues] = useContext(HeaderContext);
+  const categories = ["Name", "Category", "Seller"];
 
-  const handleProfileMenuOpen = event => {
-    setAnchorEl(event.currentTarget);
+  useEffect(() => {
+    setValues({ searchTerm: "", searchType: "Name" });
+    Emitter.on("SIGNEDIN", () => window.location.reload(false));
+  }, []);
+
+  const handleLogout = () => {
+    window.sessionStorage.clear();
+    window.location.reload(false);
+    window.location.replace("/");
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
+  const handleContactUs = () => {
+    window.sessionStorage.clear();
+    window.location.reload(false);
+    window.location.replace("/contactus");
   };
 
-  const handleSimpleMenuClose = () => {
-    setsimpleMenuAnchorEl(null);
+  const handleSubmit = event => {
+    console.log(
+      "A name was submitted: Category " +
+        values.searchType +
+        " Search : " +
+        values.searchTerm
+    );
+    Emitter.emit("SEARCHBUTTONCLICKED");
+    event.preventDefault();
   };
 
-  const handleSimpleMenuOpen = event => {
-    setsimpleMenuAnchorEl(event.currentTarget);
-  };
-
-  const handleMobileMenuOpen = event => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const simpleMenuId = 'primary-search-account-menu';
-  const renderSimpleMenu = (
-    <Menu
-      anchorEl={simpleMenuanchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-      id={simpleMenuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-      open={isSimpleMenuOpen}
-      onClose={handleSimpleMenuClose}
-    >
-      <div className={classes.buttonContainer}>
-      <MenuItem onClick={handleSimpleMenuClose}component={Link} to="/details">Details</MenuItem>
-      <MenuItem onClick={handleSimpleMenuClose} component={Link} to="/navbar">My Account</MenuItem>
-      <MenuItem onClick={handleSimpleMenuClose}component={Link} to="/navbar">Logout</MenuItem>
-      </div>
-      <div className={classes.line}>
-      <hr />
-      </div>
-      <MenuItem onClick={handleSimpleMenuClose}>Orders</MenuItem>
-      <MenuItem onClick={handleSimpleMenuClose}>Contact Us</MenuItem>
-       
-       
-    </Menu>
-  );
-
-  const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <Typography variant="subtitle1" className={classes.heading}> Welcome</Typography>
-      <Typography variant="subtitle1" className={classes.heading}> To access account and manage orders</Typography>
-      <div className={classes.buttonContainer}>
-      <Button variant="outlined" color="primary" className={classes.buttonSignup} href="/signup"> Sign up  </Button>
-      <Button variant="outlined" color="secondary" className={classes.buttonLogin} href="/login"> Login</Button>      
-      </div>
-      <div className={classes.line}>
-      <hr />
-      </div>
-      <MenuItem onClick={handleMenuClose}>Orders</MenuItem>
-      <Button href="/Contactus">Contact Us</Button>
-    </Menu>
-  );
-
+ // export default function Header() {
+    const classes = useStyles();
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [simpleMenuanchorEl, setsimpleMenuAnchorEl] = React.useState(null);
+    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   
-
-  const mobileMenuId = 'primary-search-account-menu-mobile';
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
+    const isMenuOpen = Boolean(anchorEl);
+    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+    const isSimpleMenuOpen = Boolean(simpleMenuanchorEl);
+  
+    const handleProfileMenuOpen = event => {
+      setAnchorEl(event.currentTarget);
+    };
+  
+    const handleMenuClose = () => {
+      setAnchorEl(null);
+      handleMobileMenuClose();
+    };
+  
+    const handleSimpleMenuClose = () => {
+      setsimpleMenuAnchorEl(null);
+    };
+  
+    const handleSimpleMenuOpen = event => {
+      setsimpleMenuAnchorEl(event.currentTarget);
+    };
+  
+    const handleMobileMenuOpen = event => {
+      setMobileMoreAnchorEl(event.currentTarget);
+    };
+  
+    const handleMobileMenuClose = () => {
+      setMobileMoreAnchorEl(null);
+    };
+  
+    const handleClick = event => {
+      setAnchorEl(event.currentTarget);
+    };
+  
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+  
+    const simpleMenuId = 'primary-search-account-menu';
+  
+    const menuId = 'primary-search-account-menu';
+    const renderMenu = (
+      <Menu
+        anchorEl={anchorEl}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        id={menuId}
+        keepMounted
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={isMenuOpen}
+        onClose={handleMenuClose}
+      >
+        <Typography variant="subtitle1" className={classes.heading}> Welcome</Typography>
+        <Typography variant="subtitle1" className={classes.heading}> To access account and manage orders</Typography>
+        <div className={classes.buttonContainer}>
+        {window.sessionStorage.getItem("userid") === null
+                      ? <div><Button variant="outlined" color="primary" className={classes.buttonSignup} href="/signup"> Sign up  </Button>
+                      <Button variant="outlined" color="secondary" className={classes.buttonLogin} href="/login"> Login</Button>      
+                     </div>
+                       : <div><Button variant="outlined" color="primary" className={classes.buttonSignup} href="/user"> Profile </Button>
+                       <Button variant="outlined" color="secondary" className={classes.buttonLogin} onClick={handleLogout}> Logout</Button>      
+                      </div>
+                   }
+        </div>
+        <div className={classes.line}>
+        <hr />
+        </div>
+        <MenuItem onClick={handleMenuClose}>Orders</MenuItem>
+        <MenuItem onClick={handleContactUs}>Contact Us</MenuItem>
+      </Menu>
+    );
+  
+    
+  
+    const mobileMenuId = 'primary-search-account-menu-mobile';
+    const renderMobileMenu = (
+      <Menu
+        anchorEl={mobileMoreAnchorEl}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        id={mobileMenuId}
+        keepMounted
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={isMobileMenuOpen}
+        onClose={handleMobileMenuClose}
+      >
+        <MenuItem onClick={handleProfileMenuOpen}>
+          <IconButton
+            aria-label="account of current user"
+            aria-controls="primary-search-account-menu"
+            aria-haspopup="true"
+            color="inherit"
+          >
+            <AccountCircle />
+          </IconButton>
+          <p>Profile</p>
+        </MenuItem>
+      </Menu>
+    );
 
   return (
     <div className={classes.grow}>
       <AppBar position="static" className={classes.appbar}>
-        <Toolbar>
-        <IconButton
-              edge="start"
-              aria-label="open drawer"
-              aria-controls={simpleMenuId}
-              
-              className={classes.menuButton}
-              onClick={handleSimpleMenuOpen}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            
+        <Toolbar> 
           <Typography className={classes.title} variant="h6" noWrap>
           <Link to='/' className="nav-link">
             Home
@@ -292,26 +289,17 @@ export default function Header() {
           
           <div className={classes.grow} />
           <IconButton aria-label="cart">
-              <Badge badgeContent={4} color="secondary">
-              <Link to="/cart" >
-               <ShoppingCartIcon />
-           </Link>
-              </Badge>
+              {/* <Badge badgeContent={4} color="secondary"> */}
+               <Link className="nav-item" to="/cart">
+               <ShoppingCartIcon > 
+                 <span className="bag">
+                       {props.products.cartItems.length}
+                     </span>
+               </ShoppingCartIcon>
+               </Link>
+              {/* </Badge> */}
             </IconButton>
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-                      
-            
-
             <IconButton
               edge="end"
               aria-label="account of current user"
@@ -339,9 +327,30 @@ export default function Header() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-      {renderSimpleMenu}
+
   
     </div>
   );
-}
+};
 
+const mapStateToProps = state => {
+  return {
+    products: state.getProductReducer
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    checkOut: product_id => {
+      dispatch({ type: "ADD_TO_CART" });
+    },
+    filter: (category, search) => {
+      dispatch({
+        type: "SET_PRODUCT",
+        category: category,
+        search: search
+      });
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -1,69 +1,21 @@
-import React, { Component } from "react";
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useContext } from "react";
+import Listing from "./Listing";
+import "../css/home.css";
+import { HeaderContext } from "./HeaderContext";
 import Container from '@material-ui/core/Container';
-import CardMedia from '@material-ui/core/CardMedia';
-import ShareIcon from '@material-ui/icons/Share';
-import IconButton from '@material-ui/core/IconButton';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import {Link} from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
 
-
-
-
-const useStyles = makeStyles(theme => ({
-  icon: {
-    marginRight: theme.spacing(2),
-  },
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
-  },
-  heroButtons: {
-    marginTop: theme.spacing(4),
-  },
-  cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
-  },
-  card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  cardMedia: {
-    paddingTop: '56.25%', // 16:9
-  },
-  cardContent: {
-    flexGrow: 1,
-  },
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6),
-  },
-}));
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-export default function Album() {
-  const classes = useStyles();
-
+/**
+ * landing page includes listing component
+ * and passes context values as props to it
+ */
+const Home = () => {
+  const [values, setValues] = useContext(HeaderContext);
   return (
-    <React.Fragment>
-      
-      <CssBaseline />
-     
-      <main>
-        {/* Hero unit */}
-        <div className={classes.heroContent}>
-          <Container maxWidth="sm">
-            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+    <div className="container"> 
+    <Container maxWidth="sm">
+      <br/>
+            <Typography component="h2" variant="h3" align="center" color="textPrimary" gutterBottom>
               Our Products
             </Typography>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
@@ -72,47 +24,14 @@ export default function Album() {
               entirely.
             </Typography>
             
-          </Container>
-        </div>
-        <Container className={classes.cardGrid} maxWidth="md">
-          {/* End hero unit */}
-          <Grid container spacing={4}>
-            {cards.map(card => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-              <Link to="/product/id=3">
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Product Name
-                    </Typography>
-                    <Typography>
-                      Info:
-                    </Typography>
-                  </CardContent>
-                  <CardActions className="mx-auto  py-4">
-                  <IconButton aria-label="add to favorites" color="secondary">
-                      <FavoriteIcon />
-                    </IconButton>
-                    <IconButton aria-label="add to cart" color="inherit" component={Link} to="/details">
-                    <AddShoppingCartIcon />
-                    </IconButton>
-                    <IconButton aria-label="share" color="inherit">
-                      <ShareIcon />
-                    </IconButton>
-                  </CardActions>
-                </Card>
-                </Link>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-      </main>
-      
-    </React.Fragment>
+      </Container>
+      <div className="row">
+        <Listing
+          searchTerm={values.searchTerm}
+          searchType={values.searchType}
+        />
+      </div>
+    </div>
   );
-}
+};
+export default Home;

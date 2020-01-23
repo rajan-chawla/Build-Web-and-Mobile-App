@@ -92,7 +92,6 @@ Button {
 .cartButton.remove {
     background-image: linear-gradient(-90deg, var(--red), var(--red-darker));
 }
-
 .cartButton.remove:hover {
     box-shadow: 0px 0px 10px 0px rgba(244, 67, 54, 0.75);
     transition: 0.3s;

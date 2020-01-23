@@ -8,8 +8,8 @@ userRoutes.get("/api/get/profile", function(req, res) {
   var id = req.query.id;
   const query =
     "Select email, name, lastname, DATE_FORMAT(date_of_birth,'%Y-%m-%d') AS date_of_birth, phone, description, photo_link, is_verified, is_validated, " +
-    "(select count(*) from `H7j0c1CcvW`.`user_role` where user_id = id and role_id = 2) as isSeller," +
-    "(select count(*) from `H7j0c1CcvW`.`user_role` where user_id = id and role_id = 3) as isAdmin from `H7j0c1CcvW`.`user` where id='" +
+    "(select count(*) from `hsfuldadb`.`user_role` where user_id = id and role_id = 2) as isSeller," +
+    "(select count(*) from `hsfuldadb`.`user_role` where user_id = id and role_id = 3) as isAdmin from `hsfuldadb`.`user` where id='" +
     id +
     "'";
   pool.query(query, (q_err, q_res) => {
@@ -70,7 +70,7 @@ userRoutes.post("/api/post/banUser", function(req, res, next) {
   var userId = req.body.params.userId;
 
   const query =
-    "update H7j0c1CcvW.user set is_banned = 1 WHERE id = '" + userId + "'";
+    "update hsfuldadb.user set is_banned = 1 WHERE id = '" + userId + "'";
   pool.query(query, (q_err, q_res) => {
     if (q_err != null) {
       console.log("error ocurred", q_err);
@@ -91,7 +91,7 @@ userRoutes.post("/api/post/unbanUser", function(req, res, next) {
   var userId = req.body.params.userId;
 
   const query =
-    "update H7j0c1CcvW.user set is_banned = 0 WHERE id = '" + userId + "'";
+    "update hsfuldadb.user set is_banned = 0 WHERE id = '" + userId + "'";
   pool.query(query, (q_err, q_res) => {
     if (q_err != null) {
       console.log("error ocurred", q_err);
@@ -114,7 +114,7 @@ userRoutes.post("/api/post/updateprofilepic", upload.any(), function(req, res) {
   console.log(id, cloudImage);
   cloud.uploads(cloudImage).then(result => {
     var query =
-      "UPDATE `H7j0c1CcvW`.`user` SET photo_link='" +
+      "UPDATE `hsfuldadb`.`user` SET photo_link='" +
       result.url +
       "' WHERE id =" +
       id;
@@ -137,7 +137,7 @@ userRoutes.post("/api/post/requestSeller", function(req, res, next) {
   var userId = req.body.userId;
   console.log(userId);
   const query =
-    "update H7j0c1CcvW.user set is_seller_requested = 1 WHERE id = '" +
+    "update hsfuldadb.user set is_seller_requested = 1 WHERE id = '" +
     userId +
     "'";
   pool.query(query, (q_err, q_res) => {
@@ -160,7 +160,7 @@ userRoutes.get("/api/get/userInfo", function(req, res) {
   var id = req.query.id;
   const query =
     "Select id, email, name, lastname, phone, description, photo_link, CAST(is_banned AS SIGNED INTEGER) as is_banned, " +
-    "(select count(*) from `H7j0c1CcvW`.`user_role` where user_id = id and role_id = 3) as isAdmin from `H7j0c1CcvW`.`user` where id = " +
+    "(select count(*) from `hsfuldadb`.`user_role` where user_id = id and role_id = 3) as isAdmin from `hsfuldadb`.`user` where id = " +
     id;
   pool.query(query, (q_err, q_res) => {
     if (q_err) {
