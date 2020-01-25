@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import  { Redirect } from 'react-router-dom'
 
-import './componentStyles/productminified.scss';
+import styles from './componentStyles/ProductMinified.module.css';
+
 import {
     Button
 }
@@ -32,20 +33,20 @@ class ProductMinified extends Component {
 
     render() {
         return (
-            <div className='productWrapper boxShadow' onClick={this.handleParentClick}>
-                <img src={this.props.img} className='image'/>
-                <div className='descWrapper'>
-                    <div class='headerWrapper'>
-                        <h3 className='title'>{this.props.name}</h3>
-                        <h3 className='price'>&euro;{this.props.price}</h3>
+            <div className={`${styles.productWrapper} ${styles.boxShadow}`} onClick={this.handleParentClick}>
+                <img src={this.props.img} className={styles.image}/>
+                <div className={styles.descWrapper}>
+                    <div className={styles.headerWrapper}>
+                        <h3 className={styles.title}>{this.props.name}</h3>
+                        <h3 className={styles.price}>&euro;{this.props.price}</h3>
                     </div>
                     <p>{this.props.desc}</p>
-                    <div class='buttonsWrapper02'>
-                        <Button className='buyButton' onClick={this.handleChildClick}>Buy</Button>
+                    <div className={styles.buttonWrapper02}>
+                        <Button className={styles.buyButton} onClick={this.handleChildClick}>Buy</Button>
                         {this.props.remove !== '1' &&
-                        <Button className='cartButton'>Add to Cart</Button>}
+                        <Button className={styles.cartButton}>Add to Cart</Button>}
                         {this.props.remove === '1' &&
-                        <Button className='cartButton remove'>Remove from Cart</Button>}
+                        <Button className={`${styles.cartButton} ${styles.remove}`}>Remove from Cart</Button>}
                     </div>
                 </div>
             </div>
