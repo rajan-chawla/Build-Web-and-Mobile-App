@@ -29,7 +29,7 @@ import GA from "./utils/GoogleAnalytics";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import { HeaderProvider } from "./components/HeaderContext";
-import SellerPublic from "./components/SellerPublic";
+import PublicProfile from "./components/PublicProfile/PublicProfile";
 
 class App extends Component {
   render() {
@@ -60,7 +60,7 @@ class App extends Component {
               <Route exact path="/adminProducts" component={ProductList} />
               <Route exact path="/userInfo" component={UserInfo} />
               <Route path="/error500" component={Error5oo} />
-              <Route path="/public/seller" component = {SellerPublic} />
+              <Route path="/public/profile" component = {PublicProfile} />
               <Route path="*" component={NotFound} />
               </Switch>
           </div>

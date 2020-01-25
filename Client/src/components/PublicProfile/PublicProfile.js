@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
-import ProductMinified from './ProductMinified';
-import styles from './componentStyles/SellerPublic.module.css';
+import ProductMinified from '../ProductMinified';
+import PublicSeller from './PublicSeller';
+import PublicBuyer from './PublicBuyer';
+
+import styles from '.././componentStyles/PublicProfile.module.css';
 import 'font-awesome/css/font-awesome.min.css';
 
 import {
@@ -12,7 +15,7 @@ import {
 }
 from 'reactstrap';
 
-class SellerPublic extends Component {
+class PublicProfile extends Component {
     constructor(props) {
         super(props);
         const sellerId = 49;
@@ -25,8 +28,7 @@ class SellerPublic extends Component {
                 desc: '',
                 pic: '',
                 phone: '',
-                is_verified: '',
-                is_validated: ''
+                is_seller: 1
             }, 
             products: []
         };
@@ -63,37 +65,23 @@ class SellerPublic extends Component {
         this.getProfileDetails();
         this.getResults();
     };
-
-
-    categoryChange(val) {
-      this.setState(
-            (state) => ({ results: [] }),
-            this.getResults('Category', val)
-        )
-    };
             
 render() {
     return (
-        <Container className={styles.searchContainer}>
-            <Row>
-                <Col sm='3' className={`${styles.affix} boxShadow`}>
-                    <div className={styles.profileWrapper}>
-                        <img className={styles.image} src={this.state.profileData.pic} alt='Profile Picture'/>
-                        <h3 className={styles.profileName}>{this.state.profileData.name} {this.state.profileData.lastname}</h3>
-                        <h6 className={styles.profileInfoLine}><i className='fa fa-envelope'></i> {this.state.profileData.email}</h6>
-                        <h6 className={styles.profileInfoLine}><i className='fa fa-mobile'></i> {this.state.profileData.phone}</h6> 
-                        <p className={styles.profileDesc}>{this.state.profileData.desc}</p>
-                    </div>
-                </Col>
-                <Col sm={{ size: 9, offset: 3 }}>
-                    {this.state.products.map(result => {
-                        return <ProductMinified name={result.name} desc={result.description} price={result.price} img={result.picture_link} prodId={result.id} remove='0'/>
-                    })}
-                </Col>
-            </Row>
+        <Container className={styles.profileContainer}>
+            
+                { this.state.profileData.is_seller === 0 &&
+                <PublicSeller pic={this.state.profileData.pic} name={this.state.profileData.name} lastname={this.state.profileData.lastname}
+                email={this.state.profileData.email} phone={this.state.profileData.phone} desc={this.state.profileData.desc} sellerId={this.sellerId} /> }
+
+                { this.state.profileData.is_seller === 1 &&
+                <PublicBuyer pic={this.state.profileData.pic} name={this.state.profileData.name} lastname={this.state.profileData.lastname}
+                email={this.state.profileData.email} phone={this.state.profileData.phone} desc={this.state.profileData.desc} /> }
+                
+     
         </Container>
     )
   }
 }
 
-export default withRouter(SellerPublic);
+export default withRouter(PublicProfile);

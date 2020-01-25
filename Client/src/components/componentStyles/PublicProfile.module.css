@@ -1,4 +1,4 @@
-.searchContainer {
+.profileContainer {
     margin-top: 32px;
 }
 
@@ -9,6 +9,11 @@
     width: inherit;
     background: #FFF;
     width: 18% !important;
+}
+
+.buyer {
+    margin: auto;
+    right: 0; left: 0;
 }
 
 .categoryList {
@@ -56,4 +61,8 @@
 
 .profileEmail, .profilePhone {
     padding: 4px 0;
+}
+
+.profileDesc {
+    padding-top: 4px;
 }
