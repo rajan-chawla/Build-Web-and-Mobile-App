@@ -7,7 +7,7 @@ var upload = require("./config/multer");
 approveProductRoutes.get("/api/get/notapprovedproducts", function(req, res, next) {
   console.log("request param is:" + req.query.term);
   const query =
-    "SELECT * FROM hsfuldadb.product WHERE is_validated = 0 OR is_validated = 1";
+    "SELECT * FROM hsfuldadb.product WHERE is_validated = 0";
   pool.query(query, (q_err, q_res) => {
     console.log("response", q_res);
     if (q_err != null) {
