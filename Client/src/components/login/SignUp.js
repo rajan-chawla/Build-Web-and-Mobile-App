@@ -27,11 +27,13 @@ export class SignUp extends React.Component {
 
   async submituserRegistrationForm(event) {
     event.preventDefault();
+//    console.log("the form data is " + new FormData(event.target).get("selectRole"));
     if (this.validateForm()) {
       let fields = {};
       let responseStatus = "";
       const formdata = new FormData(event.target);
       var data = {};
+      
       for (let name of formdata.keys()) {
         const value = formdata.get(name);
         data[name] = value;
@@ -46,7 +48,7 @@ export class SignUp extends React.Component {
               .post("/api/post/login", {
                 email: this.state.fields["email"],
                 password: this.state.fields["password"]
-              })  
+              })
               .then(response => {
                 if (response.data.code == 200) {
                   console.log(response);
@@ -123,21 +125,20 @@ export class SignUp extends React.Component {
     }
 
 
-  
-   if (!fields["password"]) {
+
+    if (!fields["password"]) {
       formIsValid = false;
       errors["password"] = "*Please enter your password.";
-     }
-     if (!fields["confirmpassword"]) {
-       formIsValid = false;
-       errors["confirmpassword"] = "*Please enter Confirm Password.";
-     }
+    }
+    if (!fields["confirmpassword"]) {
+      formIsValid = false;
+      errors["confirmpassword"] = "*Please enter Confirm Password.";
+    }
 
-     if (fields["password"] != fields["confirmpassword"]) {
-         formIsValid = false;
-         errors["confirmpassword"] = "*Password & confirmed password do not match";
-        
-     }
+    if (fields["password"] != fields["confirmpassword"]) {
+      formIsValid = false;
+      errors["confirmpassword"] = "*Password & confirmed password do not match";
+    }
 
 
     this.setState({
@@ -188,6 +189,15 @@ export class SignUp extends React.Component {
                   <input type="password" className="form-control" name="confirmpassword" placeholder="Confirm Password" value={this.state.fields.confirmpassword} onChange={this.handleChange} />
                   <div className="errorMsg">{this.state.errors.confirmpassword}</div>
                 </div>
+
+                <div class="form-group">
+                  <label for="selectRole">Select Role</label>
+                  <select class="form-control" name="selectRole">
+                    <option value={this.state.fields.selectRole}>Seller</option>
+                    <option value={this.state.fields.selectRole}>Buyer</option>
+                  </select>
+                </div>
+
                 <input type="submit" className="btn btn-primary" value="Register" />
                 <Link to="/login">
                   <p className="forgot-password text-right">
