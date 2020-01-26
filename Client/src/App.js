@@ -29,6 +29,9 @@ import GA from "./utils/GoogleAnalytics";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import { HeaderProvider } from "./components/HeaderContext";
+import PublicProfile from "./components/PublicProfile/PublicProfile";
+import SellerHistory from "./components/SellerHistory";
+import SellerFeedbacks from "./components/SellerFeedbacks";
 
 class App extends Component {
   render() {
@@ -47,7 +50,6 @@ class App extends Component {
               <Route path="/contactus" component = {Contactus} />
               <Route path="/publicprofile" component = {ProfileView} />
               <Route path="/buyerview" component = {BuyerView} />
-
               <Route exact path="/" component={Home} />
               <Route exact path="/cart" component={Cart} />
               <Route exact path="/detail" component={ProductDetails} />
@@ -60,8 +62,10 @@ class App extends Component {
               <Route exact path="/adminProducts" component={ProductList} />
               <Route exact path="/userInfo" component={UserInfo} />
               <Route path="/error500" component={Error5oo} />
+              <Route path="/public/profile/id=:id" component = {PublicProfile} />
+              <Route path="/profile/history" component = {SellerHistory} />
+              <Route path="/profile/feedbacks" component = {SellerFeedbacks} />
               <Route path="*" component={NotFound} />
-
               </Switch>
           </div>
           <Footer />
