@@ -33,7 +33,7 @@ class ProductMinified extends Component {
 
     render() {
         return (
-            <div className={`${styles.productWrapper} ${styles.boxShadow}`} onClick={this.handleParentClick}>
+            <div className={`${styles.productWrapper} ${styles.boxShadow} boxShadow`} onClick={this.handleParentClick}>
                 <img src={this.props.img} className={styles.image}/>
                 <div className={styles.descWrapper}>
                     <div className={styles.headerWrapper}>

@@ -60,7 +60,7 @@ class App extends Component {
               <Route exact path="/adminProducts" component={ProductList} />
               <Route exact path="/userInfo" component={UserInfo} />
               <Route path="/error500" component={Error5oo} />
-              <Route path="/public/profile" component = {PublicProfile} />
+              <Route path="/public/profile/id=:id" component = {PublicProfile} />
               <Route path="*" component={NotFound} />
               </Switch>
           </div>

@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import axios from 'axios';
-import ProductMinified from '../ProductMinified';
 import styles from '.././componentStyles/PublicProfile.module.css';
 import 'font-awesome/css/font-awesome.min.css';
 
 import {
-    Container,
     Row,
     Col
 }
