@@ -16,19 +16,17 @@ class PublicSeller extends Component {
             
 render() {
     return (
-      
-            <Row>
-                <Col sm='3' className={`${styles.buyer} ${styles.affix} boxShadow`}>
-                    <div className={styles.profileWrapper}>
-                        <img className={styles.image} src={this.props.pic} alt='Profile Picture'/>
-                        <h3 className={styles.profileName}>{this.props.name} {this.props.lastname}</h3>
-                        <h6 className={styles.profileInfoLine}><i className='fa fa-envelope'></i> {this.props.email}</h6>
-                        <h6 className={styles.profileInfoLine}><i className='fa fa-mobile'></i> {this.props.phone}</h6> 
-                        <p className={styles.profileDesc}>{this.props.desc}</p>
-                    </div>
-                </Col>
-            </Row>
-   
+        <Row>
+            <Col sm='3' className={`${styles.buyer} ${styles.affix} boxShadow`}>
+                <div className={styles.profileWrapper}>
+                    <img className={styles.image} src={this.props.pic} alt='Profile Picture'/>
+                    <h3 className={styles.profileName}>{this.props.name} {this.props.lastname}</h3>
+                    <h6 className={styles.profileInfoLine}><i className='fa fa-envelope'></i> {this.props.email}</h6>
+                    <h6 className={styles.profileInfoLine}><i className='fa fa-mobile'></i> {this.props.phone}</h6> 
+                    <p className={styles.profileDesc}>{this.props.desc}</p>
+                </div>
+            </Col>
+        </Row>
     )
   }
 }

@@ -30,6 +30,8 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 import { HeaderProvider } from "./components/HeaderContext";
 import PublicProfile from "./components/PublicProfile/PublicProfile";
+import SellerHistory from "./components/SellerHistory";
+import SellerFeedbacks from "./components/SellerFeedbacks";
 
 class App extends Component {
   render() {
@@ -61,6 +63,8 @@ class App extends Component {
               <Route exact path="/userInfo" component={UserInfo} />
               <Route path="/error500" component={Error5oo} />
               <Route path="/public/profile/id=:id" component = {PublicProfile} />
+              <Route path="/profile/history" component = {SellerHistory} />
+              <Route path="/profile/feedbacks" component = {SellerFeedbacks} />
               <Route path="*" component={NotFound} />
               </Switch>
           </div>

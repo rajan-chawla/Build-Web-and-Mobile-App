@@ -19,7 +19,7 @@ class PublicSeller extends Component {
         };
     }
 
-    getResults = () => {
+    getProducts = () => {
         axios.get(`/api/get/productofuser?id=${this.props.sellerId}`).then(res => {
             for (let i = 0; i < res.data.length; i++) {
                 this.setState(
@@ -31,7 +31,7 @@ class PublicSeller extends Component {
     }
 
     componentWillMount() {
-        this.getResults();
+        this.getProducts();
     };
             
 render() {
