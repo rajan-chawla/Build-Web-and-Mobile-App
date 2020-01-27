@@ -159,7 +159,7 @@ userRoutes.post("/api/post/requestSeller", function(req, res, next) {
 userRoutes.get("/api/get/userInfo", function(req, res) {
   var id = req.query.id;
   const query =
-    "Select id, email, name, lastname, phone, description, photo_link, CAST(is_banned AS SIGNED INTEGER) as is_banned, " +
+    "Select id, email, name, lastname, phone, description, photo_link, " +
     "(select count(*) from `hsfuldadb`.`user_role` where user_id = id and role_id = 3) as isAdmin from `hsfuldadb`.`user` where id = " +
     id;
   pool.query(query, (q_err, q_res) => {
