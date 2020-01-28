@@ -1,7 +1,7 @@
 :root {
     --green: #8bc34a;
     --green-darker: #178b48;
-    --blue: rgb(9, 231, 220);
+    --blue-lighter: rgb(9, 231, 220);
     --blue-darker: #0084ff;
     --purple: rgb(249, 84, 138);
     --purple-darker: #AB51EA;
@@ -43,6 +43,20 @@
     box-shadow: 10px 10px 40px -15px rgba(0, 0, 0, 0.33);
   }
   
+  Button {
+    /* remove border globally on the app */
+    border: 0px solid red !important;
+  }
+
+  .defaultBtn {
+    background-image: linear-gradient(-90deg, var(--blue-lighter), var(--blue-darker));
+    transition: 0.3s;
+  }
+
+  .defaultBtn:hover {
+      box-shadow: 0px 0px 10px 0px rgba(9, 231, 220, 0.75);
+      transition: 0.3s;
+  }
   .buyButton {
     background-image: linear-gradient(-90deg, var(--blue), var(--blue-darker));
     transition: 0.3s;

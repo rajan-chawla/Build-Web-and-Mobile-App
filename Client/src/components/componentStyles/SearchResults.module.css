@@ -20,9 +20,9 @@
 
 .categoryItem {
     width: 100%;
-    padding: 5px 24px 5px 24px;
-    margin-left: -24px;
-    box-sizing: content-box;
+    padding: 5px 24px 5px 24px !important;
+    margin-left: -24px !important;
+    box-sizing: content-box !important;
     cursor: pointer;
     transition: 0.25s;
 }
@@ -34,4 +34,8 @@
 
 .selected {
     font-weight: bolder;
+}
+
+.results {
+    top: 0;
 }
