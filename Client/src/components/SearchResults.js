@@ -72,7 +72,7 @@ render() {
                         })}
                     </ul>
                 </Col>
-                <Col sm={{ size: 9, offset: 3 }}>
+                <Col sm={{ size: 9, offset: 3 }} className={styles.results}>
                     {this.state.results.map(result => {
                         return <ProductMinified name={result.name} desc={result.description} price={result.price} img={result.picture_link} prodId={result.id} remove='0'/>
                     })}

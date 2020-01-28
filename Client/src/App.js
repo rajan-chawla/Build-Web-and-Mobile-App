@@ -32,6 +32,7 @@ import { HeaderProvider } from "./components/HeaderContext";
 import PublicProfile from "./components/PublicProfile/PublicProfile";
 import SellerHistory from "./components/SellerHistory";
 import SellerFeedbacks from "./components/SellerFeedbacks";
+import PostItem from "./components/PostItem";
 
 class App extends Component {
   render() {
@@ -65,6 +66,7 @@ class App extends Component {
               <Route path="/public/profile/id=:id" component = {PublicProfile} />
               <Route path="/profile/history" component = {SellerHistory} />
               <Route path="/profile/feedbacks" component = {SellerFeedbacks} />
+              <Route path="/profile/post" component = {PostItem} />
               <Route path="*" component={NotFound} />
               </Switch>
           </div>
