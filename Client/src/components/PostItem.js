@@ -29,7 +29,8 @@ class PostItem extends Component {
             description: '',
             image: '',
             location: '',
-            category: ''
+            category: '',
+            categories: []
         };
 
         this.handleChange = this.handleChange.bind(this)
@@ -49,26 +50,41 @@ class PostItem extends Component {
     async handleSubmit(event) {
         event.preventDefault();
         const formData = new FormData(event.target);
-        //alert(formData.get('name'));
-        await axios.post('/api/post/addproduct', {
+        
+        await axios.post('/api/post/addproduct', {  // returns error 401, problems with FOREIGN KEY CONSTRAINTS on category_id
             body: {
                 description: formData.get('description'),
                 name: formData.get('name'),
+                quantity: formData.get('quantity'),
+                picture_link: formData.get('fileLoader'),   // how to get img link
                 price: formData.get('price'),
-                category_id: 1,
-                seller_id: 49,
-                picture_link: 'tetete',
+                category_id: formData.get('category'),
+                seller_id: 49,      // update to logged in user id
                 location: formData.get('location'),
             }
         }).then(response => {
             if (response.data.code == 200) {
-                alert("hello")
+                alert("Added?");
+                // return <Redirect to={url}/>
             }
         });
     }
 
+    getCategories = () => {
+        axios.get('/api/get/categories').then(res => {
+            for (let i = 0; i < res.data.length; i++) {
+                this.setState(
+                    (state) => ({ categories: [...this.state.categories, [res.data[i].name, res.data[i].id]] }),
+                    () => console.log(this.state.categories)
+                );
+            }
+        });
+    };
 
-    componentWillMount() {};
+
+    componentWillMount() {
+        this.getCategories();
+    };
             
 render() {
     return (
@@ -115,10 +131,7 @@ render() {
                             <Label for="location">Category</Label>
                             <Input type="select" name="category" id="category"
                                 value={this.state.category} onChange={this.handleChange}>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
+                                {this.state.categories.map((value, key) => <option value={value[1]} key={key}>{value[0]}</option>)}
                             </Input>
                         </FormGroup>
                     </Col>

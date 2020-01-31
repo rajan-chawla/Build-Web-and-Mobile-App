@@ -89,3 +89,10 @@
     font-weight: 400;
     font-size: 0.8em;
 }
+
+.noFeedbacks {
+    font-size: 1.4em;
+    text-align: center;
+    font-weight: 700;   
+    color: grey;
+}

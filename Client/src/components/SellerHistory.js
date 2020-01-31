@@ -37,7 +37,7 @@ class SellerHistory extends Component {
 render() {
     return (
         <Container className={styles.historyContainer}>
-            <h1>Your Products</h1>
+            <h2>Dashboard</h2>
             <Table className={`${styles.table} boxShadow`}>
                 <thead>
                     <tr>
@@ -48,7 +48,7 @@ render() {
                         <th>Quantity</th>
                         <th>Feedbacks</th>
                         <th>Average Rating</th>
-                        <th>Action</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,7 +61,7 @@ render() {
                             <td>{result.quantity}</td>
                             <td><Link to="/profile/feedbacks" className="feedbackLink">6 Feedbacks</Link></td>
                             <td> 3.75/5 </td>
-                            <td> Request Feedback ??? </td>
+                            <td> Pending </td>
                         </tr>)
                     })}
                 </tbody>

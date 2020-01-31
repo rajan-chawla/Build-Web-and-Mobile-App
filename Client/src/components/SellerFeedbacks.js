@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
-import ProductMinified from './ProductMinified';
 import styles from './componentStyles/SellerFeedbacks.module.css';
 import 'font-awesome/css/font-awesome.min.css';
 
@@ -12,6 +11,16 @@ import {
 }
 from 'reactstrap';
 
+/**
+ * CURRENT ISSUES:
+ * 1. Product name updates faster than feedbacks.
+ * 2. Show which item is selected.
+ * 3. Use logged in seller id.
+ * 
+ * POSSIBLE FEATURES:
+ * 1. Show number of feedbacks next to product name.
+ */ 
+
 class SellerFeedbacks extends Component {
     constructor(props) {
         super(props);
@@ -19,8 +28,14 @@ class SellerFeedbacks extends Component {
         const sellerId = 49;
 
         this.state = {
-            products: []
+            products: [],
+            product_id: 6,
+            feedbacks: [],
+            selected_product: [],
+            average_rating: 0
         };
+
+        this.handleClick = this.handleClick.bind(this)
     }
 
     getProducts = () => {
@@ -34,12 +49,44 @@ class SellerFeedbacks extends Component {
         })
     }
 
-    getFeedbacks = () => {
+    getFeedbacks = (prod_id) => {
+        axios.get(`/api/get/feedbacks?id=${prod_id}`).then(res => {
+            if (res.data.length === 0) {
+                this.setState({
+                    feedbacks: []
+                })
+            } else {
+                this.state.feedbacks = [];
+                for (let i = 0; i < res.data.length; i++) {
+                    this.setState(
+                        (state) => ({ feedbacks: [...this.state.feedbacks, res.data[i]] })
+                    );
+                }
+            }
+        });
+    }
 
+    calcAvg = () => {
+        let sum = 0;
+        
+        for (let i=0; i<this.state.feedbacks.length; i++) {
+            sum += this.state.feedbacks[i].rate;
+        }
+
+        return (sum / this.state.feedbacks.length).toFixed(2)
+    }
+
+    handleClick(event) {
+        this.getFeedbacks(event.target.value);
+        this.setState({
+            product_name: event.target.innerHTML,   // get current products Title
+            product_id: event.target.value          // get current products ID
+        })
     }
 
     componentWillMount() {
         this.getProducts();
+        //this.getFeedbacks();
     };
             
 render() {
@@ -51,23 +98,32 @@ render() {
                         <h4 className={styles.productsTitle}>Products</h4>
                         <ul className={styles.productsList}>
                             {this.state.products.map((value, index) => {
-                                return <li className={styles.productsItem} key={index} value={value.id}>{value.name}</li>
+                                return <li className={styles.productsItem} key={index} value={value.id} onClick={this.handleClick}>{value.name}</li>
                             })}
                         </ul>
                     </div>
                 </Col>
                 <Col sm={{ size: 9, offset: 3 }}>
-                    <div className={styles.pageHeader}>
-                        <h2 className={styles.pageTitle}>Product Name</h2>
-                        <span className={styles.avgRating}>Avg rating: *****</span>
-                    </div>
-                    <div className={`${styles.feedbackContainer} boxShadow`}>
+                    
+                    { this.state.feedbacks.length <= 0 ? ( 
+                            <p className={styles.noFeedbacks}>No feedbacks for selected item.</p>
+                        ) : ( 
+                            <div className={styles.pageHeader}>
+                                <h2 className={styles.pageTitle}>{this.state.product_name}</h2>
+                                <span className={styles.avgRating}>Avg rating: {this.calcAvg()}</span>
+                            </div>
+                        )
+                    }
+
+                    {this.state.feedbacks.map((result, key) =>
+                        <div className={`${styles.feedbackContainer} boxShadow`} key={key}>
                         <div className={styles.header}>
-                            <h5 className={styles.feedbackReviewer}><span className={styles.smallText}>from:</span> Blin Varfi</h5>
-                            <span className={styles.stars}>*****</span>
+                            <h5 className={styles.feedbackReviewer}><span className={styles.smallText}>from:</span> {result.name} {result.lastname}</h5>
+                            <span className={styles.stars}>{result.rate}</span>
                         </div>
-                        <p className={styles.description}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                    </div>
+                        <p className={styles.description}>{result.text}</p>
+                        </div>    
+                    )}
                 </Col>
             </Row>
         </Container>
