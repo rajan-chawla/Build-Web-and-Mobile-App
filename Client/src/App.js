@@ -23,6 +23,8 @@ import NotFound from "./components/NotFound";
 import UserInfo from "./components/UserInfo";
 import Error5oo from "./components/Error500";
 import Purchase from "./components/Purchase";
+import buyerProfile from "./components/buyerProfile";
+import buyerOrderHistory from "./components/buyerOrderHistory";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import ReactGA from "react-ga";
 import GA from "./utils/GoogleAnalytics";
@@ -51,6 +53,12 @@ class App extends Component {
               <Route path="/contactus" component = {Contactus} />
               <Route path="/publicprofile" component = {ProfileView} />
               <Route path="/buyerview" component = {BuyerView} />
+<<<<<<< HEAD
+=======
+              <Route path="/buyerProfile" component = {buyerProfile} />
+              <Route path="/buyerOrderHistory" component = {buyerOrderHistory} />
+
+>>>>>>> 230e05899027632c496f0255908a787b14348524
               <Route exact path="/" component={Home} />
               <Route exact path="/cart" component={Cart} />
               <Route exact path="/detail" component={ProductDetails} />
