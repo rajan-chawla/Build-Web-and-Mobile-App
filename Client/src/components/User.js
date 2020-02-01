@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
+import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "jquery/dist/jquery.min.js";
 import "bootstrap/dist/js/bootstrap.min.js";
@@ -6,6 +7,7 @@ import "font-awesome/css/font-awesome.min.css";
 import axios from "axios";
 import UserProductPost from "./UserProductPost";
 import UserProductList from "./UserProductList";
+import Transactions from "./Transactions";
 import AdminPanel from "./admin/AdminPanel";
 import $ from "jquery";
 
@@ -38,11 +40,9 @@ const User = () => {
       return;
     }
     return (
-      <li className="nav-item">
-        <a data-toggle="tab" href="#admin-panel" className="nav-link">
-          Admin panel
-        </a>
-      </li>
+      <Link className="nav-link" to="/adminProducts">
+      Approve Products
+    </Link>
     );
   };
 
@@ -149,7 +149,7 @@ const User = () => {
           setAlertBody("Unexpected error occurred...!");
           setAlertClass("alert mt-2 alert-danger");
         }
-        setInterval(function() {
+        setInterval(function () {
           setAlertClass("alert alert-success mt-2 invisible");
         }, 2000);
       })
@@ -207,157 +207,58 @@ const User = () => {
   };
 
   return (
-    <div className="container" id="mainProfile">
+    <div className="container-fluid" id="mainProfile">
       <div className={alertClass} role="alert">
         {alertBody}
       </div>
-      <div className="col-sm-10 offset-sm-1">
-        <div className="row">
-          <div className="col-md-12">
-            <h1>
-              {userData.name} {userData.lastname}
-            </h1>
-          </div>
-        </div>
+      <div className="col-sm-12">
         <br />
         <div className="row">
-          <div className="col-sm-4">
-            <div className="text-center">
-              <img
-                src={
-                  userData.photo_link === null || userData.photo_link === ""
-                    ? "http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                    : userData.photo_link
-                }
-                className="avatar rounded-circle img-thumbnail"
-                alt="avatar"
-              />
-              <h6>Upload a different photo...</h6>
-              <input
-                type="file"
-                className="text-center mx-auto file-upload"
-                onChange={e => uploadPhoto(e.target.files[0])}
-              />
+          <div className="col-sm-2">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+              <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#home" role="tab" aria-controls="v-pills-home" aria-selected="true">Update Profile</a>
+              {adminPanel(userData.isAdmin)}
             </div>
             <br />
+            <br />
           </div>
-          <div className="col-sm-8">
-            <ul className="nav nav-tabs">
-              <li className="active nav-item">
-                <a data-toggle="tab" href="#home" className="nav-link">
-                  Profile
-                </a>
-              </li>
-              <li className={userData.isSeller == 0 ? "d-none" : "nav-item"}>
-                <a data-toggle="tab" href="#product-post" className="nav-link">
-                  Post Product
-                </a>
-              </li>
-              <li className={userData.isSeller == 0 ? "d-none" : "nav-item"}>
-                <a data-toggle="tab" href="#product-list" className="nav-link">
-                  Products List
-                </a>
-              </li>
-            </ul>
+          <div className="col-sm-4">
             <div className="tab-content">
               <div className="tab-pane active" id="home">
+                <div class="row">
+                  <div className="col d-flex justify-content-center" >
+                    <h1>{userData.name} {userData.lastname}</h1>
+                    <div className="col-sm-4">
+                    <img
+                      src={
+                        userData.photo_link === null || userData.photo_link === ""
+                          ? "http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                          : userData.photo_link
+                      }
+                      className="avatar rounded-circle img-thumbnail"
+                      alt="avatar"
+                      height="50px"
+                    />
+                    <input
+                      type="file"
+                      className="text-center mx-auto file-upload"
+                      onChange={e => uploadPhoto(e.target.files[0])}
+                    />
+                  </div>
+                  
+                  </div>
+                  
+                </div>
+              
                 <hr />
-                <form
-                  autocomplete="off"
-                  className="form"
-                  onSubmit={updateProfile}
-                  id="registrationForm"
-                >
-                  <div className="form-group">
-                    <label htmlFor="first_name">
-                      <h4>First name</h4>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="first_name"
-                      id="first_name"
-                      placeholder="first name"
-                      value={userData.name}
-                      title="enter your first name if any."
-                      onChange={e =>
-                        setUserData({ ...userData, name: e.target.value })
-                      }
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="last_name">
-                      <h4>Last name</h4>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="last_name"
-                      id="last_name"
-                      value={userData.lastname}
-                      placeholder="last name"
-                      title="enter your last name if any."
-                      onChange={e =>
-                        setUserData({ ...userData, lastname: e.target.value })
-                      }
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="phone">
-                      <h4>Phone</h4>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="phone"
-                      id="phone"
-                      value={userData.phone}
-                      placeholder="enter phone"
-                      title="enter your phone number if any."
-                      onChange={e =>
-                        setUserData({ ...userData, phone: e.target.value })
-                      }
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="birthday">
-                      <h4>Birthday</h4>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="birthday"
-                      id="birthday"
-                      value={userData.date_of_birth}
-                      placeholder="enter your Birthday yyyy-MM-dd"
-                      title="enter your bithday if any."
-                      onChange={e =>
-                        setUserData({
-                          ...userData,
-                          date_of_birth: e.target.value
-                        })
-                      }
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="email">
-                      <h4>Email</h4>
-                    </label>
-                    <input
-                      type="email"
-                      className="form-control disabled"
-                      name="email"
-                      id="email"
-                      readonly
-                      value={userData.email}
-                    />
-                  </div>
-
-                  <div className="form-group">
+                <div class="row">
+                      <div class="col">
                     <label htmlFor="description">
                       <h4>Description</h4>
                     </label>
-                    <input
+                    </div>
+                      <div class="col">
+                    <textarea
                       type="description"
                       className="form-control"
                       id="description"
@@ -368,13 +269,149 @@ const User = () => {
                       }
                       placeholder="Description"
                       title="enter Description if there is any"
+                      height="900px"
                       onChange={e =>
                         setUserData({
                           ...userData,
                           description: e.target.value
                         })
+                      
                       }
                     />
+                       </div>
+                  </div>
+                 
+              </div>
+             <div className="tab-pane" id="admin-panel">
+                <AdminPanel userId={window.sessionStorage.getItem("userid")} />
+              </div>
+            </div>
+          </div>
+          <div className="col-sm-4">
+          <form
+                  autocomplete="off"
+                  className="form"
+                  onSubmit={updateProfile}
+                  id="registrationForm"
+                >
+                  <div class="row">
+                    <div class="col">
+                      <div className="form-group">
+                        <label htmlFor="first_name">
+                          <h4>First name</h4>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="first_name"
+                        id="first_name"
+                        placeholder="first name"
+                        value={userData.name}
+                        title="enter your first name if any."
+                        onChange={e =>
+                          setUserData({ ...userData, name: e.target.value })
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <div className="form-group">
+                        <label htmlFor="last_name">
+                          <h4>Last name</h4>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="last_name"
+                        id="last_name"
+                        value={userData.lastname}
+                        placeholder="last name"
+                        title="enter your last name if any."
+                        onChange={e =>
+                          setUserData({ ...userData, lastname: e.target.value })
+                        }
+                      />
+
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <div className="form-group">
+                        <label htmlFor="phone">
+                          <h4>Phone</h4>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="phone"
+                        id="phone"
+                        value={userData.phone}
+                        placeholder="enter phone"
+                        title="enter your phone number if any."
+                        onChange={e =>
+                          setUserData({ ...userData, phone: e.target.value })
+                        }
+                      />
+
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <div class="row">
+                      <div class="col">
+
+                        <label htmlFor="birthday">
+                          <h4>Birthday</h4>
+                        </label>
+                      </div>
+                      <div class="col">
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="birthday"
+                          id="birthday"
+                          value={userData.date_of_birth}
+                          placeholder="enter your Birthday yyyy-MM-dd"
+                          title="enter your bithday if any."
+                          onChange={e =>
+                            setUserData({
+                              ...userData,
+                              date_of_birth: e.target.value
+                            })
+                          }
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                  <div class="row">
+                      <div class="col">
+                    <label htmlFor="email">
+                      <h4>Email</h4>
+                    </label>
+                    </div>
+                      <div class="col">
+                    <input
+                      type="email"
+                      className="form-control disabled"
+                      name="email"
+                      id="email"
+                      readonly
+                      value={userData.email}
+                    />
+                  </div>
+                  </div>
+                    </div>
+                  <div className="form-group">
                   </div>
 
                   <div className="form-group">
@@ -406,8 +443,9 @@ const User = () => {
                       onChange={e => setRepassword(e.target.value)}
                     />
                   </div>
+                  <br/>
                   <div className="form-group">
-                    <div className="col-12">
+                    <div className="col-16 d-flex justify-content-center">
                       <br />
                       <button
                         className="col-lg-4 btn btn-primary"
@@ -426,28 +464,7 @@ const User = () => {
                     </div>
                   </div>
                 </form>
-                <hr />
-              </div>
-              <div className="tab-pane" id="product-post">
-                <hr />
-                <UserProductPost
-                  userId={window.sessionStorage.getItem("userid")}
-                />
-              </div>
-              <div className="tab-pane" id="product-list">
-                <hr />
-                <UserProductList
-                  userId={window.sessionStorage.getItem("userid")}
-                />
-              </div>
-              <div className="tab-pane" id="transactions">
-                <hr />
-              </div>
-              <div className="tab-pane" id="admin-panel">
-                <hr />
-                <AdminPanel userId={window.sessionStorage.getItem("userid")} />
-              </div>
-            </div>
+              
           </div>
         </div>
       </div>
