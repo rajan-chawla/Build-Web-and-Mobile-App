@@ -24,7 +24,7 @@ export default class  extends Component {
                         </div>
                          </div>
                          <div className="mt-5 p-3 ">      
-                                    <h3>Name Here</h3>                       
+                                    <h3>Buyer Name</h3>                       
                                    </div>
                                    <div className=" ml-5">
                                     <h4>Description</h4>
