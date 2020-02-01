@@ -53,12 +53,6 @@ class App extends Component {
               <Route path="/contactus" component = {Contactus} />
               <Route path="/publicprofile" component = {ProfileView} />
               <Route path="/buyerview" component = {BuyerView} />
-<<<<<<< HEAD
-=======
-              <Route path="/buyerProfile" component = {buyerProfile} />
-              <Route path="/buyerOrderHistory" component = {buyerOrderHistory} />
-
->>>>>>> 230e05899027632c496f0255908a787b14348524
               <Route exact path="/" component={Home} />
               <Route exact path="/cart" component={Cart} />
               <Route exact path="/detail" component={ProductDetails} />
