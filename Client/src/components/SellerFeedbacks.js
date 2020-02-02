@@ -14,8 +14,9 @@ from 'reactstrap';
 /**
  * CURRENT ISSUES:
  * 1. Product name updates faster than feedbacks.
- * 2. Show which item is selected.
+ * 2. Show which item is selected. 
  * 3. Use logged in seller id.
+ * 4. Assign selected to whatever user clicked on dashboard page.
  * 
  * POSSIBLE FEATURES:
  * 1. Show number of feedbacks next to product name.
@@ -25,11 +26,10 @@ class SellerFeedbacks extends Component {
     constructor(props) {
         super(props);
 
-        const sellerId = 49;
-
+        const sellerId = 0;
         this.state = {
             products: [],
-            product_id: 6,
+            product_id: this.props.location.productId,
             feedbacks: [],
             selected_product: [],
             average_rating: 0
@@ -86,7 +86,7 @@ class SellerFeedbacks extends Component {
 
     componentWillMount() {
         this.getProducts();
-        //this.getFeedbacks();
+        this.getFeedbacks(this.state.product_id);
     };
             
 render() {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
+import { Redirect } from 'react-router'
 import styles from './componentStyles/PostItem.module.css';
 import 'font-awesome/css/font-awesome.min.css';
 
@@ -17,6 +18,13 @@ import {
     InputGroupAddon
 }
 from 'reactstrap';
+
+/**
+ * CURRENT ISSUES:
+ * 1. Form validation.
+ * 2. Call toaster as notifier. 
+ * 3. Get URL for image.
+ */
 
 class PostItem extends Component {
     constructor(props) {
@@ -47,25 +55,22 @@ class PostItem extends Component {
         console.log(this.state.category);
     }
 
-    async handleSubmit(event) {
+    handleSubmit(event) {
         event.preventDefault();
         const formData = new FormData(event.target);
         
-        await axios.post('/api/post/addproduct', {  // returns error 401, problems with FOREIGN KEY CONSTRAINTS on category_id
-            body: {
+        axios.post('/api/post/addproduct', {  
                 description: formData.get('description'),
                 name: formData.get('name'),
                 quantity: formData.get('quantity'),
-                picture_link: formData.get('fileLoader'),   // how to get img link
+                picture_link: "",   // how to get img link
                 price: formData.get('price'),
+                seller_id: 43,      // update to logged in user id
                 category_id: formData.get('category'),
-                seller_id: 49,      // update to logged in user id
-                location: formData.get('location'),
-            }
+                location: formData.get('location')
         }).then(response => {
             if (response.data.code == 200) {
-                alert("Added?");
-                // return <Redirect to={url}/>
+                this.props.history.push('/profile/history')    // redirect to url (maybe not best practice, need to recheck)
             }
         });
     }

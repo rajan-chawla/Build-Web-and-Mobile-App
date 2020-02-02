@@ -10,7 +10,14 @@ import {
 }
 from 'reactstrap';
 
+/**
+ * CURRENT ISSUES:
+ * 1. Styling for text.
+ * 2. Link with public item page on item name. 
+ */
+
 class SellerHistory extends Component {
+
     constructor(props) {
         super(props);
 
@@ -18,21 +25,40 @@ class SellerHistory extends Component {
             products: []
         };
     }
-
-    getProducts = () => {
-        axios.get(`/api/get/productofuser?id=49`).then(res => {
-            for (let i = 0; i < res.data.length; i++) {
-                this.setState(
-                    (state) => ({ products: [...this.state.products, res.data[i]] }),
-                    () => console.log(this.state.products)
-                );
-            }
-        })
-    }
     
-    componentWillMount() {
-        this.getProducts();
+    async componentDidMount() {
+        const products = []
+        await Promise.all([
+            axios.get(`/api/get/productofuser?id=49`).then(res => {
+                for (let i = 0; i < res.data.length; i++) {
+                    products.push(res.data[i])
+                }
+            })
+        ]);
+        
+        const feedCount = [];
+        const feedAvg = [];
+        for (let i=0; i < products.length; i++) {
+            await axios.get(`/api/get/feedbacksCount?id=${products[i].id}`).then(res => {
+                feedCount.push(res.data[0]);
+            })
+            await axios.get(`/api/get/feedbacksAvg?id=${products[i].id}`).then(res => {
+                feedAvg.push(res.data[0]);
+            })
+        }
+
+        const productsFinal = [];
+        for (let i=0; i<feedAvg.length; i++) {
+            productsFinal.push({...products[i], ...feedCount[i], ...feedAvg[i]})
+        }
+
+        console.log(productsFinal)
+
+        this.setState({
+            products: productsFinal
+        })
     };
+
 
 render() {
     return (
@@ -52,17 +78,32 @@ render() {
                     </tr>
                 </thead>
                 <tbody>
-                    {this.state.products.map(result => {
-                        return (<tr>
-                            <th scope="row">{result.id}</th>
-                            <td>{result.name}</td>
-                            <td>{result.category_name}</td>
-                            <td>{result.price}</td>
-                            <td>{result.quantity}</td>
-                            <td><Link to="/profile/feedbacks" className="feedbackLink">6 Feedbacks</Link></td>
-                            <td> 3.75/5 </td>
-                            <td> Pending </td>
-                        </tr>)
+                    {this.state.products.map((result, key) => {
+                        return (
+                            <tr key={key}>
+                                <th scope="row">{result.id}</th>
+                                <td>{result.name}</td>
+                                <td>{result.category_name}</td>
+                                <td>{result.price}</td>
+                                <td>{result.quantity}</td>
+                                <td>
+                                    <Link to={{
+                                        pathname: '/profile/feedbacks',
+                                        productId: result.id
+                                        }} className="feedbackLink">{result.count} Feedbacks
+                                    </Link>
+                                </td>
+                                <td>
+                                    {result.average === null && <span className={styles.nullText}>No rating yet</span>}
+                                    {result.average != null && `${parseFloat(result.average).toFixed(2)}/5` }
+                                </td>
+                                <td> 
+                                    {result.is_validated.data[0] === 1 && <span className={styles.success}>Approved</span>}
+                                    {result.is_validated.data[0] === 0 && <span className={styles.pending}>Pending</span>}
+                                    {result.is_validated.data[0] === -1 && <span className={styles.danger}>Rejected</span>}
+                                </td>
+                            </tr>
+                        )
                     })}
                 </tbody>
         </Table>

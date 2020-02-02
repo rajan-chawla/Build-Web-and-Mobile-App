@@ -152,27 +152,20 @@ productRoutes.get("/api/get/productbyid", function(req, res, next) {
 });
 //add Product for a seller
 productRoutes.post("/api/post/addproduct", function(req, res, next) {
+  console.log(req.body)
+  console.log(req.headers);
   var description = req.body.description;
   var name = req.body.name;
   var picture_link = req.body.picture_link;
   var price = req.body.price;
   var seller_id = req.body.seller_id;
   var category_id = req.body.category_id;
-  const query =
-    "INSERT INTO `hsfuldadb`.`product` (added_date,description,name, picture_link,price,seller_id, category_id) VALUES (CURRENT_TIMESTAMP, '" +
-    description +
-    "', '" +
-    name +
-    "', '" +
-    picture_link +
-    "' , " +
-    price +
-    "," +
-    seller_id +
-    "," +
-    category_id +
-    ")";
+  var location = req.body.location;
+  var quantity = req.body.quantity;
+  const query = `INSERT INTO product (added_date, description, name, picture_link, price, seller_id, category_id, quantity, location) 
+    VALUES (CURRENT_TIMESTAMP, "${description}", "${name}", "${picture_link}", "${price}", "${seller_id}", "${category_id}", "${quantity}", "${location}" )`
   pool.query(query, (q_err, q_res) => {
+    console.log(q_res);
     if (q_err) {
       console.log(q_err);
       res.status(401).json(q_err);

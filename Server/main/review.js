@@ -15,47 +15,49 @@ reviewRoutes.get('/api/get/feedbacks', function(req, res, next) {
     if (q_res.length < -1) {
       return res
         .status(404)
-        .json({ message: "error retreiving feedbacks." });
+        .json({ message: "error retreiving feedbacks." })
     } else {
       res.status(200).json(q_res);
     }
-})
+  })
 });
 
+reviewRoutes.get('/api/get/feedbacksCount', function(req, res, next) {
+  let product_id = req.query.id;
+  const query = `SELECT COUNT(*) AS count FROM review WHERE Product_id = "${product_id}"`;
+  pool.query(query, (q_err, q_res) => {
+    if (q_err) {
+      console.log(q_err);
+      res.status(401).json(q_err);
+    }
+    if (q_res.length < -1) {
+      return res
+        .status(404)
+        .json({ message: "error retreiving feedback count." })
+    } else {
+      res.status(200).json(q_res);
+    }
+  })
+})
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+reviewRoutes.get('/api/get/feedbacksAvg', function (req, res, next) {
+  let product_id = req.query.id;
+  const query = `SELECT AVG(rate) AS average FROM review WHERE Product_id = "${product_id}"`;
+  pool.query(query, (q_err, q_res) => {
+    if (q_err) {
+      console.log(q_err);
+      res.status(401).json(q_err);
+    }
+    if (q_res.length < 1) {
+      return res
+        .status(404)
+        .json({
+          message: "error retreiving average."
+        })
+    } else {
+      res.status(200).json(q_res);
+    }
+  })
+})
 
 module.exports = reviewRoutes;
