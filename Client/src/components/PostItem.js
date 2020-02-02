@@ -35,14 +35,15 @@ class PostItem extends Component {
             price: '',
             quantity: '',
             description: '',
-            image: '',
             location: '',
             category: '',
-            categories: []
+            imgFile: '',
+            categories: []  // for select dropdown
         };
 
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.getFileImage = this.getFileImage.bind(this)
     }
 
     handleChange(event) {
@@ -55,15 +56,28 @@ class PostItem extends Component {
         console.log(this.state.category);
     }
 
-    handleSubmit(event) {
+    async handleSubmit(event) {
         event.preventDefault();
+        // get data from the submitted form.
         const formData = new FormData(event.target);
+
+        // get final URL from cloudinary.
+        const imgData= new FormData();
+        imgData.append("image", this.state.imgFile);
         
-        axios.post('/api/post/addproduct', {  
+        await axios.post('/api/post/uploadpic', imgData)
+        .then(res => {
+            this.setState({
+                product_link: res.data.image
+            })
+        });
+
+        // process product submittion.
+        await axios.post('/api/post/addproduct', {  
                 description: formData.get('description'),
                 name: formData.get('name'),
                 quantity: formData.get('quantity'),
-                picture_link: "",   // how to get img link
+                picture_link: this.state.product_link,
                 price: formData.get('price'),
                 seller_id: 43,      // update to logged in user id
                 category_id: formData.get('category'),
@@ -85,6 +99,13 @@ class PostItem extends Component {
             }
         });
     };
+
+    getFileImage(event) {
+
+        this.setState({
+            imgFile: event.target.files[0]
+        }); 
+    }
 
 
     componentWillMount() {
@@ -150,7 +171,7 @@ render() {
                     <Col sm='4'>
                         <Label for="fileLoader">Load image</Label>
                         <span className={styles.btnFile}>
-                            <Input type="file" name="fileLoader" id="fileLoader" />
+                            <Input type="file" name="fileLoader" id="fileLoader"  onChange={this.getFileImage}/>
                         </span>
                     </Col>
                     <Col sm={{ size: 4, offset: 4 }}>
