@@ -46,6 +46,7 @@ class BuyerView extends Component {
     uploadPhoto  = async imgFile  => {
         var formData = new FormData();
         formData.append("files", imgFile);
+        console.log(formData);
         //NEED CHANGE
         formData.append("id", 3);
         await axios

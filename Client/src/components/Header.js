@@ -139,11 +139,33 @@ const Header = props => {
     window.location.replace("/");
   };
 
-  const handleContactUs = () => {
-    window.sessionStorage.clear();
+  const handleDashboard = () => {
+    //window.sessionStorage.clear();
     window.location.reload(false);
-    window.location.replace("/contactus");
+    window.location.replace("/profile/history");
   };
+
+    const handlePostItem = () => {
+    //window.sessionStorage.clear();
+    window.location.reload(false);
+    window.location.replace("/profile/post");
+  };
+    const handleFeedback = () => {
+    //window.sessionStorage.clear();
+    window.location.reload(false);
+    window.location.replace("/profile/feedbacks");
+  };
+    const handleEditProfile = () => {
+      //window.sessionStorage.clear();
+      window.location.reload(false);
+      window.location.replace("/profile/edit");
+    };
+
+        const handlePublicProfile = () => {
+      //window.sessionStorage.clear();
+      window.location.reload(false);
+      window.location.replace(`/profile/public/id=${window.sessionStorage.getItem('userid')}`);
+    };
 
   const handleSubmit = event => {
     console.log(
@@ -227,8 +249,20 @@ const Header = props => {
         <div className={classes.line}>
         <hr />
         </div>
-        <MenuItem onClick={handleMenuClose}>Orders</MenuItem>
-        <MenuItem onClick={handleContactUs}>Contact Us</MenuItem>
+        {window.sessionStorage.getItem("userid") != null && window.sessionStorage.getItem("userrole") === '2' &&
+        <div>
+          <MenuItem onClick={handleDashboard}>Dashboard</MenuItem>
+          <MenuItem onClick={handlePostItem}>Post Item</MenuItem>
+          <MenuItem onClick={handleFeedback}>Feedbacks</MenuItem>
+          </div>
+        }
+
+        {window.sessionStorage.getItem("userid") != null &&
+        <div>
+        <MenuItem onClick={handlePublicProfile}>Public Profile</MenuItem>
+        <MenuItem onClick={handleEditProfile}>Edit Profile</MenuItem>
+        </div>
+        }
       </Menu>
     );
   

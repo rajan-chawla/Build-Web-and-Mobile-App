@@ -20,6 +20,7 @@ class SellerHistory extends Component {
 
     constructor(props) {
         super(props);
+        this.sellerId = window.sessionStorage.getItem('userid')
 
         this.state = {
             products: []
@@ -28,13 +29,11 @@ class SellerHistory extends Component {
     
     async componentDidMount() {
         const products = []
-        await Promise.all([
-            axios.get(`/api/get/productofuser?id=49`).then(res => {
-                for (let i = 0; i < res.data.length; i++) {
-                    products.push(res.data[i])
-                }
-            })
-        ]);
+        await axios.get(`/api/get/productofuser?id=${this.sellerId}`).then(res => {
+            for (let i = 0; i < res.data.length; i++) {
+                products.push(res.data[i])
+            }
+        });
         
         const feedCount = [];
         const feedAvg = [];
@@ -89,7 +88,8 @@ render() {
                                 <td>
                                     <Link to={{
                                         pathname: '/profile/feedbacks',
-                                        productId: result.id
+                                        productId: result.id,
+                                        productName: result.name
                                         }} className="feedbackLink">{result.count} Feedbacks
                                     </Link>
                                 </td>

@@ -26,10 +26,11 @@ class SellerFeedbacks extends Component {
     constructor(props) {
         super(props);
 
-        const sellerId = 0;
+        this.sellerId = window.sessionStorage.getItem('userid');
         this.state = {
             products: [],
             product_id: this.props.location.productId,
+            product_name: this.props.location.productName,
             feedbacks: [],
             selected_product: [],
             average_rating: 0
@@ -39,7 +40,7 @@ class SellerFeedbacks extends Component {
     }
 
     getProducts = () => {
-        axios.get(`/api/get/productofuser?id=49`).then(res => {
+        axios.get(`/api/get/productofuser?id=${this.sellerId}`).then(res => {
             for (let i = 0; i < res.data.length; i++) {
                 this.setState(
                     (state) => ({ products: [...this.state.products, res.data[i]] }),

@@ -6,7 +6,6 @@ import Footer from "./components/Footer";
 import './App.css';
 import Product from "./components/Product";
 import SearchResults from "./components/SearchResults";
-import ProductMinified from "./components/ProductMinified";
 import ProfileView from "./components/ProfileView";
 import Contactus from "./components/Contactus";
 import BuyerView from "./components/BuyerView";
@@ -35,6 +34,7 @@ import PublicProfile from "./components/PublicProfile/PublicProfile";
 import SellerHistory from "./components/SellerHistory";
 import SellerFeedbacks from "./components/SellerFeedbacks";
 import PostItem from "./components/PostItem";
+import ProductView from "./components/ProductView";
 
 class App extends Component {
   render() {
@@ -47,11 +47,12 @@ class App extends Component {
           <div id="content" style={{ paddingBottom: "100px" }}>
             <Header />
             <Switch>
-              <Route path="/product/id=:id" component = {Product} />
+              <Route path="/test" component={buyerOrderHistory} />
+              <Route path="/product/id=:id" component = {ProductView} />
               <Route path="/search/:type?/:term?" component = {SearchResults} />
               <Route path="/publicprofile" component = {ProfileView} />
               <Route path="/contactus" component = {Contactus} />
-              <Route path="/publicprofile" component = {ProfileView} />
+              <Route path="/profile/edit" component = {ProfileView} />
               <Route path="/buyerview" component = {BuyerView} />
               <Route exact path="/" component={Home} />
               <Route exact path="/cart" component={Cart} />
@@ -65,7 +66,7 @@ class App extends Component {
               <Route exact path="/adminProducts" component={ProductList} />
               <Route exact path="/userInfo" component={UserInfo} />
               <Route path="/error500" component={Error5oo} />
-              <Route path="/public/profile/id=:id" component = {PublicProfile} />
+              <Route path="/profile/public/id=:id" component = {PublicProfile} />
               <Route path="/profile/history" component = {SellerHistory} />
               <Route path="/profile/feedbacks" component = {SellerFeedbacks} />
               <Route path="/profile/post" component = {PostItem} />

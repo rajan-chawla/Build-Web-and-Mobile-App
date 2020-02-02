@@ -324,4 +324,24 @@ cartRoutes.post("/api/post/buy_item", function(req, res){
 
 });
 
+
+cartRoutes.get('/api/get/cartHasItem', function(req, res, next) {
+  let buyer_id = req.query.bid;
+  let product_id = req.query.pid;
+  const query = `SELECT * FROM cart_product INNER JOIN cart ON cart_product.cart_id=cart.id  WHERE cart.buyer_id = "${buyer_id}" AND cart_product.product_id= "${product_id}"`;
+  pool.query(query, (q_err, q_res) => {
+    if (q_err) {
+      console.log(q_err);
+      res.status(401).json(q_err);
+    }
+    if (q_res.length < 0) {
+      return res
+        .status(404)
+        .json({ message: "error retreiving feedback count." })
+    } else {
+      res.status(200).json(q_res);
+    }
+  })
+})
+
 module.exports = cartRoutes;
