@@ -30,6 +30,8 @@ class PostItem extends Component {
     constructor(props) {
         super(props);
 
+        this.userId = window.sessionStorage.getItem('userid')
+
         this.state = {
             name: '',
             price: '',
@@ -79,7 +81,7 @@ class PostItem extends Component {
                 quantity: formData.get('quantity'),
                 picture_link: this.state.product_link,
                 price: formData.get('price'),
-                seller_id: 43,      // update to logged in user id
+                seller_id: this.userId,      // update to logged in user id
                 category_id: formData.get('category'),
                 location: formData.get('location')
         }).then(response => {
