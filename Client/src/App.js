@@ -23,6 +23,8 @@ import NotFound from "./components/NotFound";
 import UserInfo from "./components/UserInfo";
 import Error5oo from "./components/Error500";
 import Purchase from "./components/Purchase";
+import buyerProfile from "./components/buyerProfile";
+import buyerOrderHistory from "./components/buyerOrderHistory";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import ReactGA from "react-ga";
 import GA from "./utils/GoogleAnalytics";
