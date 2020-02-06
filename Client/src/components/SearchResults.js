@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
+import ProductMinified from './ProductMinified';
+import styles from './componentStyles/SearchResults.module.css';
 
-import './componentStyles/search.scss';
 import {
     Container,
     Row,
     Col
 }
 from 'reactstrap';
-import ProductMinified from './ProductMinified';
 
 class SearchResults extends Component {
     constructor(props) {
@@ -62,17 +62,17 @@ class SearchResults extends Component {
             
 render() {
     return (
-        <Container className='searchContainer'>
+        <Container className={styles.searchContainer}>
             <Row>
-                <Col sm='3' className='affix boxShadow'>
-                    <h4 className='categoryTitle'>Categories</h4>
-                    <ul className='categoryList'>
+                <Col sm='3' className={`${styles.affix} boxShadow`}>
+                    <h4 className={styles.categoryTitle}>Categories</h4>
+                    <ul className={styles.categoryList}>
                         {this.state.categories.map((value, index) => {
-                            return <li className={`categoryItem ${this.state.selectedIndex == index ? 'selected' : 'notSelected'}`} key={index} value={value} onClick={() => {this.categoryChange(value)}}>{value}</li>
+                            return <li className={`${styles.categoryItem} ${this.state.selectedIndex == index ? 'selected' : 'notSelected'}`} key={index} value={value} onClick={() => {this.categoryChange(value)}}>{value}</li>
                         })}
                     </ul>
                 </Col>
-                <Col sm={{ size: 9, offset: 3 }}>
+                <Col sm={{ size: 9, offset: 3 }} className={styles.results}>
                     {this.state.results.map(result => {
                         return <ProductMinified name={result.name} desc={result.description} price={result.price} img={result.picture_link} prodId={result.id} remove='0'/>
                     })}

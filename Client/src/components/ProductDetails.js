@@ -11,14 +11,14 @@ class ProductDetails extends Component {
     this.state = {
       quantity: 1
     };
-
+  }
+  
+  componentDidMount() {
+    // const product_id= this.props.products.detailsId;
+    // console.log("product_IDDI",product_id)
+    // this.props.getProductDetails(product_id);
   }
 
-  componentDidMount(){
-      // const product_id= this.props.products.detailsId;
-      // console.log("product_IDDI",product_id)
-      // this.props.getProductDetails(product_id);
-  }
   componentWillUnmount() {
     console.log("Details ID:", this.props.products.detailsId);
     const { resetDetailID } = this.props;
@@ -54,7 +54,7 @@ class ProductDetails extends Component {
       const product_id=this.props.products.detailsId;
       const isVisibleDetails=this.props.products.isDetailvisible;
       console.log("dfsdadsfdsprops",name);
-    console.log("selleername",seller_name);
+      console.log("selleername",seller_name);
 
       if(product_id!==null && isVisibleDetails!==false) {
       return (
@@ -65,7 +65,6 @@ class ProductDetails extends Component {
                 <div className="preview col-md-6">
                   <div className="preview-pic tab-content">
                     <div className="tab-pane active" id="pic-1">
-
                       <img
                         src={
                             picture_link === null ||
@@ -159,32 +158,29 @@ const mapStateToProps = state => {
   return {
     products: state.getProductReducer,
     // productsDetails: (productID)=>{fetchProductDetails(productID)}
-
   };
 };
 
 function addCartItemDB(product_id, dispatch) {
   // function(dispatch){
-  //console.log(quantity);
+  // console.log(quantity);
   return axios
     .post("/api/post/addtocart", {
       id: window.sessionStorage.getItem("userid"),
       product_id: product_id,
-      //quantity: quantity
+      // quantity: quantity
     })
     .then(response => {
       if (response.data.code === 200) {
         dispatch({
           type: "ADD_TO_CART",
           payload: product_id,
-          //quantity: quantity
+          // quantity: quantity
         });
       }
       console.log(response);
     });
 }
-
-
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -206,7 +202,7 @@ const mapDispatchToProps = dispatch => {
         console.log("CART_ID:",product_id)
       addCartItemDB(product_id, dispatch);
     },
-      }
+    }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails);

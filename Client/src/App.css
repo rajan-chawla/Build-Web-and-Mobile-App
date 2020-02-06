@@ -1,13 +1,13 @@
 :root {
     --green: #8bc34a;
     --green-darker: #178b48;
-    --blue: rgb(9, 231, 220);
+    --blue-lighter: rgb(9, 231, 220);
     --blue-darker: #0084ff;
     --purple: rgb(249, 84, 138);
     --purple-darker: #AB51EA;
     --red: #f44336;
     --red-darker: #d50000;
-    --grey: rgb(241, 241, 241);
+    --grey: #FAFBFC;
     --grey-darker: rgb(155, 155, 155);
   }
   
@@ -43,6 +43,20 @@
     box-shadow: 10px 10px 40px -15px rgba(0, 0, 0, 0.33);
   }
   
+  Button {
+    /* remove border globally on the app */
+    border: 0px solid red !important;
+  }
+
+  .defaultBtn {
+    background-image: linear-gradient(-90deg, var(--blue-lighter), var(--blue-darker));
+    transition: 0.3s;
+  }
+
+  .defaultBtn:hover {
+      box-shadow: 0px 0px 10px 0px rgba(9, 231, 220, 0.75);
+      transition: 0.3s;
+  }
   .buyButton {
     background-image: linear-gradient(-90deg, var(--blue), var(--blue-darker));
     transition: 0.3s;
@@ -81,4 +95,72 @@
     color: #ffffff;
     background-color: #f50057;
     border-color: #f50057
+  }
+
+  .body{
+    background-color: #f1f1f1;
+    margin-top:50px;
+  }
+  .border{
+    border-bottom:1px solid #F1F1F1;
+    margin-bottom:50px;
+    margin-top:50px;
+  }
+  .main-secction{
+    box-shadow: 10px 10px 10px;
+    background-color: #FAFAFA;
+    
+  }
+  .image-section{
+    padding: 0px;
+    
+    
+  }
+  .image-section img{
+    width: 100%;
+    height:250px;
+    position: relative;
+    
+    
+  }
+  .user-image{
+    position: absolute;
+    margin-top:-50px;
+    
+  }
+  .user-left-part{
+    margin: 0px;
+    background-color: #FAFAFA;
+  }
+  .user-image img{
+    width:100px;
+    height:100px;
+    
+  }
+  
+  .textbox{
+      background-color: #FAFAFA;
+      border: 1px solid black;
+       margin-left: 50px;
+      
+      margin-bottom: 50px;
+      }
+
+
+
+
+.shopping-cart {
+  margin-top: 20px;
+
+
+  
+}
+.boxHistory{
+  background-color:  rgb(255, 254, 254);
+  height:200px;
+  padding-top:45px;
+  margin:0px ;
+  border-style: solid;
+  border-width: 1px;
+  
   }

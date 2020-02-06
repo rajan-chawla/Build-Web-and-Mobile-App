@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var pool = require("./db");
 
-router.post("/api/post/login", function(req, res, next) {
+router.post("/api/post/login", function (req, res, next) {
   var email = req.body.email;
   var password = req.body.password;
   // const query =
@@ -42,12 +42,13 @@ router.post("/api/post/login", function(req, res, next) {
   });
 });
 
-router.post("/api/post/signup", function(req, res, next) {
+router.post("/api/post/signup", function (req, res, next) {
   var firstName = req.body.name;
   var lastName = req.body.lastname;
   var email = req.body.email;
   var password = req.body.password;
-  var phoneNo = req.body.phoneNo;
+  var phoneNo = req.body.phone;
+  var role = req.body.selectRole;
   console.log(req.body);
 
   const query1 =
@@ -91,10 +92,24 @@ router.post("/api/post/signup", function(req, res, next) {
             });
           } else {
             console.log(JSON.stringify(q_res, null, 2));
-            res.send({
-              code: 200,
-              success: "signup sucessfull"
+            const query3 = "insert into `hsfuldadb`.`user_role` (user_id,role_id) values ( " +
+              "(select id from `hsfuldadb`.`user` where email = '" + email +
+              "') , (select id from `hsfuldadb`.`role` where name = '" + role + "' ))";
+            pool.query(query3, (q_err, q_res) => {
+              if (q_err != null) {
+                console.log("error ocurred", q_err);
+                res.send({
+                  code: 400,
+                  failed: "error ocurred"
+                });
+              }else{
+                res.send({
+                  code: 200,
+                  success: "signup sucessfull"
+                });
+              }
             });
+            
           }
         });
       }

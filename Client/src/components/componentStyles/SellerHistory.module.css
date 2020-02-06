@@ -1,0 +1,13 @@
+.historyContainer {
+    margin-top: 32px;
+}
+
+.table {
+    background: #FFF;
+    border-radius: 8px;
+}
+
+.feedbacksLink {
+    color: blue;
+    cursor: hover;
+}

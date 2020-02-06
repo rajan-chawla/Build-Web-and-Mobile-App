@@ -1,0 +1,98 @@
+.feedbacksContainer {
+    margin-top: 32px;
+}
+
+.affix {
+    padding: 24px;
+    position: fixed;
+    border-radius: 8px;
+    width: inherit;
+    background: #FFF;
+    width: 18% !important;
+}
+
+.buyer {
+    margin: auto;
+    right: 0;
+    left: 0;
+}
+
+.productsList {
+    list-style: none;
+    width: 100%;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.productsItem {
+    width: 100%;
+    padding: 5px 24px 5px 24px;
+    margin-left: -24px;
+    box-sizing: content-box;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.productsItem:hover {
+    background: var(--grey);
+    transition: 0.25s;
+}
+
+.selected {
+    font-weight: bolder;
+}
+
+.productsWrapper {
+    position: relative;
+    width: 100%;
+}
+
+.feedbackContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    background: #FFF;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    padding: 24px;
+    transition: 0.2s;
+}
+
+.description {
+    text-align: justify;
+    margin-bottom: 0 !important;
+}
+
+.header, .pageHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.pageHeader {
+    padding-bottom: 10px;
+}
+
+.pageTitle {
+    margin-top: auto;
+    padding: 0;
+    margin: 0;
+}
+
+.avgRating {
+    margin-top: auto;
+}
+
+.smallText {
+    font-weight: 400;
+    font-size: 0.8em;
+}
+
+.noFeedbacks {
+    font-size: 1.4em;
+    text-align: center;
+    font-weight: 700;   
+    color: grey;
+}
