@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
-import styles from './componentStyles/SellerHistory.module.css';
+import styles from '../componentStyles/Dashboard.module.css';
 import 'font-awesome/css/font-awesome.min.css';
 
 import {
@@ -16,7 +16,7 @@ from 'reactstrap';
  * 2. Link with public item page on item name. 
  */
 
-class SellerHistory extends Component {
+class SellerDashboard extends Component {
 
     constructor(props) {
         super(props);
@@ -29,7 +29,7 @@ class SellerHistory extends Component {
     
     async componentDidMount() {
         const products = []
-        await axios.get(`/api/get/productofuser?id=${this.sellerId}`).then(res => {
+        await axios.get(`/api/get/productofuser?id=${this.sellerId}&type=seller`).then(res => {
             for (let i = 0; i < res.data.length; i++) {
                 products.push(res.data[i])
             }
@@ -69,7 +69,7 @@ render() {
                         <th>ID</th>
                         <th>Product Title</th>
                         <th>Category</th>
-                        <th>Price</th>
+                        <th>Price (&euro;)</th>
                         <th>Quantity</th>
                         <th>Feedbacks</th>
                         <th>Average Rating</th>
@@ -112,4 +112,4 @@ render() {
   }
 }
 
-export default withRouter(SellerHistory);
+export default withRouter(SellerDashboard);

@@ -142,7 +142,7 @@ const Header = props => {
   const handleDashboard = () => {
     //window.sessionStorage.clear();
     window.location.reload(false);
-    window.location.replace("/profile/history");
+    window.location.replace("/profile/dashboard");
   };
 
     const handlePostItem = () => {
@@ -251,7 +251,6 @@ const Header = props => {
         </div>
         {window.sessionStorage.getItem("userid") != null && window.sessionStorage.getItem("userrole") === '2' &&
         <div>
-          <MenuItem onClick={handleDashboard}>Dashboard</MenuItem>
           <MenuItem onClick={handlePostItem}>Post Item</MenuItem>
           <MenuItem onClick={handleFeedback}>Feedbacks</MenuItem>
           </div>
@@ -259,6 +258,7 @@ const Header = props => {
 
         {window.sessionStorage.getItem("userid") != null &&
         <div>
+        <MenuItem onClick={handleDashboard}>Dashboard</MenuItem>
         <MenuItem onClick={handlePublicProfile}>Public Profile</MenuItem>
         <MenuItem onClick={handleEditProfile}>Edit Profile</MenuItem>
         </div>

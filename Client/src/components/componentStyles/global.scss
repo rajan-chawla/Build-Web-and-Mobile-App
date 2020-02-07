@@ -1,0 +1,15 @@
+.noGutters {
+    margin-right: 0;
+    margin-left: 0;
+
+    &>[class^="col-"],
+    &>[class*=" col-"] {
+        padding-right: 0;
+        padding-left: 0;
+    }
+}
+
+.noPadding {
+    padding: 0 !important;
+    margin: 0 !important;
+}

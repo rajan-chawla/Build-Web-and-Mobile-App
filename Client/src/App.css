@@ -76,21 +76,6 @@
     transition: 0.3s;
   }
   
-  .footWrapper {
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    background: black;
-  }
-  
-  .footText {
-    font-size: 0.75em;
-    text-align: center;
-    padding: 6px 0px;
-    margin: 0;
-    color: #FFF;
-  }
-  
   .alert-info{
     color: #ffffff;
     background-color: #f50057;

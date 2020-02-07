@@ -48,7 +48,9 @@ render() {
             </Col>
             <Col sm={{ size: 9, offset: 3 }}>
                 {this.state.products.map(result => {
-                    return <ProductMinified name={result.name} desc={result.description} price={result.price} img={result.picture_link} prodId={result.id} remove='0'/>
+                    return <ProductMinified name={result.name} desc={result.description} 
+                        price={result.price} img={result.picture_link} prodId={result.id} 
+                        address={result.location} date={result.added_date.substring(0, 10)}/>
                 })}
             </Col>
         </Row>

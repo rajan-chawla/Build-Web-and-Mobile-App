@@ -63,18 +63,8 @@
     width: calc(100% - 8px);
 }
 
-.noGutters {
-    margin-right: 0;
-    margin-left: 0;
-
-    &>[class^="col-"],
-    &>[class*=" col-"] {
-        padding-right: 0;
-        padding-left: 0;
-    }
-}
-
 .titleText {
+    width: max-content;
     font-weight: bold;
     font-size: 2em;
 }
@@ -136,11 +126,6 @@
 
 .topDistance {
     margin-top: 24px;
-}
-
-.noPadding {
-    padding: 0 !important;
-    margin: 0 !important;
 }
 
 .priceText {

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
 
-import './componentStyles/product.scss';
+import styles from './componentStyles/ProductView.module.css';
+import './componentStyles/global.scss';
 import 'font-awesome/css/font-awesome.min.css';
 import {
     Container,
@@ -21,7 +22,7 @@ class Product extends Component {
     constructor(props) {
         super(props);
         
-        this.userRole = '1';
+        this.userRole = window.sessionStorage.getItem('userrole');
         this.userId = parseInt(window.sessionStorage.getItem('userid'));
 
         this.state = {
@@ -38,7 +39,7 @@ class Product extends Component {
             productLocation: null,
             amOwner: null,
             leftFeedback: false,
-            alreadyBought: false,
+            alreadyBought: true,
             alreadyInCart: false
         };
 
@@ -84,9 +85,9 @@ class Product extends Component {
         }))
         if (this.userRole === '1') {
             // get if user has already provided feedback
-            await axios.get(`/api/get/feedbackFromBuyerId?id=${this.userId}`)
+            await axios.get(`/api/get/feedbackFromBuyerId?buyerId=${this.userId}&productId=${this.state.productId}`)
             .then(res => {
-                if (res.data.length > 0) {
+                if (res.data[0]) {
                     this.setState({
                         leftFeedback: true
                     })
@@ -165,40 +166,50 @@ class Product extends Component {
 
     render() {
         return (
-            <Container className='productContainer'>
+            <Container className={styles.productContainer}>
                 <Row>
-                    <Col sm='4' className='productImageWrapper'> 
+                    <Col sm='4' className={styles.productImageWrapper}> 
                         <Row className='noGutters'>
-                            <Col sm='12' className='imgWrapper boxShadow'>
+                            <Col sm='12' className={`${styles.imgWrapper} boxShadow`}>
                             <img src={`${process.env.PUBLIC_URL}${this.state.productImageLink}`}
                                 alt='Product image' />    
                             </Col>
                        </Row>
                        <Row className='noGutters'>
-                           <Col sm='12' className='sellerWrapper boxShadow'>
+                           <Col sm='12' className={`${styles.sellerWrapper} boxShadow`}>
                                <span>Offered by:&nbsp;
-                                    <Link to={{pathname: `/public/profile/id=${this.state.productSellerId}`}}
-                                        className='productSeller'>
+                                    <Link to={{pathname: `/profile/public/id=${this.state.productSellerId}`}}
+                                        className={styles.productSeller}>
                                          {this.state.productSellerName}
                                     </Link>
                                 </span>
                                 <br/>
-                                <span>Located at: {this.state.productLocation}</span>
+                                <small className={styles.dateText}>
+                                    <i class="fa fa-calendar"></i>&nbsp;{this.state.productPostedDate}
+                                </small>
                            </Col>
                        </Row>
                     </Col>
                     <Col sm='8'>
-                        <Row className='productDescriptionWrapper boxShadow'>
-                            <Row className='descriptionRow noGutters'>
-                                <Col sm='4'><h3 className='titleText'>{this.state.productTitle}</h3></Col>
-                                <Col sm='8'><h3 className='priceText'>&euro;{this.state.productPrice}</h3></Col>
+                        <Row className={`${styles.productDescriptionWrapper} boxShadow`}>
+                            <Row className={`${styles.descriptionRow} noGutters`}>
+                                <Col sm='4'>
+                                    <h3 className={styles.titleText}>{this.state.productTitle}</h3>
+                                </Col>
+                                <Col sm='8'>
+                                    <h3 className={styles.priceText}>&euro;{this.state.productPrice}</h3>
+                                </Col>
                             </Row>
-                            <Row className='descriptionRow noGutters'>
-                                <Col sm='6'><small className='dateText'>Published on: {this.state.productPostedDate}</small></Col>
+                            <Row className={`${styles.descriptionRow} noGutters`}>
                                 <Col sm='6'>
-                                    <span className='shareIcons'>
+                                    <small className={styles.dateText}>
+                                        <i class="fa fa-map-marker"></i>&nbsp;{this.state.productLocation}
+                                    </small>
+                                </Col>
+                                <Col sm='6'>
+                                    <span className={styles.shareIcons}>
                                         <small>Share: </small>
-                                        <a href={this.getShareOnFacebookText()} className=''><i className='fa fa-facebook-square'></i></a>
+                                        <a href={this.getShareOnFacebookText()}><i className='fa fa-facebook-square'></i></a>
                                         <a href={this.getShareOnTwitterText()}
                                             className='twitter-share-button'>
                                                 <i className='fa fa-twitter-square'></i>
@@ -206,79 +217,87 @@ class Product extends Component {
                                     </span>
                                 </Col>
                             </Row>
-                            <Row className='descriptionRow noGutters descriptionWrapper'>
-                                <Col sm='12'><p className='descText'>{this.state.productDescription}</p></Col>
+                            <Row className={`${styles.descriptionRow} ${styles.descriptionWrapper} noGutters`}>
+                                <Col sm='12'><p className={styles.descText}>{this.state.productDescription}</p></Col>
                             </Row>
+                            { this.userRole === null && 
+                                <Row className={`${styles.descriptionRow} noGutters`}>
+                                    <Col sm='12'>
+                                        <h5 className={styles.productSold}> You need to login to interact with this product!</h5>
+                                    </Col>
+                                </Row>
+                            }
                             { this.userRole === '1' && this.state.productQuantity > 0 && this.state.alreadyBought === false && 
                                 // User is buyer, product is valid and product has not been bought.
-                                <Row className='descriptionRow buttonsWrapper noGutters'>
-                                    <Col sm='6' className='buttonWrapper'>
-                                        <Button className='buyButton'>Buy</Button>
+                                <Row className={`${styles.descriptionRow} ${styles.buttonsWrapper} noGutters`}>
+                                    <Col sm='6' className={styles.buttonWrapper}>
+                                        <Button className={styles.buyButton}>Buy</Button>
                                     </Col>
-                                    <Col sm='6' className='buttonWrapper'>
+                                    <Col sm='6' className={styles.buttonWrapper}>
                                         { this.state.alreadyInCart === false && 
-                                            <Button className='cartButton'>Add to Cart</Button>
+                                            <Button className={styles.cartButton}>Add to Cart</Button>
                                         }
                                         { this.state.alreadyInCart === true && 
-                                            <Button className='cartButton'>Remove from Cart</Button>
+                                            <Button className={styles.cartButton}>Remove from Cart</Button>
                                         }
                                     </Col>
                                 </Row>
                             }
                             { this.userRole === '1' && this.state.productQuantity > 0 && this.state.alreadyBought === true && 
                                 // User is buyer, product is valid and has already bought the product.
-                                <Row className='descriptionRow noGutters'>
+                                <Row className={`${styles.descriptionRow} noGutters`}>
                                     <Col sm='12'>
-                                        <h5 className='productSold'> You've already bought this item.</h5>
+                                        <h5 className={styles.productSold}> You've already bought this item.</h5>
                                     </Col>
                                 </Row>
                             }
                             { this.userRole === '2' && this.state.amOwner === true && 
                                 // User is seller AND owner.
-                                <Row className='descriptionRow buttonsWrapper noGutters'>
-                                    <Col sm='6' className='buttonWrapper'>
-                                        <Button className='buyButton'>Delete Product</Button>
+                                <Row className={`${styles.descriptionRow} ${styles.buttonsWrapper} noGutters`}>
+                                    <Col sm='6' className={styles.buttonWrapper}>
+                                        <Button className={styles.buyButton}>Delete Product</Button>
                                     </Col>
                                 </Row>
                             }
                             { this.userRole === '3' &&
                                 // User is admin.
-                                <Row className='descriptionRow buttonsWrapper noGutters'>
-                                    <Col sm='6' className='buttonWrapper'>
-                                        <Button className='buyButton'>Delete Product</Button>
+                                <Row className={`${styles.descriptionRow} ${styles.buttonsWrapper} noGutters`}>
+                                    <Col sm='6' className={styles.buttonWrapper}>
+                                        <Button className={styles.buyButton}>Delete Product</Button>
                                     </Col>
                                 </Row>
                             }
                             { this.userRole === '1' && this.state.productQuantity <= 0 &&
                                 // Product is unavailable due to lack of quantity AND user is buyer.
-                                <Row className='descriptionRow noGutters'>
+                                <Row className={`${styles.descriptionRow} noGutters`}>
                                     <Col sm='12'>
-                                        <h5 className='productSold'> This product is out of stock!</h5>
+                                        <h5 className={styles.productSold}> This product is out of stock!</h5>
                                     </Col>
                                 </Row>
                             }
                             { this.userRole === '2' && this.state.amOwner === false &&
                                 // User is seller AND not owner.
-                                <Row className='descriptionRow noGutters'>
+                                <Row className={`${styles.descriptionRow} noGutters`}>
                                     <Col sm='12'>
-                                        <h5 className='productSold'> Sorry, you are not a buyer!</h5>
+                                        <h5 className={styles.productSold}> Sorry, you are not a buyer!</h5>
                                     </Col>
                                 </Row>
                             }
                         </Row>
                         { this.userRole === '1' && this.state.alreadyBought === true && this.state.leftFeedback === false &&
                             // User is available to provide feedback.
-                            <Row className='feedbackWrapper boxShadow'>
-                                <Row className='feedbackForm noGutters'>
+                            <Row className={`${styles.feedbackWrapper} boxShadow`}>
+                                <Row className={`${styles.feedbackForm} noGutters`}>
                                     <Col sm='12'>
                                         <Form onSubmit={this.handleSubmit}>
                                             <Row className='noGutters'>
-                                                <Col sm='12'><h3 className='titleText noPadding'>Leave feedback</h3>
+                                                <Col sm='12'><h3 className={`${styles.titleText} noPadding`}>Leave feedback</h3>
                                                 <small>Looks like you have bought this product in the past, time for your review!</small></Col>
                                             </Row>
-                                            <FormGroup className='topDistance'>
+                                            <FormGroup className={styles.topDistance}>
+                                                <a name="feedback"></a>
                                                 <Label for="ratingSelect">How much did you enjoy this product?</Label>
-                                                <Input type="select" name="ratingSelect" id="ratingSelect" className='inputHalf'>
+                                                <Input type="select" name="ratingSelect" id="ratingSelect" className={styles.inputHalf}>
                                                     <option value='1'>1</option>
                                                     <option value='2'>2</option>
                                                     <option value='3'>3</option>
@@ -290,7 +309,7 @@ class Product extends Component {
                                                 <Label for="feedbackText">Your honest opition about it:</Label>
                                                 <Input type="textarea" name="feedbackText" id="feedbackText" rows='8'/>
                                             </FormGroup>
-                                            <Button type='submit' className='submitButton'>Submit Feedback</Button>
+                                            <Button type='submit' className={styles.submitButton}>Submit Feedback</Button>
                                         </Form>
                                     </Col>
                                 </Row>

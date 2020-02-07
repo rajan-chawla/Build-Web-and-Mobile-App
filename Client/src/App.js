@@ -31,10 +31,11 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 import { HeaderProvider } from "./components/HeaderContext";
 import PublicProfile from "./components/PublicProfile/PublicProfile";
-import SellerHistory from "./components/SellerHistory";
 import SellerFeedbacks from "./components/SellerFeedbacks";
 import PostItem from "./components/PostItem";
 import ProductView from "./components/ProductView";
+import Dashboard from "./components/Dashboard/Dashboard";
+import CartView from "./components/CartView";
 
 class App extends Component {
   render() {
@@ -67,9 +68,10 @@ class App extends Component {
               <Route exact path="/userInfo" component={UserInfo} />
               <Route path="/error500" component={Error5oo} />
               <Route path="/profile/public/id=:id" component = {PublicProfile} />
-              <Route path="/profile/history" component = {SellerHistory} />
+              <Route path="/profile/dashboard" component = {Dashboard} />
               <Route path="/profile/feedbacks" component = {SellerFeedbacks} />
               <Route path="/profile/post" component = {PostItem} />
+              <Route path="/cartview" component = {CartView} />
               <Route path="*" component={NotFound} />
               </Switch>
           </div>

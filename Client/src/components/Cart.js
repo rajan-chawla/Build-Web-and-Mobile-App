@@ -12,13 +12,11 @@ class Cart extends Component {
     this.state = {
       buyed:false
     };
-
   }
-  messagehandle(e)
-  {
+  
+  messagehandle(e) {
     this.setState({buyed:true});
     console.log("buy item ",this.buyed)
-
   }
   render() {
 

@@ -1,0 +1,14 @@
+.footerWrapper {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    background: black;
+}
+
+.footerText {
+    font-size: 0.65em;
+    text-align: center;
+    padding: 6px 0px;
+    margin: 0;
+    color: #FFF;
+}
