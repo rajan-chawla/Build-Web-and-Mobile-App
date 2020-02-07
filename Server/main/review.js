@@ -41,8 +41,10 @@ reviewRoutes.get('/api/get/feedbacksCount', function(req, res, next) {
 })
 
 reviewRoutes.get('/api/get/feedbackFromBuyerId', function(req, res, next) {
-  let buyer_id = req.query.id;
-  const query = `SELECT * FROM review WHERE buyer_id = "${buyer_id}"`;
+  let buyer_id = req.query.buyerId;
+  let product_id = req.query.productId;
+  console.log(buyer_id)
+  const query = `SELECT * FROM review WHERE buyer_id = "${buyer_id}" AND Product_id = "${product_id}"`;
   pool.query(query, (q_err, q_res) => {
     if (q_err) {
       console.log(q_err);

@@ -75,9 +75,15 @@ productRoutes.get("/api/get/allproducts", function(req, res, next) {
 //GET Product by user ID
 productRoutes.get("/api/get/productofuser", function(req, res, next) {
   var id = req.query.id;
-  // Category seller name, category name
-  const query = `select p.*,u.name as seller_name, c.name as category_name from product p join user u on p.seller_id = u.id join category c on c.id = p.category_id WHERE seller_id=${id}`;
-  pool.query(query, (q_err, q_res) => {
+  var type = req.query.type;
+
+  var query;
+  if (type === 'seller') 
+    query = `select p.*,u.name as seller_name, c.name as category_name from product p join user u on p.seller_id = u.id join category c on c.id = p.category_id WHERE seller_id=${id}`;
+  else if (type === 'buyer')
+    query = `select p.*,u.name as seller_name, c.name as category_name from product p join user u on p.seller_id = u.id join category c on c.id = p.category_id WHERE buyer_id=${id}`;
+
+    pool.query(query, (q_err, q_res) => {
     console.log(q_res);
     if (q_err) {
       console.log(q_err);
