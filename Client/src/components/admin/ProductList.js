@@ -66,7 +66,7 @@ const approveProduct = async productId => {
       }
     };
     await axios
-      .post("/api/post/rejectProduct", data)
+      .post("/api/post/rejectproduct", data)
       .then(response => {
         console.log(`Response Status = ${response.status}`);
          

@@ -7,7 +7,7 @@ const AdminPanel = () => {
       <div className="col-sm-8 mt-4 offset-2">
       <ul className="navbar-nav mr-auto mt-2 mt-lg-0 col">
             <li className="nav-item">
-              <Link className="nav-link" to="/adminProducts">
+              <Link className="nav-link" to="/adminproducts">
                 Approve products
               </Link>
             </li>

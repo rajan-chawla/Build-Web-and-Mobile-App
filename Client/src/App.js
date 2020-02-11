@@ -62,9 +62,9 @@ class App extends Component {
               <Route exact path="/purchase" component={Purchase} />
               <Route path="/signup" component={SignUp} />
               <Route exact path="/user" component={User} />
-              <Route exact path="/adminUsers" component={UserList} />
-              <Route exact path="/adminProducts" component={ProductList} />
-              <Route exact path="/userInfo" component={UserInfo} />
+              <Route exact path="/adminusers" component={UserList} />
+              <Route exact path="/adminproducts" component={ProductList} />
+              <Route exact path="/userinfo" component={UserInfo} />
               <Route path="/error500" component={Error5oo} />
               <Route path="/profile/public/id=:id" component = {PublicProfile} />
               <Route path="/profile/history" component = {SellerHistory} />

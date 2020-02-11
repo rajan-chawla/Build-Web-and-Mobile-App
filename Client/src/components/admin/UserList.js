@@ -95,8 +95,8 @@ const approveUser = async userId => {
                 <td>{rowData.lastname}</td>
                 <td>{rowData.phone}</td>
                 <td>{rowData.description}</td>
-                <th> <button onClick={(e) => approveUser(rowData.id, e)}>Approve</button></th>
-                <th> <button onClick={(e) => rejectUser(rowData.id, e)}>Reject</button></th>
+                <th> <button class="btn btn-success" onClick={(e) => approveUser(rowData.id, e)}>Approve</button></th>
+                <th> <button class="btn btn-danger" onClick={(e) => rejectUser(rowData.id, e)}>Reject</button></th>
               </tr>
             ))}
           </tbody>
