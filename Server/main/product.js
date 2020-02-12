@@ -242,4 +242,104 @@ productRoutes.post("/api/post/deleteproduct", function(req, res, next) {
   });
 });
 
+// proper search function @BV
+productRoutes.get('/api/get/search', function(req, res) {
+    console.log('Query params: ', req.query);
+    let searchTerm = req.query.term;
+    let searchCategoryId = req.query.categoryId;
+    console.log({searchTerm}, {searchCategoryId});
+    var query;
+    
+    if (searchTerm === 'undefined' || searchTerm === 'null') {
+        searchTerm = ''
+    }
+
+    if (searchCategoryId === '0' || searchCategoryId === 'undefined' || searchCategoryId === 'null') {
+        query = `SELECT * FROM product WHERE name LIKE N'%${searchTerm}%' AND quantity > 0 AND is_validated = 1`;
+    } else {
+        // and quantity > 0, and is_validated.
+        query = `SELECT * FROM product WHERE name LIKE N'%${searchTerm}%' AND category_id='${searchCategoryId}'
+          AND quantity > 0 AND is_validated = 1`;
+    }
+
+    pool.query(query, (q_err, q_res) => {
+        if (q_err) {
+            console.log(q_err);
+            res.status(401).json(q_err);
+        }
+        if (q_res.length < 1) {
+        return res.status(404).json({
+                message: "products not found"
+            });
+        } else {
+        console.log(JSON.stringify(q_res, null, 2));
+        res.status(200).json(q_res);
+        }
+    });
+});
+
+// update product after sale
+productRoutes.post('/api/post/product/sale', function(req, res) {
+  console.log(req.body);
+  let productId = req.body.id;
+  console.log({productId});
+
+  const q = `UPDATE product SET quantity = GREATEST(0, quantity - 1) WHERE id = "${productId}"`;
+
+  pool.query(q, (q_err, q_res) => {
+    if (q_err) {
+      console.log(q_err);
+      res.status(401).json(q_err);
+    } else {
+      res.status(200).json({
+        message: 'Row updated'
+      });
+    } 
+  });
+
+})
+
+  // add new transaction row to DB
+  productRoutes.post("/api/post/transaction", function (req, res) {
+    let userId = req.body.user_id;
+    let productId = req.body.product_id
+
+    const q = `INSERT INTO transactions (product_id, user_id, sold_date) VALUES ("${productId}", "${userId}", CURRENT_TIMESTAMP)`;
+
+    pool.query(q, (q_err, q_res) => {
+      if (q_err) {
+        console.log('ERROR: ', q_err);
+        res.send({
+          code: 401,
+          success: "Error registering transaction!"
+        });
+      } else {
+        console.log('SUCCESS: NEW ROW INSERTED');
+        res.send({
+          code: 200,
+          success: "Transaction added!"
+        });
+      }
+    })
+  })
+
+  // find exisitng transaction
+  productRoutes.get("/api/get/transaction/:userId/:productId", function (req, res) {
+    let userId = req.params.userId;
+    let productId = req.params.productId;
+
+    const q = `SELECT * FROM transactions WHERE product_id = "${productId}" AND user_id = "${userId}"`;
+    
+    pool.query(q, (q_err, q_res) => {
+      if (q_err) {
+        console.log('ERROR: ', q_err);
+        res.status(401).json(q_err);
+      }
+      else if (q_res.length >= 1) {
+        console.log('Transaction exists');
+        res.status(200).json(q_res);
+      }
+    })
+  })
+
 module.exports = productRoutes;

@@ -50,7 +50,7 @@ class App extends Component {
             <Switch>
               <Route path="/test" component={buyerOrderHistory} />
               <Route path="/product/id=:id" component = {ProductView} />
-              <Route path="/search/:type?/:term?" component = {SearchResults} />
+              <Route path="/search/term=:term?/category=:category?" component = {SearchResults} />
               <Route path="/publicprofile" component = {ProfileView} />
               <Route path="/contactus" component = {Contactus} />
               <Route path="/profile/edit" component = {ProfileView} />

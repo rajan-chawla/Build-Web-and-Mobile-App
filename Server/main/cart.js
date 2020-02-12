@@ -3,10 +3,10 @@ var cartRoutes = express.Router();
 var pool = require("./db");
 
 
-cartRoutes.post("/api/get/userCartItems", function(req, res, next) {
-   console.log("request parsdfadsfadam is:" + req.body.user_id);
-    const user_id=req.body.user_id
-    const userCart="Select product.id,product.name,product.price,product.added_date,product.buyer_id,product.sold_date,product.description,product.category_id,product.is_validated,product.external_link,product.seller_id from product JOIN cart_product on product.id=cart_product.product_id JOIN cart on cart.id=cart_product.cart_id where cart.buyer_id ='"+user_id+"'";
+cartRoutes.get("/api/get/userCartItems", function(req, res, next) {
+   console.log("request parsdfadsfadam is:" + req.query.user_id);
+    const user_id=req.query.user_id
+    const userCart="Select product.id,product.name,product.price,product.added_date,product.location,product.picture_link,product.buyer_id,product.sold_date,product.description,product.category_id,product.is_validated,product.seller_id from product JOIN cart_product on product.id=cart_product.product_id JOIN cart on cart.id=cart_product.cart_id where cart.buyer_id ='"+user_id+"'";
     pool.query(userCart, (q_err, q_res) => {
         if (q_err != null) {
             console.log(q_err);
@@ -80,11 +80,13 @@ cartRoutes.post("/api/post/storeCartInfoFromLocalStorage", function(req, res, ne
 
     });
 });
+
 cartRoutes.post("/api/post/addtocart", function(req, res){
-    var buyer_id= req.body.id;
+    var buyer_id= req.body.user_id;
     var product_id =req.body.product_id;
     var cart_id;
     //var quantity=req.body.quantity;
+    console.log(buyer_id, 'test hre')
     console.log("Debug Cart:",req.body);
     if (buyer_id){
         const query= "SELECT * FROM product WHERE id = " +product_id +"";
@@ -236,10 +238,7 @@ cartRoutes.post("/api/post/checkout", function(req, res){
             if (sold_date)
              return res.status(404).json({ message: "this item is not exist anymore" });
         }else{
-            const query1 ="UPDATE product SET " +
-            "buyer_id='" +
-            buyer_id +
-            "'," +
+            const query1 ="UPDATE product SET " + "buyer_id='" + buyer_id + "'," +
             "sold_date= CURRENT_TIMESTAMP where id= "+product_id+"" ;
             pool.query(query1, (q_err, q_res) => {
                 if (q_err) {
@@ -319,12 +318,71 @@ cartRoutes.post("/api/post/buy_item", function(req, res){
                 success: "purchase is done"
             });
         }
-
     });
-
 });
 
+// clear cart @BV
+cartRoutes.delete('/api/delete/cart', function(req, res) {
+    let userId = req.body.userId;
+    const q = `SELECT id FROM cart WHERE buyer_id="${userId}"`;
+    let cartId;
+    pool.query(q, (q_err, q_res) => {
+        if (q_err) {
+            console.log(q_err);
+        } else if (q_res.length >= 0) {
+            cartId = q_res[0].id;
+            const query = `DELETE FROM cart_product WHERE cart_id="${cartId}"`;
+            pool.query(query, (q_err, q_res) => {
+                if (q_err) {
+                    console.log(q_err);
+                    res.status(401).json(q_err);
+                } else {
+                    res.send({
+                        code: 200,
+                        success: "Cart cleared successfully!"
+                    });
+                }
+            })
+        } else {
+            console.log('No user ID found.');
+        }
+    })
+});
 
+// remove item from cart. @BV
+cartRoutes.delete('/api/delete/cartItem', function(req, res) {
+    console.log('REQUEST BODY IS: ', req.body);
+    let userId = req.body.userId;
+    let productId = req.body.prodId;
+
+    const q = `SELECT id FROM cart WHERE buyer_id="${userId}"`;
+    let cartId;
+    pool.query(q, (q_err, q_res) => {
+        if (q_err) {
+            console.log(q_err);
+        } else if (q_res.length >= 0) {
+            cartId = q_res[0].id
+            const query = `DELETE FROM cart_product WHERE cart_id="${cartId}" AND product_id="${productId}"`;
+            pool.query(query, (q_err, q_res) => {
+                console.log(q_res)
+                if (q_err) {
+                    console.log(q_err);
+                    res.status(401).json(q_err);
+                } else {
+                    console.log('Item deleted from cart!');
+                    res.send({
+                        code: 200,
+                        success: "Item deleted from cart successfully!"
+                    });
+                }
+            })
+        } else {
+            console.log('No user ID found.');
+        }
+    })
+})
+
+// check if item is on cart @BV
 cartRoutes.get('/api/get/cartHasItem', function(req, res, next) {
   let buyer_id = req.query.bid;
   let product_id = req.query.pid;

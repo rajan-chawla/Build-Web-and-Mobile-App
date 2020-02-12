@@ -2,39 +2,9 @@
     margin-top: 32px;
 }
 
-.affix {
-    padding: 24px;
-    position: fixed;
-    border-radius: 8px;
-    width: inherit;
-    background: #FFF;
-    width: 18% !important;
-}
-
 .buyer {
     margin: auto;
     right: 0; left: 0;
-}
-
-.categoryList {
-    list-style: none;
-    width: 100%;
-    padding: 0 !important;
-    margin: 0 !important;
-}
-
-.categoryItem {
-    width: 100%;
-    padding: 5px 24px 5px 24px;
-    margin-left: -24px;
-    box-sizing: content-box;
-    cursor: pointer;
-    transition: 0.25s;
-}
-
-.categoryItem:hover {
-    background: var(--grey);
-    transition: 0.25s;
 }
 
 .selected {
@@ -65,4 +35,11 @@
 
 .profileDesc {
     padding-top: 4px;
+}
+
+.emptySeller {
+    font-size: 1.4em;
+    text-align: center;
+    font-weight: 700;
+    color: grey;
 }

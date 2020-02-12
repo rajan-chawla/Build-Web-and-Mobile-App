@@ -20,7 +20,7 @@ class PublicSeller extends Component {
     }
 
     getProducts = () => {
-        axios.get(`/api/get/productofuser?id=${this.props.sellerId}`).then(res => {
+        axios.get(`/api/get/productofuser?id=${this.props.sellerId}&type=seller`).then(res => {
             for (let i = 0; i < res.data.length; i++) {
                 this.setState(
                     (state) => ({ products: [...this.state.products, res.data[i]] }),
@@ -30,14 +30,14 @@ class PublicSeller extends Component {
         })
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getProducts();
     };
             
 render() {
     return (
         <Row>
-            <Col sm='3' className={`${styles.affix} boxShadow`}>
+            <Col sm='3' className={`affix boxShadow`}>
                 <div className={styles.profileWrapper}>
                     <img className={styles.image} src={this.props.pic} alt='Profile Picture'/>
                     <h3 className={styles.profileName}>{this.props.name} {this.props.lastname}</h3>
@@ -47,6 +47,9 @@ render() {
                 </div>
             </Col>
             <Col sm={{ size: 9, offset: 3 }}>
+                {this.state.products.length < 1 &&
+                    <p className={styles.emptySeller}>There are no items for your search.</p>
+                }
                 {this.state.products.map(result => {
                     return <ProductMinified name={result.name} desc={result.description} 
                         price={result.price} img={result.picture_link} prodId={result.id} 

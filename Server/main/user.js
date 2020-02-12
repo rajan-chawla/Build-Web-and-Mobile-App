@@ -5,7 +5,9 @@ var cloud = require("./config/cloudinaryConfig");
 var upload = require("./config/multer");
 
 userRoutes.get("/api/get/profile", function(req, res) {
+  console.log('test', req.query.id);
   var id = req.query.id;
+  console.log({id})
   const query =
     "Select email, name, lastname, DATE_FORMAT(date_of_birth,'%Y-%m-%d') AS date_of_birth, phone, description, photo_link, is_verified, is_validated, " +
     "(select count(*) from `hsfuldadb`.`user_role` where user_id = id and role_id = 2) as isSeller," +

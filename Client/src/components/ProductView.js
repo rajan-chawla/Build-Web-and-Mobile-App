@@ -38,12 +38,50 @@ class Product extends Component {
             productQuantity: null,
             productLocation: null,
             amOwner: null,
-            leftFeedback: false,
-            alreadyBought: true,
-            alreadyInCart: false
+            leftFeedback: null,
+            alreadyBought: false,
+            alreadyInCart: null
         };
 
-        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleAddToCart = this.handleAddToCart.bind(this);
+        this.handleRemoveFromCart = this.handleRemoveFromCart.bind(this);
+        this.handleBuyProduct = this.handleBuyProduct.bind(this);
+    }
+
+    handleAddToCart() {
+        axios.post('/api/post/addtocart', {user_id: this.userId, product_id: this.state.productId})
+            .then(res => {
+                console.log(res);
+                this.setState({
+                    alreadyInCart: true
+            })
+        })
+    }
+
+    async handleBuyProduct() {
+        await axios.post(`/api/post/transaction`, { user_id: this.userId, product_id: this.state.productId }).then(res => {
+                console.log(res);
+                this.setState({
+                    alreadyBought: true,
+                    leftFeedback: false
+            })
+        });
+
+        await axios.post(`/api/post/product/sale`, {id: this.state.productId}).then(res => { 
+            
+            console.log(res);
+        })
+    }
+
+    handleRemoveFromCart() {
+        // delete request needs to have data keyword, then provide body params.
+        axios.delete(`/api/delete/cartItem`, {data: {userId: this.userId, prodId: this.state.productId}}).then(res => {
+            console.log(res);
+            this.setState({
+                alreadyInCart: false
+            });
+        }); 
     }
 
     getShareOnFacebookText() {
@@ -62,6 +100,7 @@ class Product extends Component {
         }).then(res => {
             // check if product is validated or not
             if (res.data[0].is_validated.data[0] != 1) {
+
                 this.props.history.push('/');
             }
 
@@ -80,11 +119,34 @@ class Product extends Component {
                 productLocation: res.data[0].location
             });
         }, (err => {
-            // redirect if ID invalid
+            // redirect to homepage if product ID is invalid
             this.props.history.push('/');
         }))
-        if (this.userRole === '1') {
-            // get if user has already provided feedback
+    
+        // get if user has this item in cart 
+        await axios.get(`/api/get/cartHasItem?bid=${this.userId}&pid=${this.state.productId}`)
+        .then(res => {
+            if (res.data.length > 0) {
+                this.setState({
+                    alreadyInCart: true
+                })
+            } else {
+                this.setState({
+                    alreadyInCart: false
+                })
+            }
+        });
+        // get if user has already bought this item before 
+        await axios.get(`/api/get/transaction/${this.userId}/${this.state.productId}`)
+        .then(res => {
+            this.setState({
+                alreadyBought: true
+            });
+            console.log(this.state.leftFeedback, this.state.alreadyBought);
+        });
+
+        if (this.userRole === '1' && this.state.alreadyBought === true) {
+            // check if user has already provided feedback
             await axios.get(`/api/get/feedbackFromBuyerId?buyerId=${this.userId}&productId=${this.state.productId}`)
             .then(res => {
                 if (res.data[0]) {
@@ -98,19 +160,6 @@ class Product extends Component {
                 }
             })
         }
-        // get if user has this item in cart 
-        await axios.get(`/api/get/cartHasItem?bid=${this.userId}&pid=${this.state.productId}`)
-        .then(res => {
-            if (res.data.length > 0) {
-                this.setState({
-                    alreadyInCart: true
-                })
-            } else {
-                this.setState({
-                    alreadyInCart: false
-                })
-            }
-        })
 
         this.amOwner();
     };
@@ -123,14 +172,6 @@ class Product extends Component {
 
     haveBought() {
         // check if buyer id === user id. CHANGE BUYER_ID COLUMN TO ARRAY OF IDS?
-    }
-
-    addToCart() {
-        // import from Rajan code
-    }
-
-    removeFromCart() {
-        // import from Rajan code
     }
 
     buyProduct() {
@@ -167,6 +208,7 @@ class Product extends Component {
     render() {
         return (
             <Container className={styles.productContainer}>
+                
                 <Row>
                     <Col sm='4' className={styles.productImageWrapper}> 
                         <Row className='noGutters'>
@@ -231,14 +273,14 @@ class Product extends Component {
                                 // User is buyer, product is valid and product has not been bought.
                                 <Row className={`${styles.descriptionRow} ${styles.buttonsWrapper} noGutters`}>
                                     <Col sm='6' className={styles.buttonWrapper}>
-                                        <Button className={styles.buyButton}>Buy</Button>
+                                        <Button className={styles.buyButton} onClick={this.handleBuyProduct}>Buy</Button>
                                     </Col>
                                     <Col sm='6' className={styles.buttonWrapper}>
                                         { this.state.alreadyInCart === false && 
-                                            <Button className={styles.cartButton}>Add to Cart</Button>
+                                            <Button className={styles.cartButton} onClick={this.handleAddToCart}>Add to Cart</Button>
                                         }
                                         { this.state.alreadyInCart === true && 
-                                            <Button className={styles.cartButton}>Remove from Cart</Button>
+                                            <Button className={styles.cartButton} onClick={this.handleRemoveFromCart}>Remove from Cart</Button>
                                         }
                                     </Col>
                                 </Row>

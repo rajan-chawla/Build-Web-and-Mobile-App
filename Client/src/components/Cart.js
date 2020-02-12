@@ -5,214 +5,218 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
+import ProductMinified from "./ProductMinified";
+
+import styles from './componentStyles/Cart.module.css';
+import './componentStyles/global.scss';
+import 'font-awesome/css/font-awesome.min.css';
+import {
+  	Container,
+	Row,
+  	Col,
+  	Button
+}
+from 'reactstrap';
+
 
 class Cart extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      buyed:false
-    };
-  }
+	
+	constructor(props) {
+		super(props);
+		this.userId = parseInt(window.sessionStorage.getItem('userid'));
+
+    	this.state = {
+			products: [],
+      		buyed: false
+		};
+		
+		this.handleClear = this.handleClear.bind(this);
+		this.handleCheckout = this.handleCheckout.bind(this);
+  	}
   
-  messagehandle(e) {
-    this.setState({buyed:true});
-    console.log("buy item ",this.buyed)
-  }
-  render() {
+  	messagehandle(e) {
+    	this.setState({buyed:true});
+    	console.log("buy item ",this.buyed)
+	}
 
-    if (
-      // this.props.products.cartItems.length == "undefined" ||
-      // this.props.products.cartItems.length == 0
-        this.props.products.purchased===true
-    ) {
-      console.log("exec");
-      return <Redirect to="/purchase" />;
-    } else {
-     
-      return (
-        <div className="container">
-          {this.props.products.cartItems.length > 0 ? (
-            <table id="cart" className="table table-hover table-condensed">
-              <thead>
-                <tr>
-                  <th style={{ width: 50 }}>Product</th>
-                  <th style={{ width: 40 }}>Price</th>
-                  <th style={{ width: 8 }}></th>
-                  <th style={{ width: 22 }} className="text-center">
-                  </th>
-                  <th style={{ width: 10 }}></th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.props.products.cartItems.map((product, index) => (
-                  <tr key={index}>
-                    <td data-th="Product">
-                      <div className="row">
-                        <div className="col-sm-2 hidden-xs">
-                          {console.log("pictur",product.picture_link)}
-                          <img
-                            src={
-                              product.picture_link === null ||
-                              product.picture_link === "" ||
-                              product.picture_link === "null"
-                                ? "https://icon-library.net//images/product-icon-png/product-icon-png-29.jpg"
-                                : product.picture_link
-                            }
-                            alt={product.name}
-                            className="img-responsive"
-                            style={{ maxHeight: "100" }}
-                          />
-                        </div>
-                        <div className="col-sm-10">
-                          <h4 className="nomargin">{product.name}</h4>
-                          <p>{product.description}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td data-th="Price">{product.price} €</td>
-                    <td data-th="Quantity">
-                      {/*<input*/}
-                      {/*  type="number"*/}
-                      {/*  onChange={e => {*/}
-                      {/*    this.props.quantity(e, product);*/}
-                      {/*  }}*/}
-                      {/*  className="form-control text-center"*/}
-                      {/*  value={product.quantity}*/}
-                      {/*/>*/}
-                    </td>
-                    <td data-th="Subtotal" className="text-center">
-                      {/*{product.price * product.quantity} €*/}
-                    </td>
-                    <td className="actions" data-th="">
-                      <button
-                        onClick={
-                          window.sessionStorage.getItem("userid") !== null
-                            ? e => {
-                                this.props.removeCartitemDb(product.id);
-                              }
-                            : this.props.removeCartItem.bind(this, product.id)
-                        }
-                        className="btn btn-danger btn-sm"
-                      >
-                        <i className="fa fa-trash-o"></i>
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+	getCartItems = () => {
+		axios.get(`/api/get/userCartItems?user_id=${this.userId}`).then(res => {
+            for (let i = 0; i < res.data.length; i++) {
+				console.log(res.data);
+                this.setState(
+                    (state) => ({ products: [...this.state.products, res.data[i]] }),
+                    () => console.log(this.state.products)
+                );
+            }
+        })
+	}
+	  
+	componentDidMount() {
+		this.getCartItems();
+	}
 
-              <tfoot>
-                <tr className="visible-xs">
-                  <td colSpan="2" className="hidden-xs"></td>
-                  <td colSpan="2" className="hidden-xs"></td>
-                  <td className="text-right">
-                    <strong>
-                      Total{" "}
-                      {this.props.products.cartItems.reduce(
-                        (price, addprice) => price + addprice.price,
-                        0
-                      )}{" "}
-                      €
-                    </strong>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <Link to="/" className="btn btn-secondary">
-                      <i className="fa fa-angle-left"></i> Continue Shopping
-                    </Link>
-                  </td>
-                  <td colSpan="2" className="hidden-xs"></td>
-                  <td className="hidden-xs text-center"></td>
-                  <td>
-                    {window.sessionStorage.getItem("userid") !== null ? (
-                        <button
-                            onClick={
-                              e => {
-                               const buy= this.props.buyItem();
-                              }
-                            }
-                            className="btn btn-primary btn-block"
-                        >
-                          Buy Now <i className="fa fa-angle-right"></i>
-                        </button> ): (<Link to={{pathname:'/login',fromCart:'cart'}} className="btn btn-primary btn-block" >{"Buy Now"}</Link> )}
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
-          )
-          : (<div className="alert alert-primary" role="alert">
-            Your cart is empty!
-          </div>)
-          }
-        </div>
-      );
+	// function removes product from state as to avoid another API call for each item deletion from cart. (although item is removed from DB)
+	async handleDelete(prodId) {
+		let products = this.state.products;
+		this.setState({
+			products: products.filter((prod) => prod.id !== prodId)
+		})
+	}
+
+	async handleClear(e) {
+		e.stopPropagation();
+
+		await axios.delete(`/api/delete/cart`, {data: {userId: this.userId}}).then(res => {
+            console.log(res);
+        }); 
+
+		this.emptyProductsState()
+	}
+
+	async handleCheckout(e) {
+		e.stopPropagation();
+		
+		// API naming confusing, buy_item actually is checkout the whole cart!!!
+		for(let i=0; i<this.state.products.length; i++) {
+
+			await axios.post(`/api/post/transaction`, { user_id: this.userId, product_id: this.state.products[i].id }).then(res => {
+				console.log('Post Trans', res);
+				axios.delete(`/api/delete/cartItem`, {data: {userId: this.userId, prodId: this.state.products[i].id}}).then(res => {
+					axios.post(`/api/post/product/sale`, {id: this.state.products[i].id}).then(res => { 
+						this.handleDelete(this.state.products[i].id)
+						console.log('Post Sale', res);
+					})
+					console.log('Delete', res);
+				})
+			
+			})
+			/*
+			await axios.post(`/api/post/product/sale`, {id: this.state.products[i].id}).then(res => { 
+            	console.log('Post Sale', res);
+			})
+			
+			await axios.delete(`/api/delete/cartItem`, {data: {userId: this.userId, prodId: this.state.products[i].id}}).then(res => {
+            	console.log('Delete', res);
+			})
+			
+			await this.handleDelete(this.state.products[i].id)*/
+		}
+
+		// this.emptyProductsState()
+	}
+
+	emptyProductsState() {
+		this.setState({
+			products: []
+		})
+	}
+  
+	render() {
+	/*	if (
+      	// 	this.props.products.cartItems.length == "undefined" ||
+      	// 	this.props.products.cartItems.length == 0
+        	this.props.products.purchased===true
+    	) {
+      	console.log("exec");
+      	return <Redirect to="/purchase" />;
+    	} else {
+    */
+    	return (
+        	<Container className={styles.cartContainer}>
+            	<Row>
+              		{this.state.products.length > 0 &&
+                		<Col sm='9'>
+                    		{this.state.products.map(result => {
+                        		return <ProductMinified name={result.name} desc={result.description} 
+									price={result.price} img={result.picture_link} prodId={result.id} 
+									address={result.location} remove='1' cart='1' handleDelete={this.handleDelete.bind(this)}/>
+                    		})}
+                		</Col>
+              		}
+              		{this.state.products.length <= 0 &&
+                		<Col sm='9'> <p className={styles.emptyCart}>You have no products in your cart.</p> </Col>
+              		}
+                
+					<Col sm='3' className={`${styles.checkoutBox} boxShadow`}>
+                    	<h2>Checkout<sup><small className={styles.clearCart} onClick={this.handleClear}> Clear cart?</small></sup></h2>
+					  	<p>Number of items: {this.state.products.length}</p>
+						<p>Total price:{" "}
+							<strong>{this.state.products.reduce(
+								(price, addprice) => price + addprice.price,
+								0
+							)}&euro;
+							</strong>
+					  	</p>
+                    	<small>Proceed with the checkout?</small>
+                    	<Button className={styles.checkoutButton} onClick={this.handleCheckout}>Checkout</Button>
+                	</Col>
+            	</Row>
+        	</Container>
+        )
     }
-  }
 }
 
 const mapStateToProps = state => {
-  return {
-    products: state.getProductReducer
-  };
+	return {
+    	products: state.getProductReducer
+  	};
 };
+
 function removeFromItem(product_id, dispatch) {
-  return axios
-    .post("/api/post/deleteitemincart", {
-      user_id: window.sessionStorage.getItem("userid"),
-      product_id: product_id
-    })
+	return axios
+    	.post("/api/post/deleteitemincart", {
+      		user_id: window.sessionStorage.getItem("userid"),
+      		product_id: product_id
+    	})
     .then(response => {
-      if (response.data.code == 200) {
-        dispatch({
-          type: "DELETE_FROM_CART",
-          payload: product_id
-        });
-      }
+      	if (response.data.code == 200) {
+        	dispatch({
+          		type: "DELETE_FROM_CART",
+          		payload: product_id
+        	});
+      	}
     });
 }
+
 function buyItem(userID, dispatch) {
   // console.log("USERID:",userID)
-  return axios
-    .post("/api/post/buy_item", {
-      userID: window.sessionStorage.getItem("userid")
+  	return axios
+    	.post("/api/post/buy_item", {
+      		userID: window.sessionStorage.getItem("userid")
     })
     .then(response => {
-      if (response.data.code == 200) {
-        dispatch({type: "BUY_PRODUCT",payload: true})
-      }
+      	if (response.data.code == 200) {
+        	dispatch({type: "BUY_PRODUCT",payload: true})
+    	}
     });
 }
 
 const mapDispatchToProps = dispatch => {
-  return {
-    removeCartitemDb: product_id => {
-      removeFromItem(product_id, dispatch);
-    },
-
-    removeCartItem: product_id => {
-      dispatch({
-        type: "DELETE_FROM_CART",
-        payload: product_id
-      });
-    },
-    // quantity: (event, product) => {
-    //   // console.log(product);
-    //
-    //   dispatch({
-    //     type: "QUANTITY",
-    //     payload: product,
-    //     quantity: event.target.value
-    //   });
-    // },
-    buyItem: () => {
-      let userID = window.sessionStorage.getItem("userid");
-      buyItem(userID,dispatch);
-      // console.log(product);
-
-
-    }
-  };
+  	return {
+    	removeCartitemDb: product_id => {
+      		removeFromItem(product_id, dispatch);
+		},
+		removeCartItem: product_id => {
+			dispatch({
+				type: "DELETE_FROM_CART",
+				payload: product_id
+			});
+		},
+		// quantity: (event, product) => {
+		//   // console.log(product);
+		//
+		//   dispatch({
+		//     type: "QUANTITY",
+		//     payload: product,
+		//     quantity: event.target.value
+		//   });
+		// },
+		buyItem: () => {
+			let userID = window.sessionStorage.getItem("userid");
+			buyItem(userID,dispatch);
+		// console.log(product);
+		}
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

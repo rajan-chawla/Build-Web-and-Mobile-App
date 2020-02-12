@@ -13,3 +13,16 @@
     padding: 0 !important;
     margin: 0 !important;
 }
+
+.affix {
+    padding: 24px;
+    position: fixed;
+    border-radius: 8px;
+    background: #FFF;
+    height: min-content;
+    width: 18% !important;
+}
+
+.selected {
+    font-weight: bolder;
+}

@@ -17,12 +17,10 @@ class SearchResults extends Component {
         this.state = {
             categories: ['All'],
             results: [],
-            selectedIndex: 0,
-            searchType: this.props.match.params.type,
+            selectedIndex: (this.props.match.params.category === undefined) ? 0 : this.props.match.params.category,
+            searchCategory: this.props.match.params.category,
             searchTerm: this.props.match.params.term
         };
-
-        console.log('search type ', this.state.searchType)
     }
 
     getCategories = () => {
@@ -36,8 +34,8 @@ class SearchResults extends Component {
         });
     };
 
-    getResults = (a, b) => {
-        axios.get(`/api/get/allproducts?type=${a}&term=${b}`).then(res => {
+    getResults = (term, category) => {
+        axios.get(`/api/get/search?term=${term}&categoryId=${category}`).then(res => {
             for (let i = 0; i < res.data.length; i++) {
                 this.setState(
                     (state) => ({ results: [...this.state.results, res.data[i]] }),
@@ -49,14 +47,16 @@ class SearchResults extends Component {
 
     componentWillMount() {
         this.getCategories();
-        this.getResults('Name', '');
+        this.getResults(this.props.match.params.term, this.props.match.params.category);
     };
 
 
     categoryChange(val) {
+        alert(val);
+        alert(this.state.searchTerm);
       this.setState(
             (state) => ({ results: [] }),
-            this.getResults('Category', val)
+            this.getResults(this.state.searchTerm, val)
         )
     };
             
@@ -64,21 +64,33 @@ render() {
     return (
         <Container className={styles.searchContainer}>
             <Row>
-                <Col sm='3' className={`${styles.affix} boxShadow`}>
+                <Col sm='3' className={`affix boxShadow`}>
                     <div className={styles.categoriesWrapper}>
                         <h4 className={styles.categoryTitle}>Categories</h4>
                         <ul className={styles.categoryList}>
                             {this.state.categories.map((value, index) => {
-                                return <li className={`${styles.categoryItem} ${this.state.selectedIndex == index ? 'selected' : 'notSelected'}`} key={index} value={value} onClick={() => {this.categoryChange(value)}}>{value}</li>
+                                return <li className = {`${styles.categoryItem} ${this.state.selectedIndex == index ? 'selected' : ''}`}
+                                key={index} value={value} onClick={() => {this.categoryChange(index)}}> 
+                                {value} </li>
                             })}
                         </ul>
                     </div>
                 </Col>
+
                 <Col sm={{ size: 9, offset: 3 }}>
+                                    {this.state.results.length <= 0 &&
+                    <p className={styles.emptySearch}>There are no items for your search.</p>
+              	}
                     {this.state.results.map(result => {
-                        return <ProductMinified name={result.name} desc={result.description} price={result.price} img={result.picture_link} prodId={result.id} remove='0'/>
+                        return <ProductMinified name={result.name} desc={result.description} 
+                        price={result.price} img={result.picture_link} prodId={result.id} 
+                        address={result.location} date={result.added_date.substring(0, 10)}/>
                     })}
                 </Col>
+
+                
+
+
             </Row>
         </Container>
     )

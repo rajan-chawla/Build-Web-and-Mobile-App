@@ -31,7 +31,7 @@ class PublicProfile extends Component {
     }
 
     getProfileDetails = () => {
-        axios.get(`/api/get/profile?id=${this.state.profileData.id}`).then(res => { 
+        axios.get(`/api/get/profile?id=${this.props.match.params.id}`).then(res => {
             this.setState( prevState => {
                 let profileData = Object.assign({}, prevState.profileData);
                 profileData.name = res.data[0].name;
