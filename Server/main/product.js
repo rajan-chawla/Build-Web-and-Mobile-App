@@ -309,15 +309,11 @@ productRoutes.post('/api/post/product/sale', function(req, res) {
     pool.query(q, (q_err, q_res) => {
       if (q_err) {
         console.log('ERROR: ', q_err);
-        res.send({
-          code: 401,
-          success: "Error registering transaction!"
-        });
+        res.status(401).json(q_err);
       } else {
         console.log('SUCCESS: NEW ROW INSERTED');
-        res.send({
-          code: 200,
-          success: "Transaction added!"
+        res.status(200).json({
+          message: 'Row updated'
         });
       }
     })

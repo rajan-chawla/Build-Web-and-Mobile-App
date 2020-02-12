@@ -401,5 +401,10 @@ cartRoutes.get('/api/get/cartHasItem', function(req, res, next) {
     }
   })
 })
-
+/*
+cartRoutes.post('/api/post/cart/checkout', function(req, res) {
+    let products = req.body.products;
+    const q = 
+})
+*/
 module.exports = cartRoutes;

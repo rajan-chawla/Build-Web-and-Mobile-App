@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import "font-awesome/css/font-awesome.min.css";
 import "../css/checkout.css";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 import axios from "axios";
 import ProductMinified from "./ProductMinified";
 
@@ -72,37 +70,23 @@ class Cart extends Component {
 
 		this.emptyProductsState()
 	}
+	
 
 	async handleCheckout(e) {
 		e.stopPropagation();
-		
-		// API naming confusing, buy_item actually is checkout the whole cart!!!
-		for(let i=0; i<this.state.products.length; i++) {
+		var products = this.state.products;
 
-			await axios.post(`/api/post/transaction`, { user_id: this.userId, product_id: this.state.products[i].id }).then(res => {
-				console.log('Post Trans', res);
-				axios.delete(`/api/delete/cartItem`, {data: {userId: this.userId, prodId: this.state.products[i].id}}).then(res => {
-					axios.post(`/api/post/product/sale`, {id: this.state.products[i].id}).then(res => { 
-						this.handleDelete(this.state.products[i].id)
-						console.log('Post Sale', res);
-					})
-					console.log('Delete', res);
-				})
-			
-			})
-			/*
-			await axios.post(`/api/post/product/sale`, {id: this.state.products[i].id}).then(res => { 
-            	console.log('Post Sale', res);
-			})
-			
-			await axios.delete(`/api/delete/cartItem`, {data: {userId: this.userId, prodId: this.state.products[i].id}}).then(res => {
-            	console.log('Delete', res);
-			})
-			
-			await this.handleDelete(this.state.products[i].id)*/
+		for(var i=0; i<products.length; i++) {
+			var prodId = products[i].id;
+			axios.all([axios.post(`/api/post/transaction`, { user_id: this.userId, product_id: prodId }),
+			axios.post(`/api/post/product/sale`, {id: prodId}),
+			axios.delete(`/api/delete/cartItem`, {data: {userId: this.userId, prodId: prodId}})])
+		  	.then(axios.spread((firstResponse, secondResponse, thirdResponse) => {  
+				this.emptyProductsState();
+		  		console.log(firstResponse.data,secondResponse.data, thirdResponse.data);
+			}))
+			.catch(error => console.log(error));	
 		}
-
-		// this.emptyProductsState()
 	}
 
 	emptyProductsState() {
@@ -112,15 +96,7 @@ class Cart extends Component {
 	}
   
 	render() {
-	/*	if (
-      	// 	this.props.products.cartItems.length == "undefined" ||
-      	// 	this.props.products.cartItems.length == 0
-        	this.props.products.purchased===true
-    	) {
-      	console.log("exec");
-      	return <Redirect to="/purchase" />;
-    	} else {
-    */
+
     	return (
         	<Container className={styles.cartContainer}>
             	<Row>
@@ -138,7 +114,7 @@ class Cart extends Component {
               		}
                 
 					<Col sm='3' className={`${styles.checkoutBox} boxShadow`}>
-                    	<h2>Checkout<sup><small className={styles.clearCart} onClick={this.handleClear}> Clear cart?</small></sup></h2>
+					   	<h2>Checkout<sup><small className={styles.clearCart} onClick={this.handleClear}> Clear cart?</small></sup></h2>
 					  	<p>Number of items: {this.state.products.length}</p>
 						<p>Total price:{" "}
 							<strong>{this.state.products.reduce(
@@ -149,7 +125,7 @@ class Cart extends Component {
 					  	</p>
                     	<small>Proceed with the checkout?</small>
                     	<Button className={styles.checkoutButton} onClick={this.handleCheckout}>Checkout</Button>
-                	</Col>
+		         	</Col>
             	</Row>
         	</Container>
         )
