@@ -52,8 +52,6 @@ class SearchResults extends Component {
 
 
     categoryChange(val) {
-        alert(val);
-        alert(this.state.searchTerm);
       this.setState(
             (state) => ({ results: [] }),
             this.getResults(this.state.searchTerm, val)

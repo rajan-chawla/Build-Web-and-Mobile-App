@@ -1,0 +1,39 @@
+.headerBody {
+    background: #fff
+}
+
+.navText {
+    color: black !important;
+}
+
+.searchBar {
+    position: absolute;
+    width: 50vw;
+    left: 25vw;
+}
+
+.searchFormContainer {
+    position: relative !important;
+    width: 100% !important;
+}
+
+.categoriesDropdown {
+    position: relative !important;
+    max-width: 20% !important;
+    border-top-left-radius: 19px !important;
+    border-bottom-left-radius: 19px !important;
+}
+
+.searchInputField {
+    width: auto !important;
+}
+
+.searchButton {
+    width: 64px !important ;
+    border-top-right-radius: 19px !important;
+    border-bottom-right-radius: 19px !important;
+}
+
+.test {
+    color: red !important
+}

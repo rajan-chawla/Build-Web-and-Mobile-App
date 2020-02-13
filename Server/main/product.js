@@ -338,4 +338,11 @@ productRoutes.post('/api/post/product/sale', function(req, res) {
     })
   })
 
+  // get products bought by buyer 
+  productRoutes.get("/api/get/products/:userId", function(req, res) {
+    let userId = req.params.userId;
+
+    const q = `SELECT * FROM transactions WHERE AND user_id = "${userId}"`;
+  })
+
 module.exports = productRoutes;

@@ -29,7 +29,7 @@ class PublicProfile extends Component {
             }
         };
     }
-
+    // https://i.ibb.co/8shjTQs/default-img.jpg default profile image when missing.
     getProfileDetails = () => {
         axios.get(`/api/get/profile?id=${this.props.match.params.id}`).then(res => {
             this.setState( prevState => {
