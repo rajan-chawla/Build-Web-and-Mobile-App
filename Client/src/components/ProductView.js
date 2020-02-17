@@ -184,6 +184,9 @@ class Product extends Component {
         }).then(response => {
             if (response.data.code == 200) {
                 alert('success')
+                this.setState({
+                    leftFeedback: true
+                });
                 //this.props.history.push('/profile/history') // redirect to url (maybe not best practice, need to recheck)
             }
         });
@@ -274,7 +277,7 @@ class Product extends Component {
                                     </Col>
                                 </Row>
                             }
-                            { this.userRole === '1' && this.state.productQuantity > 0 && this.state.alreadyBought === true && 
+                            { this.userRole === '1' && this.state.productQuantity > 0 && this.state.alreadyBought === true && this.state.leftFeedback === false &&
                                 // User is buyer, product is valid and has already bought the product.
                                 <Row className={`${styles.descriptionRow} noGutters`}>
                                     <Col sm='12'>
@@ -282,6 +285,16 @@ class Product extends Component {
                                     </Col>
                                 </Row>
                             }
+
+                            { this.userRole === '1' && this.state.productQuantity > 0 && this.state.alreadyBought === true && this.state.leftFeedback === true &&
+                           
+                                <Row className={`${styles.descriptionRow} noGutters`}>
+                                    <Col sm='12'>
+                                        <h5 className={styles.productSold}> Feedback submitted! </h5>
+                                    </Col>
+                                </Row>
+                            }
+
                             { this.userRole === '2' && this.state.amOwner === true && 
                                 // User is seller AND owner.
                                 <Row className={`${styles.descriptionRow} ${styles.buttonsWrapper} noGutters`}>

@@ -17,7 +17,7 @@ class PublicSeller extends Component {
 render() {
     return (
         <Row>
-            <Col sm='3' className={`${styles.buyer} ${styles.affix} boxShadow`}>
+            <Col sm='3' className={`${styles.buyer} affix boxShadow`}>
                 <div className={styles.profileWrapper}>
                     <img className={styles.image} src={this.props.pic} alt='Profile Picture'/>
                     <h3 className={styles.profileName}>{this.props.name} {this.props.lastname}</h3>
