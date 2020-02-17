@@ -36,12 +36,9 @@ class SearchResults extends Component {
 
     getResults = (term, category) => {
         axios.get(`/api/get/search?term=${term}&categoryId=${category}`).then(res => {
-            for (let i = 0; i < res.data.length; i++) {
-                this.setState(
-                    (state) => ({ results: [...this.state.results, res.data[i]] }),
-                    () => console.log(this.state.results)
-                );
-            }
+                this.setState({
+                    results: res.data 
+                });
         })
     }
 

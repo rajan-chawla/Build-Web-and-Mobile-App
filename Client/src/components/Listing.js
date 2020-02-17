@@ -36,7 +36,7 @@ const Listing = props => {
       }
     };
     await axios
-      .get("/api/get/allproducts", data)
+      .get(`/api/get/search?term=&categoryId=0`)
       .then(response => {
         console.log(`Response Status = ${response.status}`);
         if (Array.isArray(response.data)) {
