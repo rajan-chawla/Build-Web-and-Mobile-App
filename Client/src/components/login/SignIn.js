@@ -47,7 +47,9 @@ class SignIn extends React.Component {
           if (response.data.code == 200) {
             console.log(response);
             window.sessionStorage.setItem("userid", response.data.userid);
+            window.localStorage.setItem("userid", response.data.userid);
             window.sessionStorage.setItem("userrole", response.data.userrole);
+            window.localStorage.setItem("userrole", response.data.userrole);
             console.log(this.props.products.cartItems);
             if(this.props.products.cartItems.length>0)
             {

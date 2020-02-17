@@ -33,7 +33,12 @@ class NavBar extends Component {
 	
     constructor(props) {
         super(props);
-        
+	
+		if (window.sessionStorage.getItem("userid") == null && window.localStorage.getItem("userid") !=null) {
+			window.sessionStorage.setItem('userid', window.localStorage.getItem("userid"));
+			window.sessionStorage.setItem('userrole', window.localStorage.getItem("userrole"));
+		}
+
 		this.userId = window.sessionStorage.getItem('userid');
 		this.userRole = window.sessionStorage.getItem('userrole'); // 1 buyer, 2 seller, 3 admin
 
@@ -104,7 +109,8 @@ class NavBar extends Component {
 
 	handleLogout() {
 		console.log("User logged out");
-	    window.sessionStorage.clear();
+		window.sessionStorage.clear();
+		window.localStorage.clear();
     	window.location.reload(false);
     	window.location.replace("/");
 	}
