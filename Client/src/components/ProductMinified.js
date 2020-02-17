@@ -58,9 +58,8 @@ class ProductMinified extends Component {
     }
 
     handleGoToProduct(e) {
-        e.stopPropagation();
-        //alert(this.props.prodId);
-        this.props.history.push(`/product/id=${this.props.prodId}`);
+       window.location.reload(false);
+       window.location.replace(`/product/id=${this.props.prodId}`);
     }
 
     checkIfYours() {
