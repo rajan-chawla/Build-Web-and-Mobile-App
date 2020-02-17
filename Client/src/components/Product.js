@@ -55,7 +55,7 @@ class Product extends Component {
       <div className="col-md-4 col-lg-3 d-flex align-items-stretch">
 
         <div className="product">
-          <Link to={{ pathname: "/detail" }} onClick={() => { this.props.productDetailID(product_id); }}>
+          <Link to={{ pathname: "/product/id=" + product_id }} onClick={() => { this.props.productDetailID(product_id); }}>
             <div className="product-img">
               <img
                 src={
