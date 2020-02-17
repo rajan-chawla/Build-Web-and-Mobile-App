@@ -50,6 +50,7 @@ class NavBar extends Component {
 		this.categoryChange = this.categoryChange.bind(this);
 		this.searchClick = this.searchClick.bind(this);
 		this.keyPressChecker = this.keyPressChecker.bind(this);
+		this.handleLogout = this.handleLogout.bind(this);
     }
 
 	toggleDropDown(e) {
@@ -98,7 +99,14 @@ class NavBar extends Component {
 
 	goToProfile() {
 		window.location.reload(false);
-		window.location.replace(`/profile/public/id=${this.userId}`);
+		window.location.replace(`/profile/public/id=${window.sessionStorage.getItem("userid")}`);
+	}
+
+	handleLogout() {
+		console.log("User logged out");
+	    window.sessionStorage.clear();
+    	window.location.reload(false);
+    	window.location.replace("/");
 	}
 
 	componentDidMount() {
@@ -180,8 +188,8 @@ render() {
 										<i className="fa fa-comment"></i>&nbsp;Feedbacks
 									</DropdownItem>}
 									<DropdownItem divider />
-									<DropdownItem>
-										<i className="fa fa-sign-out"></i>&nbsp;Log Out
+									<DropdownItem onClick={this.handleLogout}>
+										<i className="fa fa-sign-out" ></i>&nbsp;Log Out
 									</DropdownItem>
 								</DropdownMenu>
 							</UncontrolledDropdown>
