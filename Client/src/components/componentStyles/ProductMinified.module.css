@@ -37,7 +37,7 @@
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     text-align: justify;
     /* number of lines to show */
 }
@@ -94,6 +94,23 @@
 
 .titleWrapper h3 {
     margin-bottom: 0;
+}
+
+.rightAligned {
+    padding-right: 48px;
+    float: right;
+}
+
+.leftAligned {
+    float: left;
+}
+
+.yourCart {
+    color: red;
+}
+
+.yourItem {
+    color: green;
 }
 /*
 .cartButton.remove {

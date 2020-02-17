@@ -94,7 +94,7 @@ render() {
     return (
         <Container className={styles.feedbacksContainer}>
             <Row>
-                <Col sm='3' className={`${styles.affix} boxShadow`}>
+                <Col sm='3' className={`affix boxShadow`}>
                     <div className={styles.productsWrapper}>
                         <h4 className={styles.productsTitle}>Products</h4>
                         <ul className={styles.productsList}>

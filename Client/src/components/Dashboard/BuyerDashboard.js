@@ -29,7 +29,7 @@ class BuyerDashboard extends Component {
     
     async componentDidMount() {
         const products = []
-        await axios.get(`/api/get/productofuser?id=${this.buyerId}&type=buyer`).then(res => {
+        await axios.get(`/api/get/products/${this.buyerId}`).then(res => {
             for (let i = 0; i < res.data.length; i++) {
                 products.push(res.data[i])
             }
@@ -77,7 +77,7 @@ render() {
                     {this.state.products.map((result, key) => {
                         return (
                             <tr key={key}>
-                                <th scope="row">{result.id}</th>
+                                <th scope="row">{result.product_id}</th>
                                 <td>{result.name}</td>
                                 <td>{result.category_name}</td>
                                 <td>{result.price}.00</td>

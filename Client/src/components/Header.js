@@ -160,8 +160,8 @@ const Header = props => {
       window.location.reload(false);
       window.location.replace("/profile/edit");
     };
-
-        const handlePublicProfile = () => {
+    
+    const handlePublicProfile = () => {
       //window.sessionStorage.clear();
       window.location.reload(false);
       window.location.replace(`/profile/public/id=${window.sessionStorage.getItem('userid')}`);

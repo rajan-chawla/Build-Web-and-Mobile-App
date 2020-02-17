@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use('/uploads', express.static('uploads'));
 app.use(express.static("build"));
 app.get("/", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "build", "index.html"));
+  res.sendFile(path.resolve(__dirname, "../build/index.html"));
 });
 
 app.use("/", indexRouter);

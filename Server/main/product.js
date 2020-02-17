@@ -75,13 +75,8 @@ productRoutes.get("/api/get/allproducts", function(req, res, next) {
 //GET Product by user ID
 productRoutes.get("/api/get/productofuser", function(req, res, next) {
   var id = req.query.id;
-  var type = req.query.type;
 
-  var query;
-  if (type === 'seller') 
-    query = `select p.*,u.name as seller_name, c.name as category_name from product p join user u on p.seller_id = u.id join category c on c.id = p.category_id WHERE seller_id=${id}`;
-  else if (type === 'buyer')
-    query = `select p.*,u.name as seller_name, c.name as category_name from product p join user u on p.seller_id = u.id join category c on c.id = p.category_id WHERE buyer_id=${id}`;
+  var query = `select p.*,u.name as seller_name, c.name as category_name from product p join user u on p.seller_id = u.id join category c on c.id = p.category_id WHERE seller_id=${id}`;
 
     pool.query(query, (q_err, q_res) => {
     console.log(q_res);
@@ -128,11 +123,8 @@ productRoutes.get("/api/get/categories", function(req, res, next) {
       res.status(401).json(q_err);
     }
     if (q_res.length < 1) {
-      return res
-        .status(404)
-        .json({ message: "error occurred on getting categories." });
+      return res.status(404).json({ message: "error occurred on getting categories." });
     } else {
-      console.log(JSON.stringify(q_res, null, 2));
       res.status(200).json(q_res);
     }
   });
@@ -156,6 +148,7 @@ productRoutes.get("/api/get/productbyid", function(req, res, next) {
     }
   });
 });
+
 //add Product for a seller
 productRoutes.post("/api/post/addproduct", function(req, res, next) {
   console.log(req.body)
@@ -278,6 +271,31 @@ productRoutes.get('/api/get/search', function(req, res) {
     });
 });
 
+
+// check if product belongs to you
+productRoutes.get("/api/get/products/:pid/sellers/:sid", (req, res) => {
+  let sellerId = req.params.sid;
+  let productId = req.params.pid;
+
+  console.log({sellerId})
+  console.log({productId})
+
+  const query = `SELECT * FROM product WHERE seller_id = "${sellerId}" AND id = "${productId}"`;
+
+  pool.query(query, (q_err, q_res) => {
+    if (q_err) {
+      res.status(500).json({
+        message: q_err.message 
+      });
+    } else if (q_res.length > 0) {
+      res.status(200).json(q_res);
+    }
+  });
+
+  
+});
+
+
 // update product after sale
 productRoutes.post('/api/post/product/sale', function(req, res) {
   console.log(req.body);
@@ -341,8 +359,18 @@ productRoutes.post('/api/post/product/sale', function(req, res) {
   // get products bought by buyer 
   productRoutes.get("/api/get/products/:userId", function(req, res) {
     let userId = req.params.userId;
+    console.log({userId})
+    const query = `SELECT * FROM product INNER JOIN transactions ON product.id = transactions.product_id WHERE transactions.user_id = "${userId}"`;
 
-    const q = `SELECT * FROM transactions WHERE AND user_id = "${userId}"`;
-  })
+    pool.query(query, (q_err, q_res) => {
+      if (q_err) {
+        res.status(500).json({
+          message: q_res.message
+        })
+      } else if (q_res) {
+        res.status(200).json(q_res);
+      }
+    });
+  });
 
 module.exports = productRoutes;

@@ -161,7 +161,7 @@ render() {
 									<i className="fa fa-user-circle"></i>&nbsp;Account
 								</DropdownToggle>
 								<DropdownMenu right>
-									{this.userRole === '2' || this.userRole === '1' &&
+									{(this.userRole === '2' || this.userRole === '1') &&
 									<DropdownItem href="/profile/dashboard">
 										<i className="fa fa-tachometer"></i>&nbsp;Dashboard
 									</DropdownItem>}
