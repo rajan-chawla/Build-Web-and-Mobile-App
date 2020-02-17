@@ -37,10 +37,10 @@ class Product extends Component {
             productValid: null,
             productQuantity: null,
             productLocation: null,
-            amOwner: null,
+            amOwner: false,
             leftFeedback: null,
             alreadyBought: false,
-            alreadyInCart: null
+            alreadyInCart: false
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -170,18 +170,6 @@ class Product extends Component {
         })
     }
 
-    haveBought() {
-        // check if buyer id === user id. CHANGE BUYER_ID COLUMN TO ARRAY OF IDS?
-    }
-
-    buyProduct() {
-        // import from Rajan code
-    }
-
-    deleteItem() {
-        // import from Rajan code
-    }
-
     // submitting feedback
     async handleSubmit(event) {
         event.preventDefault();
@@ -262,6 +250,7 @@ class Product extends Component {
                             <Row className={`${styles.descriptionRow} ${styles.descriptionWrapper} noGutters`}>
                                 <Col sm='12'><p className={styles.descText}>{this.state.productDescription}</p></Col>
                             </Row>
+                            
                             { this.userRole === null && 
                                 <Row className={`${styles.descriptionRow} noGutters`}>
                                     <Col sm='12'>
@@ -297,7 +286,7 @@ class Product extends Component {
                                 // User is seller AND owner.
                                 <Row className={`${styles.descriptionRow} ${styles.buttonsWrapper} noGutters`}>
                                     <Col sm='6' className={styles.buttonWrapper}>
-                                        <Button className={styles.buyButton}>Delete Product</Button>
+                                        <Button className={styles.buyButton} >Delete Product</Button>
                                     </Col>
                                 </Row>
                             }
@@ -305,7 +294,7 @@ class Product extends Component {
                                 // User is admin.
                                 <Row className={`${styles.descriptionRow} ${styles.buttonsWrapper} noGutters`}>
                                     <Col sm='6' className={styles.buttonWrapper}>
-                                        <Button className={styles.buyButton}>Delete Product</Button>
+                                        <Button className={styles.buyButton} >Delete Product</Button>
                                     </Col>
                                 </Row>
                             }
