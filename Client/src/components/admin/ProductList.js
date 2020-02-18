@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { HeaderContext } from "../HeaderContext";
-import Emitter from "../Emitter";
 
 const ProductList = () => {
   const [values, setValues] = useContext(HeaderContext);

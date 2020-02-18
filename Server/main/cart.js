@@ -158,7 +158,6 @@ cartRoutes.post("/api/post/addtocart", function (req, res) {
     }
 });
 
-
 cartRoutes.get("/api/get/getcartitems", function (req, res) {
     var cart_id = req.query.cart_id;
     const query = "select name, price from product p INNER JOIN cart_product cp ON p.id=cp.product_id where cp.cart_id =" + 2 + "";
@@ -373,13 +372,10 @@ cartRoutes.delete('/api/delete/cartItem', function (req, res) {
     })
 })
 
-// check if item is on cart @BV
 cartRoutes.get('/api/get/cartHasItem', function (req, res, next) {
     let buyer_id = req.query.bid;
     let product_id = req.query.pid;
 
-    console.log(buyer_id);
-    console.log(product_id);
     const query = `SELECT * FROM cart_product INNER JOIN cart ON cart_product.cart_id=cart.id WHERE cart.buyer_id = "${buyer_id}" AND cart_product.product_id= "${product_id}"`;
     pool.query(query, (q_err, q_res) => {
         console.log("test asda", q_res)
@@ -396,10 +392,5 @@ cartRoutes.get('/api/get/cartHasItem', function (req, res, next) {
         }
     })
 })
-/*
-cartRoutes.post('/api/post/cart/checkout', function(req, res) {
-    let products = req.body.products;
-    const q = 
-})
-*/
+
 module.exports = cartRoutes;

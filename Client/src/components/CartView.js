@@ -11,21 +11,17 @@ class Cart extends Component {
     super(props);
 
     this.state = {
-      buyed:false
+      buyed: false
     };
   }
-  
+
   messagehandle(e) {
-    this.setState({buyed:true});
-    console.log("buy item ",this.buyed)
+    this.setState({ buyed: true });
+    console.log("buy item ", this.buyed)
   }
-  
+
   render() {
-    if (
-        // this.props.products.cartItems.length == "undefined" ||
-        // this.props.products.cartItems.length == 0
-        this.props.products.purchased===true
-    ) {
+    if (this.props.products.purchased === true) {
       console.log("exec");
       return <Redirect to="/purchase" />;
     } else {
@@ -49,12 +45,12 @@ class Cart extends Component {
                     <td data-th="Product">
                       <div className="row">
                         <div className="col-sm-2 hidden-xs">
-                          {console.log("pictur",product.picture_link)}
+                          {console.log("pictur", product.picture_link)}
                           <img
                             src={
                               product.picture_link === null ||
-                              product.picture_link === "" ||
-                              product.picture_link === "null"
+                                product.picture_link === "" ||
+                                product.picture_link === "null"
                                 ? "https://icon-library.net//images/product-icon-png/product-icon-png-29.jpg"
                                 : product.picture_link
                             }
@@ -71,25 +67,16 @@ class Cart extends Component {
                     </td>
                     <td data-th="Price">{product.price} €</td>
                     <td data-th="Quantity">
-                      {/*<input*/}
-                      {/*  type="number"*/}
-                      {/*  onChange={e => {*/}
-                      {/*    this.props.quantity(e, product);*/}
-                      {/*  }}*/}
-                      {/*  className="form-control text-center"*/}
-                      {/*  value={product.quantity}*/}
-                      {/*/>*/}
                     </td>
                     <td data-th="Subtotal" className="text-center">
-                      {/*{product.price * product.quantity} €*/}
                     </td>
                     <td className="actions" data-th="">
                       <button
                         onClick={
                           window.sessionStorage.getItem("userid") !== null
                             ? e => {
-                                this.props.removeCartitemDb(product.id);
-                              }
+                              this.props.removeCartitemDb(product.id);
+                            }
                             : this.props.removeCartItem.bind(this, product.id)
                         }
                         className="btn btn-danger btn-sm"
@@ -126,23 +113,23 @@ class Cart extends Component {
                   <td className="hidden-xs text-center"></td>
                   <td>
                     {window.sessionStorage.getItem("userid") !== null ? (
-                        <button
-                            onClick={
-                              e => {
-                               const buy= this.props.buyItem();
-                              }
-                            }
-                            className="btn btn-primary btn-block"
-                        >
-                          Buy Now <i className="fa fa-angle-right"></i>
-                        </button> ): (<Link to={{pathname:'/login',fromCart:'cart'}} className="btn btn-primary btn-block" >{"Buy Now"}</Link> )}
+                      <button
+                        onClick={
+                          e => {
+                            const buy = this.props.buyItem();
+                          }
+                        }
+                        className="btn btn-primary btn-block"
+                      >
+                        Buy Now <i className="fa fa-angle-right"></i>
+                      </button>) : (<Link to={{ pathname: '/login', fromCart: 'cart' }} className="btn btn-primary btn-block" >{"Buy Now"}</Link>)}
                   </td>
                 </tr>
               </tfoot>
             </table>
           )
-          : (<div className="alert alert-primary" role="alert">
-            Your cart is empty!
+            : (<div className="alert alert-primary" role="alert">
+              Your cart is empty!
           </div>)
           }
         </div>
@@ -179,7 +166,7 @@ function buyItem(userID, dispatch) {
     })
     .then(response => {
       if (response.data.code == 200) {
-        dispatch({type: "BUY_PRODUCT",payload: true})
+        dispatch({ type: "BUY_PRODUCT", payload: true })
       }
     });
 }
@@ -196,21 +183,9 @@ const mapDispatchToProps = dispatch => {
         payload: product_id
       });
     },
-    // quantity: (event, product) => {
-    //   // console.log(product);
-    //
-    //   dispatch({
-    //     type: "QUANTITY",
-    //     payload: product,
-    //     quantity: event.target.value
-    //   });
-    // },
     buyItem: () => {
       let userID = window.sessionStorage.getItem("userid");
-      buyItem(userID,dispatch);
-      // console.log(product);
-
-
+      buyItem(userID, dispatch);
     }
   };
 };

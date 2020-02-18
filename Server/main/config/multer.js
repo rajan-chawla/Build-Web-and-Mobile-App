@@ -1,5 +1,6 @@
 // Multer is a node. js middleware for handling multipart/form-data , which is primarily used for uploading files
 // Multer is used along with cloudinary to upload product images and profile pictures from user's system to image host
+
 var multer = require('multer');
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {

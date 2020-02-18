@@ -22,8 +22,6 @@ import NotFound from "./components/NotFound";
 import UserInfo from "./components/UserInfo";
 import Error5oo from "./components/Error500";
 import Purchase from "./components/Purchase";
-import buyerProfile from "./components/buyerProfile";
-import buyerOrderHistory from "./components/buyerOrderHistory";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import ReactGA from "react-ga";
 import GA from "./utils/GoogleAnalytics";
@@ -49,7 +47,6 @@ class App extends Component {
           <div id="content" style={{ paddingBottom: "100px" }}>
             <NavBar />
             <Switch>
-              <Route path="/test" component={buyerOrderHistory} />
               <Route path="/product/id=:id" component = {ProductView} />
               <Route path="/search/term=:term?/category=:category?" component = {SearchResults} />
               <Route path="/contactus" component = {Contactus} />

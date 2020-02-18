@@ -4,7 +4,6 @@ import "jquery/dist/jquery.min.js";
 import "bootstrap/dist/js/bootstrap.min.js";
 import "font-awesome/css/font-awesome.min.css";
 import axios from "axios";
-import AdminPanel from "./admin/AdminPanel";
 import $ from "jquery";
 import { Link } from "react-router-dom";
 
@@ -218,7 +217,6 @@ const User = () => {
           <div class="col-2 ">
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
               <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Update Profile</a>
-              {adminPanel(userData.isAdmin)}
             </div>
           </div>
           <div class="col" >
@@ -227,7 +225,7 @@ const User = () => {
               <div class="col" id="v-pills-profile" role="tab" class="tab-pane fade" aria-labelledby="v-pills-profile-tab">
                 <div class="tab-content" id="v-pills-tabContent">
                   <div class="row">
-                    <div class="col"> <AdminPanel userId={window.sessionStorage.getItem("userid")} />
+                    <div class="col">
                     </div>
                   </div>
                 </div>
