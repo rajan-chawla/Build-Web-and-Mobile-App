@@ -1,3 +1,6 @@
+// Express. js is a Node js web application server framework
+// Pool is used to create a database connection
+
 var express = require("express");
 var userRoutes = express.Router();
 var pool = require("./db");

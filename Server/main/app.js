@@ -1,24 +1,22 @@
-var createError = require("http-errors");
+// Express. js is a Node js web application server framework
+// Path module is used to handle and transform files paths
+// IndexRouter defines all the routes in the website
+
 var express = require("express");
 var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
 var indexRouter = require("./routes");
 
 var app = express();
-
-app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use('/uploads', express.static('uploads'));
 app.use(express.static("build"));
-app.get("/", (req, res) => {
+app.use("/", indexRouter);
+app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../build/index.html"));
 });
 
-app.use("/", indexRouter);
 
 module.exports = app;
 

@@ -1,3 +1,6 @@
+// Express. js is a Node js web application server framework
+// Pool is used to create a database connection
+
 var express = require("express");
 var router = express.Router();
 var pool = require("./db");
@@ -5,8 +8,6 @@ var pool = require("./db");
 router.post("/api/post/login", function (req, res, next) {
   var email = req.body.email;
   var password = req.body.password;
-  // const query =
-  //   "SELECT * FROM `hsfuldadb`.`user` WHERE email = '" + email + "'";
   const query = `SELECT user.id,user.password,max(user_role.role_id) AS role FROM user  JOIN user_role ON user.id=user_role.user_id WHERE user.email='${email}'`;
   pool.query(query, (q_err, q_res) => {
     if (q_err != null) {
@@ -49,7 +50,6 @@ router.post("/api/post/signup", function (req, res, next) {
   var password = req.body.password;
   var phoneNo = req.body.phone;
   var role = req.body.selectRole;
-  console.log(req.body);
 
   const query1 =
     "SELECT email FROM `hsfuldadb`.`user` WHERE email = '" + email + "'";
@@ -63,7 +63,6 @@ router.post("/api/post/signup", function (req, res, next) {
     } else {
       console.log(JSON.stringify(q_res, null, 2));
       if (q_res.length > 0) {
-        console.log("email - ", q_res[0].email, req.body.email);
         if (q_res[0].email == req.body.email) {
           res.send({
             code: 204,
@@ -102,14 +101,14 @@ router.post("/api/post/signup", function (req, res, next) {
                   code: 400,
                   failed: "error ocurred"
                 });
-              }else{
+              } else {
                 res.send({
                   code: 200,
                   success: "signup sucessfull"
                 });
               }
             });
-            
+
           }
         });
       }
