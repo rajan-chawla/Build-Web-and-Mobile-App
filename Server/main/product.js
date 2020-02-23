@@ -277,16 +277,14 @@ productRoutes.get("/api/get/products/:pid/sellers/:sid", (req, res) => {
   const query = `SELECT * FROM product WHERE seller_id = "${sellerId}" AND id = "${productId}"`;
 
   pool.query(query, (q_err, q_res) => {
-    if (q_err) {
-      res.status(500).json({
-        message: q_err.message
-      });
-    } else if (q_res.length > 0) {
+    if (q_res.length > 0) {
       res.status(200).json(q_res);
+    } else {
+      res.status(500).json({
+        message: q_err
+      });
     }
   });
-
-
 });
 
 
