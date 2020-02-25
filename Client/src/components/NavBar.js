@@ -119,13 +119,28 @@ class NavBar extends Component {
 		console.log('test', window.sessionStorage.getItem('userrole'))
 		this.getCategories();
 	}
-    
+	
+	getUserRole() {
+		var roleid = window.sessionStorage.getItem("userrole");
+		var role = "";
+		switch(roleid){
+			case "1": role ="Buyer";  break; 
+			case 1: role ="Buyer"; break;
+			case "2": role ="Seller";  break;
+			case 2: role ="Seller"; break;
+			case "3": role ="Admin"; break;
+			case 3:	role ="Admin"; break;
+			default: break;
+		}
+		return <sub>{role}</sub>;
+	}
+	
             
 render() {
     return (
         <div>
           	<Navbar expand="md" className={`${styles.headerBody} boxShadow`}>
-            	<NavbarBrand className={`${styles.navText}`} href="/">SampleME</NavbarBrand>
+            	<NavbarBrand className={`${styles.navText}`} href="/">SampleME {this.getUserRole()}</NavbarBrand>
             	<NavbarToggler/>
 				<div className={`${styles.searchBar} ml-auto mr-auto`}>
 					<InputGroup className={styles.searchFormContainer}>
