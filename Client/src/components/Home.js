@@ -1,10 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, Component } from "react";
 import Listing from "./Listing";
 import "../css/home.css";
 import { HeaderContext } from "./HeaderContext";
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import Toaster from './Toaster'
+import Toaster from './Toaster';
+import styles from './componentStyles/Home.module.css';
+import { StylesContext } from "@material-ui/styles";
+
+
 
 /**
  * landing page includes listing component
@@ -13,8 +17,18 @@ import Toaster from './Toaster'
 const Home = () => {
   const [values, setValues] = useContext(HeaderContext);
   return (
-    <div className="container"> 
-    <Container maxWidth="sm">
+    <div> 
+
+        <div className={styles.homeImage}>
+          <span className={styles.homeImageTxt}>
+            Be the first to try out new exciting products!
+          </span>
+        </div>
+
+        <div className='container' >
+
+        
+    <Container >
       <br/>
             <Typography component="h2" variant="h3" align="center" color="textPrimary" gutterBottom>
               Our Products
@@ -26,11 +40,13 @@ const Home = () => {
             </Typography>
             
       </Container>
+
       <div className="row">
         <Listing
           searchTerm={values.searchTerm}
           searchType={values.searchType}
         />
+      </div>
       </div>
 
     </div>

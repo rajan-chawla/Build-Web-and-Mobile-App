@@ -46,7 +46,7 @@ class App extends Component {
       <div id="wrap">
         <HeaderProvider>
           <NavBar />
-          <div id="content" style={{ paddingBottom: "128px", paddingTop: "64px" }}>
+          <div id="content" style={{ paddingBottom: "128px", paddingTop: "56px" }}>
             
             <Switch>
               <Route path="/product/id=:id" component = {ProductView} />
