@@ -32,6 +32,11 @@ class PublicProfile extends Component {
     // https://i.ibb.co/8shjTQs/default-img.jpg default profile image when missing.
     getProfileDetails = () => {
         axios.get(`/api/get/profile?id=${this.props.match.params.id}`).then(res => {
+            var userLoggedInId = window.sessionStorage.getItem('userid');
+            if(userLoggedInId == null){
+                res.data[0].email = res.data[0].name+"###@#####.com";
+                res.data[0].phone = "**********";
+            }
             this.setState( prevState => {
                 let profileData = Object.assign({}, prevState.profileData);
                 profileData.name = res.data[0].name;
