@@ -13,6 +13,7 @@
   
   .App {
     text-align: center;
+    background: red;
   }
   
   .App-logo {
@@ -33,7 +34,7 @@
   .App-link {
     color: #09d3ac;
   }
-  
+ 
   body {
     background-color: #FAFBFC;
     font-family: 'Open Sans'

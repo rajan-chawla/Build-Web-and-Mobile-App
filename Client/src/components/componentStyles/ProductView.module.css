@@ -9,13 +9,14 @@
 
 .productDescriptionWrapper {
     background: #fff;
-    padding: 16px;
+    padding: 16px 0;
     width: 100%;
     border-radius: 8px;
 }
 
 .descriptionRow {
     width: 100%;
+    margin: 0 auto;
 }
 
 .imgWrapper {
@@ -101,6 +102,10 @@
     padding-bottom: 8px;
 }
 
+.feedbackContainer {
+    padding: 16px 0px 0px 0;
+}
+
 .feedbackWrapper {
     background: #fff;
     width: 100%;
@@ -119,9 +124,10 @@
     width: 50%;
 }
 
-.submitButton {
+.submitButtonFeedback {
     border-radius: 4px;
     width: 50%;
+    margin-bottom: 16px;
 }
 
 .topDistance {

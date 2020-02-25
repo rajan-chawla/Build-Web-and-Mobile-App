@@ -38,7 +38,7 @@ class Product extends Component {
             productValid: null,
             productQuantity: null,
             productLocation: null,
-            amOwner: false,
+            amOwner: null,
             leftFeedback: null,
             alreadyBought: false,
             alreadyInCart: false,
@@ -96,6 +96,7 @@ class Product extends Component {
     }
 
     async getProductData() {
+  
         await axios.get('/api/get/productbyid', {
             params: {
                 id: this.state.productId
@@ -107,7 +108,6 @@ class Product extends Component {
                 this.props.history.push('/');
             }
 
-            console.log(res.data[0])
             this.setState({
                 productId: res.data[0].id,
                 productTitle: res.data[0].name,
@@ -139,13 +139,15 @@ class Product extends Component {
                 })
             }
         });
+
         // get if user has already bought this item before 
         await axios.get(`/api/get/transaction/${this.userId}/${this.state.productId}`)
         .then(res => {
             this.setState({
                 alreadyBought: true
-            });
-            console.log(this.state.leftFeedback, this.state.alreadyBought);
+            }); 
+        }).catch(err => {
+            console.log(err)
         });
 
         if (this.userRole === '1' && this.state.alreadyBought === true) {
@@ -168,6 +170,9 @@ class Product extends Component {
     };
 
     amOwner() {
+        console.log("TETET")
+        console.log(this.userId);
+        console.log(this.state.productSellerId);
         this.setState({
             amOwner: (this.userId === this.state.productSellerId)
         })
@@ -200,6 +205,8 @@ class Product extends Component {
     };
 
     render() {
+        if (this.state.amOwner === null)
+            return null;
         return (
             <Container className={styles.productContainer}>
                 
@@ -334,11 +341,11 @@ class Product extends Component {
                         { this.userRole === '1' && this.state.alreadyBought === true && this.state.leftFeedback === false &&
                             // User is available to provide feedback.
                             <Row className={`${styles.feedbackWrapper} boxShadow`}>
-                                <Row className={`${styles.feedbackForm} noGutters`}>
+                                <Row className={`noPadding ${styles.feedbackForm}`}>
                                     <Col sm='12'>
                                         <Form onSubmit={this.handleSubmit}>
-                                            <Row className='noGutters'>
-                                                <Col sm='12'><h3 className={`${styles.titleText} noPadding`}>Leave feedback</h3>
+                                            <Row className={styles.feedbackContainer}>
+                                                <Col sm='12'><h3 className={`${styles.titleText} noPadding noGutters`}>Leave feedback</h3>
                                                 <small>Looks like you have bought this product in the past, time for your review!</small></Col>
                                             </Row>
                                             <FormGroup className={styles.topDistance}>
@@ -356,7 +363,7 @@ class Product extends Component {
                                                 <Label for="feedbackText">Your honest opition about it:</Label>
                                                 <Input type="textarea" name="feedbackText" id="feedbackText" rows='8'/>
                                             </FormGroup>
-                                            <Button type='submit' className={styles.submitButton}>Submit Feedback</Button>
+                                            <Button type='submit' className={styles.submitButtonFeedback}>Submit Feedback</Button>
                                         </Form>
                                     </Col>
                                 </Row>
