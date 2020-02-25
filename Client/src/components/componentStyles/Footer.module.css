@@ -2,7 +2,7 @@
     position: fixed;
     width: 100%;
     bottom: 0;
-    background: black;
+    background: var(--blue, #2196F3);
     z-index: 999;
 }
 

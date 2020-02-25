@@ -105,12 +105,12 @@ class ProductMinified extends Component {
                     <p>{this.props.desc}</p>
                     <div className={styles.buttonsWrapper02}>
                         {this.props.cart && 
-                            <Button className={`${styles.buyButton} ${styles.remove}`} onClick={this.handleBuyProduct}><i className="fa fa-credit-card"></i> Buy</Button>
+                            <Button className={`${styles.buyButton}`} onClick={this.handleBuyProduct}><i className="fa fa-credit-card"></i> Buy</Button>
                         }
                         {this.props.cart && this.props.remove !== '1' &&
                         <Button className={styles.cartButton}><i className="fa fa-shopping-cart"></i> Add to Cart</Button>}
                         {this.props.cart && this.props.remove === '1' &&
-                        <Button className={`${styles.cartButton} ${styles.remove}`} onClick={this.handleRemove}><i className="fa fa-shopping-cart"></i> Remove</Button>}
+                        <Button className={`${styles.cartButton} remove`} onClick={this.handleRemove}><i className="fa fa-shopping-cart"></i> Remove</Button>}
 
                         {!this.props.cart && 
                             <small className={`${styles.rightAligned} dateText`}><i className="fa fa-calendar"></i> {this.props.date}</small>

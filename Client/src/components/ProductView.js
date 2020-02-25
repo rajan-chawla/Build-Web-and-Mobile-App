@@ -188,7 +188,6 @@ class Product extends Component {
     async handleSubmit(event) {
         event.preventDefault();
         const formData = new FormData(event.target);
-        alert(this.state.starRating)
         await axios.post('/api/post/addFeedback', {
             description: formData.get('feedbackText'),
             rate: this.state.starRating,
@@ -197,7 +196,7 @@ class Product extends Component {
             product_id: this.state.productId
         }).then(response => {
             if (response.data.code == 200) {
-                alert('success')
+                alert('Feedback provided!')
                 this.setState({
                     leftFeedback: true
                 });
@@ -217,7 +216,6 @@ class Product extends Component {
       });
       }
     handleStars = (stars) => {
-        alert(stars)
         this.setState({
             starRating: stars
         })
@@ -298,7 +296,7 @@ class Product extends Component {
                                 // User is buyer, product is valid and product has not been bought.
                                 <Row className={`${styles.descriptionRow} ${styles.buttonsWrapper}`}>
                                     <Col sm='6' className={styles.buttonWrapper}>
-                                        <Button className={`${styles.buyButton} mainBtn`} onClick={this.handleBuyProduct}> 
+                                        <Button className={`${styles.buyButton}`} onClick={this.handleBuyProduct}> 
                                         <i className="fa fa-credit-card"></i> Buy</Button>
                                     </Col>
                                     <Col sm='6' className={styles.buttonWrapper}>
@@ -331,17 +329,17 @@ class Product extends Component {
 
                             { this.userRole === '2' && this.state.amOwner === true && 
                                 // User is seller AND owner.
-                                <Row className={`${styles.descriptionRow} ${styles.buttonsWrapper} noGutters`}>
+                                <Row className={`${styles.descriptionRow} ${styles.buttonsWrapper}`}>
                                     <Col sm='6' className={styles.buttonWrapper}>
-                                        <Button className={styles.buyButton} onClick={() => this.deleteProduct(this.state.productId)}>Delete Product</Button>
+                                        <Button className={styles.deleteButton} onClick={() => this.deleteProduct(this.state.productId)}>Delete Product</Button>
                                     </Col>
                                 </Row>
                             }
                             { this.userRole === '3' &&
                                 // User is admin.
-                                <Row className={`${styles.descriptionRow} ${styles.buttonsWrapper} noGutters`}>
+                                <Row className={`${styles.descriptionRow} ${styles.buttonsWrapper}`}>
                                     <Col sm='6' className={styles.buttonWrapper}>
-                                        <Button className={styles.buyButton} onClick={() => this.deleteProduct(this.state.productId)}>Delete Product</Button>
+                                        <Button className={styles.deleteButton} onClick={() => this.deleteProduct(this.state.productId)}>Delete Product</Button>
                                     </Col>
                                 </Row>
                             }

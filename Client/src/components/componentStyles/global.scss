@@ -1,3 +1,14 @@
+:root {
+  --blue: #2196F3; 
+  --blue-hover: #03A9F4;
+  --green: #4CAF50;
+  --green-hover: #8BC34A;
+  --purple: #3F51B5; 
+  --purple-hover: #673AB7;
+  --red: #F44336 ;
+  --red-hover: #FF5722;
+}
+
 .noGutters {
     margin-right: 0;
     margin-left: 0;
@@ -7,6 +18,18 @@
         padding-right: 0;
         padding-left: 0;
     }
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+  background-color: var(--blue, #03A9F4) !important;
+}
+
+.btn-secondary, .btn-secondary:hover, .btn-secondary:active, .btn-secondary:visited {
+  background-color: var(--blue, #03A9F4) !important;
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+  background-color: var(--blue-hover, #2196F3) !important;
 }
 
 .noPadding {
@@ -36,13 +59,12 @@
     margin-top: 48px;
 }
 
-
 .green {
-    color: green !important;
+    color: var(--green) !important;
 }
 
 .red {
-    color: red !important;
+    color: var(--red, #f44336) !important;
 }
 
 .homeProdImg {
@@ -71,7 +93,7 @@
 
 .productPrice {
     font-size: 1.2em;
-    color: green;
+    color: var(--green, #8BC34A);
     text-align: left;
 }
 
@@ -147,3 +169,11 @@
     color: orange !important;
     text-shadow: 0 0 5px #09f;
   }
+
+  .remove {
+    background: var(--red, #f44336) !important;
+}
+
+.remove:hover {
+    background: var(--red-hover, #FF5722) !important;
+}
