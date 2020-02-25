@@ -34,6 +34,10 @@ class Product extends Component {
   });
   }
 
+  getShareOnTwitterText(product_id) {
+    return `https://twitter.com/intent/tweet?text=Checkout%20this%20amazing%20product%20on%20SampleMe:&url=${window.location.href}/product/id=${product_id}&hashtags=sampleMe,bargainSale`
+  }
+
   render() {
     const {
       product_id,
@@ -52,12 +56,13 @@ class Product extends Component {
     }
 
     return (
-      <div className="col-md-4 col-lg-3 d-flex align-items-stretch">
+      <div className="productContainer col-md-4 col-lg-3 d-flex align-items-stretch">
 
-        <div className="product">
+        <div className="product boxShadow">
           <Link to={{ pathname: "/product/id=" + product_id }} onClick={() => { this.props.productDetailID(product_id); }}>
             <div className="product-img">
               <img
+                className="homeProdImg"
                 src={
                   product_img === null ||
                     product_img === "" ||
@@ -65,34 +70,22 @@ class Product extends Component {
                     ? "https://icon-library.net//images/product-icon-png/product-icon-png-29.jpg"
                     : product_img
                 }
-                style={{ maxHeight: "130px" }}
+                style={{ maxHeight: "200px" }}
                 alt="product_name"
               />
 
             </div>
           </Link>
           <div className="product-body">
-            <Typography gutterBottom variant="h6" component="h6">
+            <h6 className="productTitle">
               {product_name}
-            </Typography>
-            <Typography className="product-category">
-              {product_category}
-            </Typography>
-            <Typography gutterBottom variant="h6" component="h6">
-              € {product_price}
-            </Typography>
-            <CardActions>
-              <IconButton aria-label="add to favorites" color="secondary">
-                <FavoriteIcon />
-              </IconButton>
-              <IconButton aria-label="add to cart" color="inherit" component={Link} to="/detail">
-                <AddShoppingCartIcon />
-              </IconButton>
-              <IconButton aria-label="share" color="inherit">
-                <ShareIcon />
-              </IconButton>
-              {del_icon}
-            </CardActions>
+            </h6>
+            <h6 className="productPrice">
+              €{product_price}
+            </h6>
+            <a href={this.getShareOnTwitterText(product_id)} className='twitterForHomepage'>
+              <i className='fa fa-twitter'></i>
+            </a>
           </div>
 
         </div>
