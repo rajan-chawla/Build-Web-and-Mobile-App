@@ -37,7 +37,7 @@ class BuyerDashboard extends Component {
         
         const leftFeed = [];
         for (let i=0; i < products.length; i++) {
-            await axios.get(`/api/get/feedbackFromBuyerId?buyerId=${this.buyerId}&productId=${products[i].id}`).then(res => {
+            await axios.get(`/api/get/feedbackFromBuyerId?buyerId=${this.buyerId}&productId=${products[i].product_id}`).then(res => {
                 if (res.data[0])
                     leftFeed.push({leftFeedback: true});
                 else
@@ -49,8 +49,6 @@ class BuyerDashboard extends Component {
         for (let i=0; i<products.length; i++) {
             productsFinal.push({...products[i], ...leftFeed[i]})
         }
-
-        console.log(productsFinal)
 
         this.setState({
             products: productsFinal
@@ -85,7 +83,7 @@ render() {
                                     }
                                     { result.leftFeedback === false && 
                                         <Link to={{
-                                            pathname: `/product/id=${result.id}#feedback`
+                                            pathname: `/product/id=${result.product_id}#feedback`
                                             }} className={styles.feedbackLink}>PROVIDE
                                         </Link>
                                     }

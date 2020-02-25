@@ -81,7 +81,7 @@ const Listing = props => {
         </div>
         <Pagination
           postsPerPage={postsPerPage}
-          totalPosts={data.length}
+          totalPosts={16}
           paginate={paginate}
         />
       </div>

@@ -46,19 +46,21 @@ reviewRoutes.get('/api/get/feedbacksCount', function (req, res, next) {
 reviewRoutes.get('/api/get/feedbackFromBuyerId', function (req, res, next) {
   let buyer_id = req.query.buyerId;
   let product_id = req.query.productId;
+  console.log("JOOOOOOOOOOOOOOOOOOOOOOO")
   console.log(buyer_id)
+  console.log(product_id)
   const query = `SELECT * FROM review WHERE buyer_id = "${buyer_id}" AND Product_id = "${product_id}"`;
   pool.query(query, (q_err, q_res) => {
     if (q_err) {
       console.log(q_err);
       res.status(401).json(q_err);
     }
-    if (q_res.length < 0) {
-      return res
-        .status(404)
-        .json({ message: "error retreiving feedback count." })
-    } else {
+    if (q_res.length > 0) {
       res.status(200).json(q_res);
+    } else {
+      return res
+      .status(200)
+      .json({ code:200,  message: "error retreiving feedback count." })
     }
   })
 })
