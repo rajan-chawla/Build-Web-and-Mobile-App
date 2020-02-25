@@ -178,8 +178,8 @@ render() {
 
 					  	{this.userRole === '1' && 
 							<NavItem>
-								<NavLink className={`${styles.navText}`} href="/cart/">
-									<i className="fa fa-shopping-cart"></i>&nbsp;Shopping Cart
+								<NavLink className={`disbaled .text-light ${styles.navText}` } href="/cart/">
+									<i className="fa fa-shopping-cart "></i>&nbsp;Shopping Cart 
 								</NavLink>
 							</NavItem>
 						}

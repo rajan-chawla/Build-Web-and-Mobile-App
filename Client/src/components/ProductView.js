@@ -49,6 +49,7 @@ class Product extends Component {
         this.handleAddToCart = this.handleAddToCart.bind(this);
         this.handleRemoveFromCart = this.handleRemoveFromCart.bind(this);
         this.handleBuyProduct = this.handleBuyProduct.bind(this);
+        this.deleteProduct = this.deleteProduct.bind(this);
     }
 
     handleAddToCart() {
@@ -200,6 +201,17 @@ class Product extends Component {
         });
     }
 
+    async deleteProduct(product_id) {
+        const params = { pid: product_id};
+        console.log("Clicked " + product_id);
+        await axios.post('/api/post/deleteproduct', params).then(response => {
+          if (response.data.code == 200) {
+            alert("Product deleted successfully");
+            window.location.replace("/");
+          }
+      });
+      }
+
     componentDidMount() {
         this.getProductData();
     };
@@ -309,7 +321,7 @@ class Product extends Component {
                                 // User is seller AND owner.
                                 <Row className={`${styles.descriptionRow} ${styles.buttonsWrapper} noGutters`}>
                                     <Col sm='6' className={styles.buttonWrapper}>
-                                        <Button className={styles.buyButton} >Delete Product</Button>
+                                        <Button className={styles.buyButton} onClick={() => this.deleteProduct(this.state.productId)}>Delete Product</Button>
                                     </Col>
                                 </Row>
                             }
@@ -317,7 +329,7 @@ class Product extends Component {
                                 // User is admin.
                                 <Row className={`${styles.descriptionRow} ${styles.buttonsWrapper} noGutters`}>
                                     <Col sm='6' className={styles.buttonWrapper}>
-                                        <Button className={styles.buyButton} >Delete Product</Button>
+                                        <Button className={styles.buyButton} onClick={() => this.deleteProduct(this.state.productId)}>Delete Product</Button>
                                     </Col>
                                 </Row>
                             }
