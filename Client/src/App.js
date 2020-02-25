@@ -35,7 +35,6 @@ import ProductView from "./components/ProductView";
 import Dashboard from "./components/Dashboard/Dashboard";
 import CartView from "./components/CartView";
 import NavBar from "./components/NavBar";
-import Toaster from "./components/Toaster";
 
 class App extends Component {
   render() {

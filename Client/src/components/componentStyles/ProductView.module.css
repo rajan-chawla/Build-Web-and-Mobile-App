@@ -61,7 +61,7 @@
 .buttonWrapper Button {
     border-width: 0;
     border-radius: 4px;
-    width: calc(100% - 8px);
+    width: calc(100%);
 }
 
 .titleText {

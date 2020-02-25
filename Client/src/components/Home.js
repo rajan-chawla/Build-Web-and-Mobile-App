@@ -4,7 +4,6 @@ import "../css/home.css";
 import { HeaderContext } from "./HeaderContext";
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import Toaster from './Toaster';
 import styles from './componentStyles/Home.module.css';
 import { StylesContext } from "@material-ui/styles";
 

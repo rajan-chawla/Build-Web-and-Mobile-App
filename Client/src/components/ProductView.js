@@ -71,6 +71,7 @@ class Product extends Component {
                     alreadyBought: true,
                     leftFeedback: false
             })
+            this.handleRemoveFromCart();
         });
 
         await axios.post(`/api/post/product/sale`, {id: this.state.productId}).then(res => { 
@@ -145,9 +146,12 @@ class Product extends Component {
         // get if user has already bought this item before 
         await axios.get(`/api/get/transaction/${this.userId}/${this.state.productId}`)
         .then(res => {
+            if (res.data[0]){
             this.setState({
                 alreadyBought: true
             }); 
+            }
+            console.log('222222', this.state.alreadyBought);
         }).catch(err => {
             console.log(err)
         });
@@ -292,16 +296,17 @@ class Product extends Component {
                             }
                             { this.userRole === '1' && this.state.productQuantity > 0 && this.state.alreadyBought === false && 
                                 // User is buyer, product is valid and product has not been bought.
-                                <Row className={`${styles.descriptionRow} ${styles.buttonsWrapper} noGutters`}>
+                                <Row className={`${styles.descriptionRow} ${styles.buttonsWrapper}`}>
                                     <Col sm='6' className={styles.buttonWrapper}>
-                                        <Button className={`${styles.buyButton} mainBtn`} onClick={this.handleBuyProduct}>Buy</Button>
+                                        <Button className={`${styles.buyButton} mainBtn`} onClick={this.handleBuyProduct}> 
+                                        <i className="fa fa-credit-card"></i> Buy</Button>
                                     </Col>
                                     <Col sm='6' className={styles.buttonWrapper}>
                                         { this.state.alreadyInCart === false && 
-                                            <Button className={styles.cartButton} onClick={this.handleAddToCart}>Add to Cart</Button>
+                                            <Button className={styles.cartButton} onClick={this.handleAddToCart}><i className="fa fa-shopping-cart"></i> Add to Cart</Button>
                                         }
                                         { this.state.alreadyInCart === true && 
-                                            <Button className={styles.cartButton} onClick={this.handleRemoveFromCart}>Remove from Cart</Button>
+                                            <Button className={styles.cartButton} onClick={this.handleRemoveFromCart}><i className="fa fa-shopping-cart"></i> Remove from Cart</Button>
                                         }
                                     </Col>
                                 </Row>

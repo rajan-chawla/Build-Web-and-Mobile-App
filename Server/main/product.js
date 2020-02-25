@@ -333,6 +333,7 @@ productRoutes.post("/api/post/transaction", function (req, res) {
 productRoutes.get("/api/get/transaction/:userId/:productId", function (req, res) {
   let userId = req.params.userId;
   let productId = req.params.productId;
+  console.log('TEETTEETET', userId, '§"""§R§"R§"');
 
   const q = `SELECT * FROM transactions WHERE product_id = "${productId}" AND user_id = "${userId}"`;
 
@@ -341,9 +342,13 @@ productRoutes.get("/api/get/transaction/:userId/:productId", function (req, res)
       console.log('ERROR: ', q_err);
       res.status(401).json(q_err);
     }
-    else if (q_res) {
-      console.log('Transaction exists');
+    else if (q_res.length >0) {
+      console.log('Transaction exists', q_res);
       res.status(200).json(q_res);
+    }
+    else if (q_res.length === 0) {
+      console.log('Transaction exists', q_res);
+      res.status(200).json({message: "No products"});
     }
   })
 })

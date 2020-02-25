@@ -58,8 +58,9 @@
       box-shadow: 0px 0px 10px 0px rgba(9, 231, 220, 0.75);
       transition: 0.3s;
   }
+  
   .buyButton {
-    background-image: linear-gradient(-90deg, var(--blue), var(--blue-darker));
+    background-image: red;
     transition: 0.3s;
   }
   

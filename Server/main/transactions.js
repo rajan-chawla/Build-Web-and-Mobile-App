@@ -39,6 +39,8 @@ transactionRoutes.post("/api/post/transaction", function (req, res) {
       });
     } else {
       console.log('SUCCESS: NEW ROW INSERTED');
+
+      
       res.send({
         code: 200,
         success: "Transaction added!"
