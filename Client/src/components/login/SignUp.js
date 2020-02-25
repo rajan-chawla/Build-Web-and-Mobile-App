@@ -112,11 +112,6 @@ export class SignUp extends React.Component {
         formIsValid = false;
         errors["email"] = "*Please enter valid email-ID.";
       }
-      var pattern_hs = new RegExp(/\w+\.\w+(\@\w+\.hs-fulda.de)/)
-      if (!pattern_hs.test(fields["email"])) {
-        formIsValid = false;
-        errors["email"] = "*Please enter hs-fulda email-ID.";
-      }
     }
 
     if (!fields["phone"]) {

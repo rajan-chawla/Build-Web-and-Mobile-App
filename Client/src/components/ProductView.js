@@ -295,7 +295,7 @@ class Product extends Component {
                                 // User is buyer, product is valid and product has not been bought.
                                 <Row className={`${styles.descriptionRow} ${styles.buttonsWrapper} noGutters`}>
                                     <Col sm='6' className={styles.buttonWrapper}>
-                                        <Button className={styles.buyButton} onClick={this.handleBuyProduct}>Buy</Button>
+                                        <Button className={`${styles.buyButton} mainBtn`} onClick={this.handleBuyProduct}>Buy</Button>
                                     </Col>
                                     <Col sm='6' className={styles.buttonWrapper}>
                                         { this.state.alreadyInCart === false && 
