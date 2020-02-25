@@ -341,7 +341,7 @@ productRoutes.get("/api/get/transaction/:userId/:productId", function (req, res)
       console.log('ERROR: ', q_err);
       res.status(401).json(q_err);
     }
-    else if (q_res.length >= 1) {
+    else if (q_res) {
       console.log('Transaction exists');
       res.status(200).json(q_res);
     }
