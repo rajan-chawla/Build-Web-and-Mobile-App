@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
-import Toaster from './Toaster';
+import Rater from './Rater';
+import RatingStars from './RatingStars';
 
 import styles from './componentStyles/ProductView.module.css';
 import './componentStyles/global.scss';
@@ -42,7 +43,8 @@ class Product extends Component {
             leftFeedback: null,
             alreadyBought: false,
             alreadyInCart: false,
-            showToaster: false
+            showToaster: false,
+            starRating: 0
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -183,10 +185,10 @@ class Product extends Component {
     async handleSubmit(event) {
         event.preventDefault();
         const formData = new FormData(event.target);
-        
+        alert(this.state.starRating)
         await axios.post('/api/post/addFeedback', {
             description: formData.get('feedbackText'),
-            rate: formData.get('ratingSelect'),
+            rate: this.state.starRating,
             seller_id: this.state.productSellerId,
             buyer_id: this.userId,
             product_id: this.state.productId
@@ -201,6 +203,7 @@ class Product extends Component {
         });
     }
 
+<<<<<<< HEAD
     async deleteProduct(product_id) {
         const params = { pid: product_id};
         console.log("Clicked " + product_id);
@@ -211,6 +214,14 @@ class Product extends Component {
           }
       });
       }
+=======
+    handleStars = (stars) => {
+        alert(stars)
+        this.setState({
+            starRating: stars
+        })
+    }
+>>>>>>> f18a610863446d2dfb39ae75a6f1cd9e047230ed
 
     componentDidMount() {
         this.getProductData();
@@ -240,7 +251,7 @@ class Product extends Component {
                                 </span>
                                 <br/>
                                 <small className={styles.dateText}>
-                                    <i class="fa fa-calendar"></i>&nbsp;{this.state.productPostedDate}
+                                    <i className="fa fa-calendar"></i>&nbsp;{this.state.productPostedDate}
                                 </small>
                            </Col>
                        </Row>
@@ -258,7 +269,7 @@ class Product extends Component {
                             <Row className={`${styles.descriptionRow}`}>
                                 <Col sm='6'>
                                     <small className={styles.dateText}>
-                                        <i class="fa fa-map-marker"></i>&nbsp;{this.state.productLocation}
+                                        <i className="fa fa-map-marker"></i>&nbsp;{this.state.productLocation}
                                     </small>
                                 </Col>
                                 <Col sm='6'>
@@ -363,13 +374,9 @@ class Product extends Component {
                                             <FormGroup className={styles.topDistance}>
                                                 <a name="feedback"></a>
                                                 <Label for="ratingSelect">How much did you enjoy this product?</Label>
-                                                <Input type="select" name="ratingSelect" id="ratingSelect" className={styles.inputHalf}>
-                                                    <option value='1'>1</option>
-                                                    <option value='2'>2</option>
-                                                    <option value='3'>3</option>
-                                                    <option value='4'>4</option>
-                                                    <option value='5'>5</option>
-                                                </Input>
+                                 
+                                                <RatingStars onSelection={this.handleStars} />
+
                                             </FormGroup>
                                             <FormGroup>
                                                 <Label for="feedbackText">Your honest opition about it:</Label>
@@ -383,7 +390,7 @@ class Product extends Component {
                         }
                     </Col>
                 </Row>
-                <Toaster type='success' text='hihihi' show={this.state.showToaster} />
+
             </Container>
         );
     }
