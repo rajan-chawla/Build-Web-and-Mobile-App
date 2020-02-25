@@ -11,13 +11,13 @@
 
 .checkoutButton {
     width: 100%;
-    background-image: linear-gradient(-90deg, var(--green), var(--green-darker));
+    background: var(--green, #4CAF50) !important;
     transition: 0.3s;
     border: 0 solid red;
 }
 
 .checkoutButton:hover {
-    box-shadow: 0px 0px 10px 0px rgba(139, 195, 74, 0.75);
+    background: var(--green-hover, #8BC34A) !important;
     transition: 0.3s;
 }
 
@@ -30,10 +30,11 @@
 
 .clearCart {
     font-size: 0.6em;
-    color: blue;
+    color: var(--red);
     cursor: pointer;
 }
 
 .clearCart:hover {
+    color: var(--red-hover, #FF5722);
     text-decoration: underline;   
 }

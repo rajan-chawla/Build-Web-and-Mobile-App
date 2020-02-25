@@ -3,9 +3,9 @@ import "font-awesome/css/font-awesome.min.css";
 import "../css/checkout.css";
 import { connect } from "react-redux";
 import axios from "axios";
+import './componentStyles/global.scss';
 import ProductMinified from "./ProductMinified";
 import styles from './componentStyles/Cart.module.css';
-import './componentStyles/global.scss';
 import 'font-awesome/css/font-awesome.min.css';
 
 import {

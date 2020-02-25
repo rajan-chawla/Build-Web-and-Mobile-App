@@ -35,6 +35,7 @@
     width: 64px !important ;
     border-top-right-radius: 19px !important;
     border-bottom-right-radius: 19px !important;
+    background: var(--blue, #2196F3) !important;
 }
 
 .test {

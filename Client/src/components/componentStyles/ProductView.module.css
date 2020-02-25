@@ -35,22 +35,17 @@
     border-radius: 8px;
 }
 
-.buyButton {
-    background-image: linear-gradient(-90deg, var(--blue), var(--blue-darker));
-    transition: 0.3s;
-}
-
 .buyButton:hover {
-    box-shadow: 0px 0px 10px 0px rgba(9, 231, 220, 0.75);
+
     transition: 0.3s;
 }
 
 .cartButton {
-    background-image: linear-gradient(-90deg, var(--purple), var(--purple-darker));
+    background: var(--purple, #9C27B0) !important;
 }
 
 .cartButton:hover {
-    box-shadow: 0px 0px 10px 0px rgba(249, 84, 138, 0.75);
+    background: var(--purple-hover, #673AB7) !important;
     transition: 0.3s;
 }
 
@@ -135,7 +130,7 @@
 }
 
 .priceText {
-    color: var(--green)
+    color: var(--green, #4CAF50)
 }
 
 .shareIcons a {
@@ -152,3 +147,10 @@ small {
     color: rgb(119, 119, 119);
 }
 
+.deleteButton {
+    background: var(--red, #f44336) !important;
+}
+
+.deleteButton:hover {
+    background: var(--red-hover, #FF5722) !important;
+}
