@@ -203,7 +203,6 @@ class Product extends Component {
         });
     }
 
-<<<<<<< HEAD
     async deleteProduct(product_id) {
         const params = { pid: product_id};
         console.log("Clicked " + product_id);
@@ -214,14 +213,12 @@ class Product extends Component {
           }
       });
       }
-=======
     handleStars = (stars) => {
         alert(stars)
         this.setState({
             starRating: stars
         })
     }
->>>>>>> f18a610863446d2dfb39ae75a6f1cd9e047230ed
 
     componentDidMount() {
         this.getProductData();
