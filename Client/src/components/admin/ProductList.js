@@ -7,6 +7,10 @@ const ProductList = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    var userLoggedInId = window.sessionStorage.getItem('userid');
+    if(userLoggedInId == null){
+        window.location.replace("/");
+    }
     getProducts();
   }, [values.searchTerm]);
 

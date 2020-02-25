@@ -21,6 +21,10 @@ from 'reactstrap';
 
 class SellerFeedbacks extends Component {
     constructor(props) {
+        var userLoggedInId = window.sessionStorage.getItem('userid');
+        if(userLoggedInId == null){
+            window.location.replace("/");
+        }
         super(props);
 
         this.sellerId = window.sessionStorage.getItem('userid');

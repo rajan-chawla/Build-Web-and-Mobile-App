@@ -9,7 +9,10 @@ import axios from "axios";
 class Cart extends Component {
   constructor(props) {
     super(props);
-
+    var userLoggedInId = window.sessionStorage.getItem('userid');
+    if(userLoggedInId == null){
+        window.location.replace("/");
+    }
     this.state = {
       buyed: false
     };

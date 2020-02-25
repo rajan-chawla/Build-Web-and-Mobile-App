@@ -15,6 +15,10 @@ from 'reactstrap';
 class Dashboard extends Component {
     constructor(props) {
         super(props);
+        var userLoggedInId = window.sessionStorage.getItem('userid');
+        if(userLoggedInId == null){
+            window.location.replace("/");
+        }
         this.userRole = window.sessionStorage.getItem('userrole');
         this.state = { };
     }

@@ -18,8 +18,12 @@ from 'reactstrap';
 class ProfileView extends Component {
 
     constructor(props) {
+       
         super(props);
-
+        var userLoggedInId = window.sessionStorage.getItem('userid');
+        if(userLoggedInId == null){
+            window.location.replace("/");
+        }
         this.userId = window.sessionStorage.getItem('userid');
 
         this.state = {
