@@ -14,9 +14,6 @@ from 'reactstrap';
 /**
  * CURRENT ISSUES:
  * 1. Product name updates faster than feedbacks.
- * 2. Show which item is selected. 
- * 3. Use logged in seller id.
- * 4. Assign selected to whatever user clicked on dashboard page.
  * 
  * POSSIBLE FEATURES:
  * 1. Show number of feedbacks next to product name.
@@ -32,11 +29,12 @@ class SellerFeedbacks extends Component {
             product_id: this.props.location.productId,
             product_name: this.props.location.productName,
             feedbacks: [],
-            selected_product: [],
+            selected_product: this.props.location.productId,
             average_rating: 0
         };
 
         this.handleClick = this.handleClick.bind(this)
+        console.log('jij',this.state.selected_product)
     }
 
     getProducts = () => {
@@ -81,7 +79,8 @@ class SellerFeedbacks extends Component {
         this.getFeedbacks(event.target.value);
         this.setState({
             product_name: event.target.innerHTML,   // get current products Title
-            product_id: event.target.value          // get current products ID
+            product_id: event.target.value,          // get current products ID
+            selected_product: event.target.value
         })
     }
 
@@ -89,6 +88,14 @@ class SellerFeedbacks extends Component {
         this.getProducts();
         this.getFeedbacks(this.state.product_id);
     };
+
+    checkSelected(clickedId, currentId) {
+        if (clickedId === currentId) {
+            return styles.selected
+        } else {
+            return styles.notSelected
+        }
+    }
             
 render() {
     return (
@@ -99,7 +106,7 @@ render() {
                         <h4 className={styles.productsTitle}>Products</h4>
                         <ul className={styles.productsList}>
                             {this.state.products.map((value, index) => {
-                                return <li className={styles.productsItem} key={index} value={value.id} onClick={this.handleClick}>{value.name}</li>
+                                return <li className={`${styles.productsItem} ${this.checkSelected(this.state.selected_product, value.id)} `} key={index} value={value.id} onClick={this.handleClick}>{value.name}</li>
                             })}
                         </ul>
                     </div>

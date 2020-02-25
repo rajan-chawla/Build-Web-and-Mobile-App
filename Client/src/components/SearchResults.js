@@ -19,7 +19,8 @@ class SearchResults extends Component {
             results: [],
             selectedIndex: (this.props.match.params.category === undefined) ? 0 : this.props.match.params.category,
             searchCategory: this.props.match.params.category,
-            searchTerm: this.props.match.params.term
+            searchTerm: this.props.match.params.term,
+            selected: 0
         };
     }
 
@@ -36,9 +37,9 @@ class SearchResults extends Component {
 
     getResults = (term, category) => {
         axios.get(`/api/get/search?term=${term}&categoryId=${category}`).then(res => {
-                this.setState({
-                    results: res.data 
-                });
+            this.setState({
+                results: res.data 
+            });
         })
     }
 
@@ -50,10 +51,20 @@ class SearchResults extends Component {
 
     categoryChange(val) {
       this.setState(
-            (state) => ({ results: [] }),
+            (state) => ({ results: [], selected: val }),
             this.getResults(this.state.searchTerm, val)
         )
     };
+
+    checkSelected(clickedId, currentId) {
+        console.log({clickedId});
+        console.log({currentId})
+        if (clickedId === currentId) {
+            return styles.selected
+        } else {
+            return styles.notSelected
+        }
+    }
             
 render() {
     return (
@@ -64,7 +75,7 @@ render() {
                         <h4 className={styles.categoryTitle}>Categories</h4>
                         <ul className={styles.categoryList}>
                             {this.state.categories.map((value, index) => {
-                                return <li className = {`${styles.categoryItem} ${this.state.selectedIndex == index ? 'selected' : ''}`}
+                                return <li className = {`${styles.categoryItem} ${this.checkSelected(this.state.selected, index)} `}
                                 key={index} value={value} onClick={() => {this.categoryChange(index)}}> 
                                 {value} </li>
                             })}
@@ -73,19 +84,15 @@ render() {
                 </Col>
 
                 <Col sm={{ size: 9, offset: 3 }}>
-                                    {this.state.results.length <= 0 &&
-                    <p className={styles.emptySearch}>There are no items for your search.</p>
-              	}
+                    {this.state.results.length <= 0 &&
+                        <p className={styles.emptySearch}>There are no items for your search.</p>
+              	    }
                     {this.state.results.map(result => {
                         return <ProductMinified name={result.name} desc={result.description} 
                         price={result.price} img={result.picture_link} prodId={result.id} 
                         address={result.location} date={result.added_date.substring(0, 10)}/>
                     })}
                 </Col>
-
-                
-
-
             </Row>
         </Container>
     )
