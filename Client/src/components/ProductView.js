@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
-import Rater from './Rater';
 import RatingStars from './RatingStars';
 
 import styles from './componentStyles/ProductView.module.css';
