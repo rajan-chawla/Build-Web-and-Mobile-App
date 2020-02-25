@@ -81,8 +81,28 @@ class ProfileView extends Component {
           });
     };
 
-    updateProfile = e => {
-        e.preventDefault();
+    handleNameChange = e => {
+        var updatedData = this.state.userData;
+        updatedData.name = e.target.value;
+        this.setState({updatedData});
+    };
+
+    handleLastNameChange = e => {
+        var updatedData = this.state.userData;
+        updatedData.lastname = e.target.value;
+        this.setState({updatedData});
+    };
+
+    handlePasswordChange = e => {
+        var updatedData = this.state.userData;
+        updatedData.password = e.target.value;
+        this.setState({updatedData});
+    };
+
+    handleConfirmPasswordChange = e => {
+        var updatedData = this.state.userData;
+        updatedData.confirmpassword = e.target.value;
+        this.setState({updatedData});
     };
 
     updateProfile = e => {
@@ -100,7 +120,9 @@ class ProfileView extends Component {
           email: this.state.userData.email,
           phone: this.state.userData.phone,
           photo_link: this.state.userData.photo_link,
-          description: this.state.userData.description
+          description: this.state.userData.description,
+          password: this.state.userData.password,
+          confirmpassword: this.state.userData.confirmpassword
         };
         await axios
           .post("/api/post/updateprofile", data)
@@ -118,7 +140,7 @@ class ProfileView extends Component {
                 <div className={styles.pageHeader}>
                     <h2 className={styles.pageTitle}>Profile Details</h2>
                 </div>
-                <Form className={`${styles.postForm} boxShadow`} onSubmit={this.handleSubmit}>
+                <Form className={`${styles.postForm} boxShadow`} onSubmit={this.updateProfileRequest}>
                     <Row>
                         <Col sm='4' className={styles.btnImgWrapper}>
                             <img src={
@@ -134,15 +156,15 @@ class ProfileView extends Component {
                         <Col sm={{size: 4}}>
                             <FormGroup>
                                 <Label>First name:</Label>
-                                <Input type="text" placeholder="First Name" value={this.state.userData.name}  
-                                    onChange={e => (e.target.value)} />
+                                <Input type="text" placeholder="First Name" value={this.state.userData.name}  name="name"
+                                     onChange={this.handleNameChange.bind(this)} />
                             </FormGroup>
                         </Col>
                         <Col sm={{size: 4}}>
                             <FormGroup>
                                 <Label for="lastname">Last Name</Label>
-                                <Input type="text" placeholder="Last Name" value={this.state.userData.lastname} 
-                                    />
+                                <Input type="text" placeholder="Last Name" value={this.state.userData.lastname}  name="lastname"
+                                    onChange={this.handleLastNameChange.bind(this)} />
                             </FormGroup>
                         </Col>
                         <Col sm={{size: 4}}>
@@ -155,14 +177,14 @@ class ProfileView extends Component {
                         <Col sm={{size: 4}}>
                             <FormGroup>
                                 <Label for="password">Password</Label>
-                                <Input type="password" value="" onChange={e => (e.target.value)} placeholder="Password"
+                                <Input type="password" value={this.state.userData.password} onChange={this.handlePasswordChange.bind(this)} placeholder="Password" name="password"
                                     />
                             </FormGroup>
                         </Col>
                         <Col sm={{size: 4}}>
                             <FormGroup>
                                 <Label for="confPassword">Confirm Password</Label>
-                                <Input type="password" value="" onChange={e => (e.target.value)} placeholder="Confirm Password"
+                                <Input type="password" value={this.state.userData.confirmpassword} onChange={this.handleConfirmPasswordChange.bind(this)} placeholder="Confirm Password" name="confirmpassword"
                                     />
                             </FormGroup>
                         </Col>
