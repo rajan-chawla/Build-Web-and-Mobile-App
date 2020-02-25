@@ -88,10 +88,10 @@ reviewRoutes.post("/api/post/addFeedback", function (req, res, next) {
   console.log(req.body)
   var seller_id = req.body.seller_id;
   var buyer_id = req.body.buyer_id;
-  var rating = req.body.rating;
+  var rating = req.body.rate;
   var product_id = req.body.product_id;
   var description = req.body.description;
-
+  console.log('RATIIIIIIIIIIIIIIIIIIIIIING', rating)
   const query = `INSERT INTO review (seller_id, buyer_id, date, rate, Product_id, text) 
     VALUES ("${seller_id}", "${buyer_id}", CURRENT_TIMESTAMP, "${rating}", "${product_id}", "${description}")`
 

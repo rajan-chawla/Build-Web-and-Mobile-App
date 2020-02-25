@@ -56,7 +56,7 @@ class Product extends Component {
     }
 
     return (
-      <div className="productContainer col-md-4 col-lg-3 d-flex align-items-stretch">
+      <div className="productContainer col-md-4 col-lg-3 align-items-stretch">
 
         <div className="product boxShadow">
           <Link to={{ pathname: "/product/id=" + product_id }} onClick={() => { this.props.productDetailID(product_id); }}>
@@ -70,14 +70,14 @@ class Product extends Component {
                     ? "https://icon-library.net//images/product-icon-png/product-icon-png-29.jpg"
                     : product_img
                 }
-                style={{ maxHeight: "200px" }}
+                style={{ maxHeight: "200px", minHeight: "200px" }}
                 alt="product_name"
               />
 
             </div>
           </Link>
           <div className="product-body">
-            <h6 className="productTitle">
+            <h6 className="productTitle" maxlength="10">
               {product_name}
             </h6>
             <h6 className="productPrice">
