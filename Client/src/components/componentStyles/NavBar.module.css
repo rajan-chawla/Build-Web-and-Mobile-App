@@ -1,5 +1,8 @@
 .headerBody {
-    background: #fff
+    background: #fff;
+    position: fixed;
+    width: 100vw;
+    z-index: 999;
 }
 
 .navText {

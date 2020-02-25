@@ -20,16 +20,16 @@
 .errorMsg {
     color: #cc0000;
     margin-bottom: 12px;
-  }
-  
-  .sucessMsg {
+}
+
+.sucessMsg {
     color: #6B8E23;
     margin-bottom: 10px;
-  }
+}
 
 .profileThumb {
     display: block !important;
-    height: 48px !important;
+    height: 44px !important;
     width: 48px !important;
     object-fit: cover;
     border-radius: 12px;
@@ -38,7 +38,7 @@
 .btnImgWrapper {
     display: flex;
     flex-direction: row;
-    margin-top: 32px;
+    align-items: center;
 }
 
 .btnFile {

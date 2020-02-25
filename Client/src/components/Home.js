@@ -4,6 +4,7 @@ import "../css/home.css";
 import { HeaderContext } from "./HeaderContext";
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
+import Toaster from './Toaster'
 
 /**
  * landing page includes listing component
@@ -31,6 +32,7 @@ const Home = () => {
           searchType={values.searchType}
         />
       </div>
+
     </div>
   );
 };

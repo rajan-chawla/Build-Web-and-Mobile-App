@@ -67,7 +67,6 @@ render() {
                     <tr>
                         <th>ID</th>
                         <th>Product Title</th>
-                        <th>Category</th>
                         <th>Price (&euro;)</th>
                         <th>Feedback</th>
                         <th>Activity</th>
@@ -79,7 +78,6 @@ render() {
                             <tr key={key}>
                                 <th scope="row">{result.product_id}</th>
                                 <td>{result.name}</td>
-                                <td>{result.category_name}</td>
                                 <td>{result.price}.00</td>
                                 <td>
                                     { result.leftFeedback === true && 

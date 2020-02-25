@@ -25,7 +25,7 @@ class BuyerView extends Component {
 
     getUserData = async () => {
         //NEED CHANGE
-        const params = { id: 3 };
+        const params = { id: window.sessionStorage.getItem('userid') };
         await axios.get('/api/get/profile', { params }).then(result => {
             for (var attr in result.data[0]) {
                 if (result.data[0][attr] === "undefined") {
@@ -48,7 +48,7 @@ class BuyerView extends Component {
         formData.append("files", imgFile);
         console.log(formData);
         //NEED CHANGE
-        formData.append("id", 3);
+        formData.append("id", window.sessionStorage.getItem('userid'));
         await axios
           .post("/api/post/updateprofilepic", formData)
           .then(result => {
@@ -80,7 +80,7 @@ class BuyerView extends Component {
       updateProfileRequest = async () => {
       //NEED CHANGE
         const data = {
-          id: 3,
+          id: window.sessionStorage.getItem('userid'),
           name: this.state.userData.name,
           lastname: this.state.userData.lastname,
           date_of_birth: this.state.userData.date_of_birth,

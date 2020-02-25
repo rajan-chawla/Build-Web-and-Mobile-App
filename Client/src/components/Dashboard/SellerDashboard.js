@@ -29,7 +29,7 @@ class SellerDashboard extends Component {
     
     async componentDidMount() {
         const products = []
-        await axios.get(`/api/get/productofuser?id=${this.sellerId}&type=seller`).then(res => {
+        await axios.get(`/api/get/productofuser?id=${this.sellerId}`).then(res => {
             for (let i = 0; i < res.data.length; i++) {
                 products.push(res.data[i])
             }

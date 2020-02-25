@@ -13,15 +13,15 @@
 
 .categoryList {
     list-style: none;
-    width: 100%;
+    width: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
 }
 
 .categoryItem {
     width: 100%;
-    padding: 5px 24px 5px 24px;
-    margin-left: -24px;
+    padding: 5px 15px 5px 15px;
+    margin-left: -15px;
     box-sizing: content-box;
     cursor: pointer;
     transition: 0.25s;
@@ -33,7 +33,11 @@
 }
 
 .selected {
-    font-weight: bolder;
+    font-weight: bolder !important;
+}
+
+.notSelected {
+    font-weight: normal !important;
 }
 
 .emptySearch {

@@ -16,11 +16,11 @@
 
 .affix {
     padding: 24px;
-    position: fixed;
+    position: fixed !important;
     border-radius: 8px;
     background: #FFF;
     height: min-content;
-    width: 21%;
+    box-sizing: border-box !important;
     max-width: 280px !important;
 }
 
@@ -30,4 +30,16 @@
 
 .toRight {
    float: right;
+}
+
+.actionBtnWrapper {
+    margin-top: 48px;
+}
+
+.green {
+    color: green !important;
+}
+
+.red {
+    color: red !important;
 }

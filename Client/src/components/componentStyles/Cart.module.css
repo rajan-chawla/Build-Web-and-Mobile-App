@@ -2,21 +2,11 @@
     margin-top: 32px;
 }
 
-.affix {
-    padding: 24px;
-    position: fixed;
-    border-radius: 8px;
-    width: inherit;
-    background: #FFF;
-    width: 18% !important;
-}
-
 .checkoutBox {
     padding: 24px;
     height: min-content;
     background: #FFF;
     border-radius: 8px;
-
 }
 
 .checkoutButton {

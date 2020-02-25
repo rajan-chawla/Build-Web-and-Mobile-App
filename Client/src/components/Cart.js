@@ -4,10 +4,10 @@ import "../css/checkout.css";
 import { connect } from "react-redux";
 import axios from "axios";
 import ProductMinified from "./ProductMinified";
-
 import styles from './componentStyles/Cart.module.css';
 import './componentStyles/global.scss';
 import 'font-awesome/css/font-awesome.min.css';
+
 import {
   	Container,
 	Row,
@@ -25,7 +25,8 @@ class Cart extends Component {
 
     	this.state = {
 			products: [],
-      		buyed: false
+      		buyed: false,
+			showToaster: false
 		};
 		
 		this.handleClear = this.handleClear.bind(this);
@@ -91,8 +92,10 @@ class Cart extends Component {
 
 	emptyProductsState() {
 		this.setState({
-			products: []
-		})
+			products: [],
+			showToaster: true
+		});
+		
 	}
   
 	render() {

@@ -35,6 +35,7 @@ import ProductView from "./components/ProductView";
 import Dashboard from "./components/Dashboard/Dashboard";
 import CartView from "./components/CartView";
 import NavBar from "./components/NavBar";
+import Toaster from "./components/Toaster";
 
 class App extends Component {
   render() {
@@ -44,8 +45,9 @@ class App extends Component {
       {GA.init() && <GA.RouteTracker />}
       <div id="wrap">
         <HeaderProvider>
-          <div id="content" style={{ paddingBottom: "100px" }}>
-            <NavBar />
+          <NavBar />
+          <div id="content" style={{ paddingBottom: "128px", paddingTop: "64px" }}>
+            
             <Switch>
               <Route path="/product/id=:id" component = {ProductView} />
               <Route path="/search/term=:term?/category=:category?" component = {SearchResults} />

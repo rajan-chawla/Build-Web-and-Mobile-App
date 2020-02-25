@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
+import Toaster from './Toaster';
 
 import styles from './componentStyles/ProductView.module.css';
 import './componentStyles/global.scss';
@@ -40,7 +41,8 @@ class Product extends Component {
             amOwner: false,
             leftFeedback: null,
             alreadyBought: false,
-            alreadyInCart: false
+            alreadyInCart: false,
+            showToaster: false
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -54,7 +56,8 @@ class Product extends Component {
             .then(res => {
                 console.log(res);
                 this.setState({
-                    alreadyInCart: true
+                    alreadyInCart: true,
+                    showToaster: 'true'
             })
         })
     }
@@ -202,13 +205,13 @@ class Product extends Component {
                 
                 <Row>
                     <Col sm='4' className={styles.productImageWrapper}> 
-                        <Row className='noGutters'>
+                        <Row className='noPadding noGutters'>
                             <Col sm='12' className={`${styles.imgWrapper} boxShadow`}>
                             <img src={`${process.env.PUBLIC_URL}${this.state.productImageLink}`}
                                 alt='Product image' />    
                             </Col>
                        </Row>
-                       <Row className='noGutters'>
+                       <Row className='noGutters noPadding'>
                            <Col sm='12' className={`${styles.sellerWrapper} boxShadow`}>
                                <span>Offered by:&nbsp;
                                     <Link to={{pathname: `/profile/public/id=${this.state.productSellerId}`}}
@@ -225,7 +228,7 @@ class Product extends Component {
                     </Col>
                     <Col sm='8'>
                         <Row className={`${styles.productDescriptionWrapper} boxShadow`}>
-                            <Row className={`${styles.descriptionRow} noGutters`}>
+                            <Row className={`${styles.descriptionRow}`}>
                                 <Col sm='4'>
                                     <h3 className={styles.titleText}>{this.state.productTitle}</h3>
                                 </Col>
@@ -233,7 +236,7 @@ class Product extends Component {
                                     <h3 className={styles.priceText}>&euro;{this.state.productPrice}</h3>
                                 </Col>
                             </Row>
-                            <Row className={`${styles.descriptionRow} noGutters`}>
+                            <Row className={`${styles.descriptionRow}`}>
                                 <Col sm='6'>
                                     <small className={styles.dateText}>
                                         <i class="fa fa-map-marker"></i>&nbsp;{this.state.productLocation}
@@ -250,7 +253,7 @@ class Product extends Component {
                                     </span>
                                 </Col>
                             </Row>
-                            <Row className={`${styles.descriptionRow} ${styles.descriptionWrapper} noGutters`}>
+                            <Row className={`${styles.descriptionRow} ${styles.descriptionWrapper}`}>
                                 <Col sm='12'><p className={styles.descText}>{this.state.productDescription}</p></Col>
                             </Row>
                             
@@ -361,6 +364,7 @@ class Product extends Component {
                         }
                     </Col>
                 </Row>
+                <Toaster type='success' text='hihihi' show={this.state.showToaster} />
             </Container>
         );
     }

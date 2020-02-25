@@ -40,6 +40,7 @@ class PostItem extends Component {
             location: '',
             category: '',
             imgFile: '',
+            imgFileURL: '',
             categories: [],  // for select dropdown
             errors: {}
         };
@@ -149,9 +150,10 @@ class PostItem extends Component {
     };
 
     getFileImage(event) {
-
+       
         this.setState({
-            imgFile: event.target.files[0]
+            imgFile: event.target.files[0],
+            imgFileURL: URL.createObjectURL(event.target.files[0])
         });
     }
 
@@ -217,13 +219,17 @@ class PostItem extends Component {
                                     value={this.state.description} onChange={this.handleChange} />
                             </FormGroup>
                         </Col>
-                        <Col sm='4'>
-                            <Label for="fileLoader">Load image</Label>
+                        <Col sm='4' className={styles.btnImgWrapper}>
+                            <img src={
+                                this.state.imgFile === null || this.state.imgFile === ""
+                                ? "http://res.cloudinary.com/doanqz7r8/image/upload/v1582476132/yzggv3vr0tgetdjjxbx6.png"
+                                : this.state.imgFileURL
+                                }  className={styles.profileThumb} alt="avatar" />
                             <span className={styles.btnFile}>
                                 <Input type="file" name="fileLoader" id="fileLoader" onChange={this.getFileImage} />
                             </span>
                         </Col>
-                        <Col sm={{ size: 4, offset: 4 }}>
+                        <Col sm={{ size: 4, offset: 4 }} className='actionBtnWrapper'>
                             <Button type="submit" value="Submit" className={`${styles.submitBtn} defaultBtn`}>Submit</Button>
                         </Col>
                     </Row>
