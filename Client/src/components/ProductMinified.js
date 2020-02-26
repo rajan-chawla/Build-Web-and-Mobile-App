@@ -21,7 +21,8 @@ class ProductMinified extends Component {
 
         this.state = {
             alreadyInCart: false,
-            yourItem: false
+            yourItem: false,
+            alrdBought: false
          };
 
         this.handleRemove = this.handleRemove.bind(this);
@@ -74,17 +75,36 @@ class ProductMinified extends Component {
 
     checkIfInCart() {
         axios.get(`/api/get/cartHasItem?pid=${this.props.prodId}&bid=${this.userId}`).then(res => {
-            this.setState({
-                alreadyInCart: true
-            });
+            console.log(res);
+            if (res.status === 200) {
+ 
+                            this.setState({
+                                alreadyInCart: true
+                            });
+            }
         }).catch((error) => {
             console.log(error);
         });
     }
 
+    checkIfAlreadyBought() {
+        axios.get(`/api/get/transaction/${this.userId}/${this.props.prodId}`)
+            .then(res => {
+                if (res.data[0]) {
+                    this.setState({
+                        alrdBought: true
+                    });
+                }
+
+                    }).catch(err => {
+                        console.log(err)
+                    });
+    }
+
     componentDidMount() {
         if (!this.props.cart && parseInt(window.sessionStorage.getItem('userrole')) === 1) {
             this.checkIfInCart();
+            this.checkIfAlreadyBought();
         } else if (!this.props.cart && parseInt(window.sessionStorage.getItem('userrole')) === 2) {
             this.checkIfYours();
         }
@@ -116,8 +136,12 @@ class ProductMinified extends Component {
                             <small className={`${styles.rightAligned} dateText`}><i className="fa fa-calendar"></i> {this.props.date}</small>
                         }
 
-                        {!this.props.cart && this.state.alreadyInCart && !this.state.yourItem === false &&
+                        {!this.props.cart && this.state.alreadyInCart && this.state.yourItem === false &&
                             <small className={`${styles.leftAligned} ${styles.yourCart}`}>Item is in your cart!</small>
+                        }
+
+                        {!this.props.cart && this.state.alrdBought && this.state.yourItem === false &&
+                            <small className={`${styles.leftAligned} ${styles.yourItem}`}>Already bought this item!</small>
                         }
 
                         {!this.props.cart && this.state.alreadyInCart === false && this.state.yourItem &&

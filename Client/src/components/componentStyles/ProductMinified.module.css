@@ -129,11 +129,11 @@
 }
 
 .yourCart {
-    color: red;
+      color: var(--red, #f44336) !important;
 }
 
 .yourItem {
-    color: green;
+    color: var(--green, #8BC34A);
 }
 
 .cartButton,

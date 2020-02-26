@@ -383,11 +383,13 @@ cartRoutes.get('/api/get/cartHasItem', function (req, res, next) {
             console.log(q_err);
             res.status(401).json(q_err);
         }
-        if (q_res.length < 1) {
+        if (q_res === undefined || q_res.length == 0) {
+            console.log("jo")
             res
                 .status(204)
-                .json({ message: "error retreiving feedback count." })
+                .json({ message: "" })
         } else {
+            console.log("po")
             res.status(200).json(q_res);
         }
     })
