@@ -31,13 +31,24 @@
     display: block !important;
     height: 44px !important;
     width: 48px !important;
+    -o-object-fit: cover;
     object-fit: cover;
     border-radius: 12px;
 }
 
 .btnImgWrapper {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
     flex-direction: row;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
     align-items: center;
 }
 

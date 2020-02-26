@@ -1,9 +1,13 @@
 .loginContainer {
     width: 33%;
+    height: -webkit-min-content;
+    height: -moz-min-content;
     height: min-content;
     position: absolute;
-    left: 0; right: 0;
-    top: 0; bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
     margin: auto;
     background: #FFF;
     border-radius: 8px;
@@ -12,6 +16,8 @@
 
 .loginButton {
     width: 50%;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
     transition: 0.3s;
     border: 0 solid red;
 }
@@ -29,7 +35,13 @@
 
 .loginHeaderWrapper {
     width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
     justify-content: space-between;
     margin-bottom: 24px;
 }

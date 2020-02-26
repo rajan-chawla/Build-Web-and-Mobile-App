@@ -4,6 +4,8 @@
 
 .checkoutBox {
     padding: 24px;
+    height: -webkit-min-content;
+    height: -moz-min-content;
     height: min-content;
     background: #FFF;
     border-radius: 8px;
@@ -12,12 +14,16 @@
 .checkoutButton {
     width: 100%;
     background: var(--green, #4CAF50) !important;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
     transition: 0.3s;
     border: 0 solid red;
 }
 
 .checkoutButton:hover {
     background: var(--green-hover, #8BC34A) !important;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
     transition: 0.3s;
 }
 
@@ -36,5 +42,5 @@
 
 .clearCart:hover {
     color: var(--red-hover, #FF5722);
-    text-decoration: underline;   
+    text-decoration: underline;
 }

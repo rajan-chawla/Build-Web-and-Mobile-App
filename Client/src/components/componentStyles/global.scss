@@ -1,179 +1,193 @@
 :root {
-  --blue: #2196F3; 
+  --blue: #2196F3;
   --blue-hover: #03A9F4;
   --green: #4CAF50;
   --green-hover: #8BC34A;
-  --purple: #3F51B5; 
+  --purple: #3F51B5;
   --purple-hover: #673AB7;
-  --red: #F44336 ;
+  --red: #F44336;
   --red-hover: #FF5722;
 }
 
 .noGutters {
-    margin-right: 0;
-    margin-left: 0;
+  margin-right: 0;
+  margin-left: 0;
 
-    &>[class^="col-"],
-    &>[class*=" col-"] {
-        padding-right: 0;
-        padding-left: 0;
-    }
+  &>[class^="col-"],
+  &>[class*=" col-"] {
+    padding-right: 0;
+    padding-left: 0;
+  }
 }
 
-.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited {
   background-color: var(--blue, #03A9F4) !important;
 }
 
-.btn-secondary, .btn-secondary:hover, .btn-secondary:active, .btn-secondary:visited {
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:active,
+.btn-secondary:visited {
   background-color: var(--blue, #03A9F4) !important;
 }
 
-.btn-primary:hover, .btn-secondary:hover {
+.btn-primary:hover,
+.btn-secondary:hover {
   background-color: var(--blue-hover, #2196F3) !important;
 }
 
 .noPadding {
-    padding: 0 !important;
-    margin: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 .affix {
-    padding: 24px;
-    position: fixed !important;
-    border-radius: 8px;
-    background: #FFF;
-    height: min-content;
-    box-sizing: border-box !important;
-    max-width: 280px !important;
+  padding: 24px;
+  position: fixed !important;
+  border-radius: 8px;
+  background: #FFF;
+  height: -webkit-min-content;
+  height: -moz-min-content;
+  height: min-content;
+  -webkit-box-sizing: border-box !important;
+  box-sizing: border-box !important;
+  max-width: 280px !important;
 }
 
 .selected {
-    font-weight: bolder;
+  font-weight: bolder;
 }
 
 .toRight {
-   float: right;
+  float: right;
 }
 
 .actionBtnWrapper {
-    margin-top: 48px;
+  margin-top: 48px;
 }
 
 .green {
-    color: var(--green) !important;
+  color: var(--green) !important;
 }
 
 .red {
-    color: var(--red, #f44336) !important;
+  color: var(--red, #f44336) !important;
 }
 
 .homeProdImg {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
+  -o-object-fit: cover;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
 }
 
 .product-body {
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
-    padding-bottom: 36px !important;
-    height: min-content;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  padding-bottom: 36px !important;
+  height: -webkit-min-content;
+  height: -moz-min-content;
+  height: min-content;
 }
 
 .productTitle {
-    font-size: 1.2em;
-    text-align: left;
-    width: 200px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: 1.2em;
+  text-align: left;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
 }
 
 .productPrice {
-    font-size: 1.2em;
-    color: var(--green, #8BC34A);
-    text-align: left;
+  font-size: 1.2em;
+  color: var(--green, #8BC34A);
+  text-align: left;
 }
 
 .twitterForHomepage {
-    display: block;
-    float: right;
-    text-align: right;
-    font-size: 1.25em;
+  display: block;
+  float: right;
+  text-align: right;
+  font-size: 1.25em;
 }
 
 .rating {
-    display: inline-block;
-    position: relative;
-    height: 50px;
-    line-height: 50px;
-    font-size: 50px;
-  }
-  
-.starLabel {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    cursor: pointer;
-  }
-  
-  .starLabel:last-child {
-    position: static;
-  }
-  
-  .starLabel:nth-child(1) {
-    z-index: 5;
-  }
-  
-  .starLabel:nth-child(2) {
-    z-index: 4;
-  }
-  
-  .starLabel:nth-child(3) {
-    z-index: 3;
-  }
-  
-  .starLabel:nth-child(4) {
-    z-index: 2;
-  }
-  
-  .starLabel:nth-child(5) {
-    z-index: 1;
-  }
-  
-  .starInput {
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-  }
-  
-  .starIcon {
-    float: left;
-    color: transparent;
-  }
-  
-  .starLabel:last-child .starIcon {
-    color: blue;
-  }
-  
-  .rating:not(:active) .starLabel .starInput:checked ~ .starIcon,
-  .rating:active .starLabel:active .starInput ~ .starIcon {
-    color: #09f;
-  }
-  
-  .starLabel .starInput:focus:not(:checked) ~ .starIcon:last-child {
-    color: orange !important;
-    text-shadow: 0 0 5px #09f;
-  }
+  display: inline-block;
+  position: relative;
+  height: 50px;
+  line-height: 50px;
+  font-size: 50px;
+}
 
-  .remove {
-    background: var(--red, #f44336) !important;
+.starLabel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  cursor: pointer;
+}
+
+.starLabel:last-child {
+  position: static;
+}
+
+.starLabel:nth-child(1) {
+  z-index: 5;
+}
+
+.starLabel:nth-child(2) {
+  z-index: 4;
+}
+
+.starLabel:nth-child(3) {
+  z-index: 3;
+}
+
+.starLabel:nth-child(4) {
+  z-index: 2;
+}
+
+.starLabel:nth-child(5) {
+  z-index: 1;
+}
+
+.starInput {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.starIcon {
+  float: left;
+  color: transparent;
+}
+
+.starLabel:last-child .starIcon {
+  color: blue;
+}
+
+.rating:not(:active) .starLabel .starInput:checked~.starIcon,
+.rating:active .starLabel:active .starInput~.starIcon {
+  color: #09f;
+}
+
+.starLabel .starInput:focus:not(:checked)~.starIcon:last-child {
+  color: orange !important;
+  text-shadow: 0 0 5px #09f;
+}
+
+.remove {
+  background: var(--red, #f44336) !important;
 }
 
 .remove:hover {
-    background: var(--red-hover, #FF5722) !important;
+  background: var(--red-hover, #FF5722) !important;
 }

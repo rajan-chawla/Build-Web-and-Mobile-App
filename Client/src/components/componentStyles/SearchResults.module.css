@@ -22,13 +22,18 @@
     width: 100%;
     padding: 5px 15px 5px 15px;
     margin-left: -15px;
+    -webkit-box-sizing: content-box;
     box-sizing: content-box;
     cursor: pointer;
+    -webkit-transition: 0.25s;
+    -o-transition: 0.25s;
     transition: 0.25s;
 }
 
 .categoryItem:hover {
     background: var(--grey);
+    -webkit-transition: 0.25s;
+    -o-transition: 0.25s;
     transition: 0.25s;
 }
 

@@ -4,7 +4,8 @@
 
 .buyer {
     margin: auto;
-    right: 0; left: 0;
+    right: 0;
+    left: 0;
 }
 
 .selected {
@@ -22,6 +23,7 @@
     height: 128px;
     border-radius: 64px;
     border: 8px solid var(--grey);
+    -o-object-fit: cover;
     object-fit: cover;
 }
 
@@ -29,7 +31,8 @@
     padding: 16px 0 8px 0;
 }
 
-.profileEmail, .profilePhone {
+.profileEmail,
+.profilePhone {
     padding: 4px 0;
 }
 

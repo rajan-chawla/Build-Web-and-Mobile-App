@@ -19,13 +19,18 @@
     width: 100%;
     padding: 5px 15px 5px 15px;
     margin-left: -15px;
+    -webkit-box-sizing: content-box;
     box-sizing: content-box;
     cursor: pointer;
+    -webkit-transition: 0.25s;
+    -o-transition: 0.25s;
     transition: 0.25s;
 }
 
 .productsItem:hover {
     background: var(--grey);
+    -webkit-transition: 0.25s;
+    -o-transition: 0.25s;
     transition: 0.25s;
 }
 
@@ -44,7 +49,14 @@
 
 .feedbackContainer {
     position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
     flex-direction: column;
     width: 100%;
     height: auto;
@@ -52,6 +64,8 @@
     margin-bottom: 16px;
     border-radius: 8px;
     padding: 24px;
+    -webkit-transition: 0.2s;
+    -o-transition: 0.2s;
     transition: 0.2s;
 }
 
@@ -60,9 +74,20 @@
     margin-bottom: 0 !important;
 }
 
-.header, .pageHeader {
+.header,
+.pageHeader {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
     flex-direction: row;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
     justify-content: space-between;
 }
 
@@ -88,6 +113,6 @@
 .noFeedbacks {
     font-size: 1.4em;
     text-align: center;
-    font-weight: 700;   
+    font-weight: 700;
     color: grey;
 }

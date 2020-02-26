@@ -20,23 +20,31 @@
 .errorMsg {
     color: #cc0000;
     margin-bottom: 12px;
-  }
-  
-  .sucessMsg {
+}
+
+.sucessMsg {
     color: #6B8E23;
     margin-bottom: 10px;
-  }
+}
 
 .profileThumb {
     display: block !important;
     height: 48px !important;
     width: 48px !important;
+    -o-object-fit: cover;
     object-fit: cover;
     border-radius: 12px;
 }
 
 .btnImgWrapper {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
     flex-direction: row;
     margin-top: 32px;
 }

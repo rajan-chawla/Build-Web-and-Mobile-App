@@ -3,39 +3,90 @@
     z-index: 999;
     bottom: -256px;
     border-radius: 8px;
+    width: -webkit-min-content;
+    width: -moz-min-content;
     width: min-content;
-    left: 0; right: 0;
+    left: 0;
+    right: 0;
     margin: auto;
     text-align: center;
     min-width: 256px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
     flex-direction: row;
     color: #FFF !important;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
     align-items: center;
 }
 
 .showAnim {
+    -webkit-animation-name: showToaster;
     animation-name: showToaster;
+    -webkit-animation-duration: 1s;
     animation-duration: 1s;
     bottom: 48px;
+    -webkit-transition: 1s;
+    -o-transition: 1s;
     transition: 1s;
 }
 
 .hideAnim {
+    -webkit-animation-name: hideToaster;
     animation-name: hideToaster;
+    -webkit-animation-duration: 1s;
     animation-duration: 1s;
     bottom: -256px;
+    -webkit-transition: 1s;
+    -o-transition: 1s;
     transition: 1s;
 }
 
+@-webkit-keyframes hideToaster {
+    0% {
+        bottom: 48px
+    }
+
+    100% {
+        bottom: -256px
+    }
+}
+
 @keyframes hideToaster {
-    0% {bottom: 48px}
-    100% {bottom: -256px}
+    0% {
+        bottom: 48px
+    }
+
+    100% {
+        bottom: -256px
+    }
+}
+
+@-webkit-keyframes showToaster {
+    0% {
+        bottom: -256px
+    }
+
+    100% {
+        bottom: 48px
+    }
 }
 
 @keyframes showToaster {
-  0%   {bottom: -256px}
-  100% {bottom: 48px}
+    0% {
+        bottom: -256px
+    }
+
+    100% {
+        bottom: 48px
+    }
 }
 
 .wrapper {
