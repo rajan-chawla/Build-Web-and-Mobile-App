@@ -45,14 +45,23 @@ class SellerFeedbacks extends Component {
         axios.get(`/api/get/productofuser?id=${this.sellerId}`).then(res => {
             for (let i = 0; i < res.data.length; i++) {
                 this.setState(
+
                     (state) => ({ products: [...this.state.products, res.data[i]] }),
-                    () => console.log(this.state.products)
+                    () => {
+                        if (this.state.selected_product === undefined) {
+                            this.setState({
+                                selected_product: this.state.products[0].id
+                            })
+                            this.getFeedbacks(this.state.products[0].id);
+                        }
+                    }
                 );
             }
         })
     }
 
     getFeedbacks = (prod_id) => {
+
         axios.get(`/api/get/feedbacks?id=${prod_id}`).then(res => {
             if (res.data.length === 0) {
                 this.setState({
@@ -88,9 +97,10 @@ class SellerFeedbacks extends Component {
         })
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getProducts();
-        this.getFeedbacks(this.state.product_id);
+        if (this.state.selected_product !== undefined)
+            this.getFeedbacks(this.state.product_id);
     };
 
     checkSelected(clickedId, currentId) {
