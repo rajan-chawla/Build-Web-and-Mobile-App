@@ -131,7 +131,7 @@ render() {
                         <div className={`${styles.feedbackContainer} boxShadow`} key={key}>
                         <div className={styles.header}>
                             <h5 className={styles.feedbackReviewer}><span className={styles.smallText}>from:</span> {result.name} {result.lastname}</h5>
-                            <span className={styles.stars}>{result.rate}</span>
+                            <span className={styles.stars}>{result.rate.toFixed(2)}</span>
                         </div>
                         <p className={styles.description}>{result.text}</p>
                         </div>    

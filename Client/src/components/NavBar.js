@@ -71,8 +71,7 @@ class NavBar extends Component {
 		axios.get('/api/get/categories').then(res => {
 			for (let i = 0; i < res.data.length; i++) {
 				this.setState(
-					(state) => ({ categories: [...this.state.categories, res.data[i].name] }),
-					() => console.log(this.state.categories)
+					(state) => ({ categories: [...this.state.categories, res.data[i].name] })
 				);
 			}
 		});
@@ -132,7 +131,7 @@ class NavBar extends Component {
 			case 3:	role ="Admin"; break;
 			default: break;
 		}
-		return <sub>{role}</sub>;
+		return <sub className={styles.blueText}>{role}</sub>;
 	}
 	
             

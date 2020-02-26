@@ -41,3 +41,7 @@
 .test {
     color: red !important
 }
+
+.blueText {
+    color: var(--blue, #2196F3) !important;
+}

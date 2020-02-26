@@ -92,7 +92,7 @@ class PostItem extends Component {
                 location: formData.get('location')
             }).then(response => {
                 if (response.data.code == 200) {
-                    this.props.history.push('/profile/history')    // redirect to url (maybe not best practice, need to recheck)
+                    this.props.history.push('/profile/dashboard')    // redirect to url (maybe not best practice, need to recheck)
                 }
             });
         }

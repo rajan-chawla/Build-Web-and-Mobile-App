@@ -73,7 +73,6 @@ render() {
                         <th>Quantity</th>
                         <th>Feedbacks</th>
                         <th>Average Rating</th>
-                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,7 +80,12 @@ render() {
                         return (
                             <tr key={key}>
                                 <th scope="row">{result.id}</th>
-                                <td>{result.name}</td>
+                                <td>
+                                    <Link to={{
+                                        pathname: '/product/id='+result.id+''
+                                        }} className="feedbackLink">{result.name}
+                                    </Link>
+                                </td>
                                 <td>{result.category_name}</td>
                                 <td>{result.price}</td>
                                 <td>{result.quantity}</td>
@@ -96,11 +100,6 @@ render() {
                                 <td>
                                     {result.average === null && <span className={styles.nullText}>No rating yet</span>}
                                     {result.average != null && `${parseFloat(result.average).toFixed(2)}/5` }
-                                </td>
-                                <td> 
-                                    {result.is_validated.data[0] === 1 && <span className={styles.success}>Approved</span>}
-                                    {result.is_validated.data[0] === 0 && <span className={styles.pending}>Pending</span>}
-                                    {result.is_validated.data[0] === -1 && <span className={styles.danger}>Rejected</span>}
                                 </td>
                             </tr>
                         )
